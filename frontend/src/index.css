@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --primary-color: #161616;
+    --secondary-color: #c1c1c1;
+    --tertiary-color: #727272;
+    --highlight-color: #dcf763;
+    --x-color: #3b3b3b;
+    --x2-color: #1c1c1c;
+    --x3-color: #1e1e1e;
+}
+
+@layer base {
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+        font-family: "Montserrat", serif;
+        /* border: 1px solid; */
+        
+
+    }
+
+    nav.active {
+        @apply max-md:top-[100%] opacity-100
+    }
+
+    .dot {
+        @apply w-2 aspect-square bg-highlight rounded-full
+    }
+
+    .nav-link {
+        @apply px-4 py-[5px] max-md:w-full max-md:text-center hover:bg-[#d9d9d9] text-base  hover:text-primary md:rounded-xl transition-all font-[500]
+    }
+
+    section {
+        @apply padding-x min-h-[90vh] md:min-h-screen py-5
+    }
+
+    .work-heading {
+        /* backdrop-filter: blur(5px); */
+        background-color: #c1c1c150;
+    }
+
+
+    body {
+        max-width: 1440px;
+        margin: 0 auto;
+        @apply min-h-[90vh] md:min-h-screen
+    }
+
+    html {
+        background-color: #161616;
+        color: var(--secondary-color);
+        scroll-behavior: smooth;
+    }
+
+    img {
+        max-width: 100%;
+        object-fit: cover;
+    }
+}
+
+@layer utilities {
+
+    .test-b {
+        @apply border border-solid
+    }
+    .padding-x {
+      @apply sm:px-32 px-8;
+    }
+  
+    .padding-y {
+      @apply py-5 md:py-10;
+    }
+
+    .high-shadow {
+        text-shadow: 0px 0px 10px var(--highlight-color);
+        
+    }
+
+    .primary-sh {
+        text-shadow: 0px 0px 10px var(--primary-color);
+    }
+
+    .form-row {
+        @apply flex flex-col gap-3 w-full
+    }
+
+    .form-input {
+        @apply rounded-xl bg-x2 p-3 placeholder:text-x placeholder:text-sm focus:border-blue-600 w-full
+    }
+
+    input, textarea {
+        resize: none;
+        @apply focus:outline-none test-b border-transparent 
+    }
+
+}

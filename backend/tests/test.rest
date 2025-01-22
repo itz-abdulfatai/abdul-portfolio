@@ -1,0 +1,3 @@
+# server on test
+GET http://localhost:4040 
+
