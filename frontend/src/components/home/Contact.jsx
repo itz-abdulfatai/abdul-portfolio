@@ -4,7 +4,8 @@ import { Link } from "react-router-dom"
 import { scrollR } from "../../utils/scrollR"
 
 function Contact() {
-    const {socials} = useContext(SettingContext)
+    const {settings} = useContext(SettingContext)
+    const { socials } = settings;
 
     useEffect(() => {
         scrollR('lll', 'left', false)

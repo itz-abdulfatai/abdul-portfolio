@@ -5,7 +5,8 @@ import SettingContext from "../../contexts/settingContext"
 import { scrollR } from "../../utils/scrollR"
 
 function Testimonials() {
-    const {testimonials} = useContext(SettingContext)
+    const {settings} = useContext(SettingContext)
+    const {testimonials} = settings;
 
     useEffect(() => {
         scrollR('tesii', 'bottom', true)

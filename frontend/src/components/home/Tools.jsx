@@ -3,7 +3,8 @@ import SettingContext from "../../contexts/settingContext";
 import { scrollR } from "../../utils/scrollR";
 
 function Tools() {
-  const { tools } = useContext(SettingContext);
+  const { settings } = useContext(SettingContext);
+  const {tools} = settings
   const [full, setFull] = useState(false)
 
   useEffect(() => {

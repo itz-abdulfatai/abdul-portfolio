@@ -5,8 +5,9 @@ import ImageSlider from "./ImageSlider";
 import { scrollR } from "../../utils/scrollR";
 
 function Hero() {
-  const { avatar, isAvaliableForFreelancing, heading } =
+  const { settings } =
     useContext(SettingContext);
+    const {avatar, isAvaliableForFreelancing, heading} = settings
   // console.log(name)
 
   useEffect(() => {

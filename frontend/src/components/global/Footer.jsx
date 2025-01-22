@@ -15,7 +15,8 @@ function Footer() {
 }, [])
 
   
-  const {socials, name} = useContext(SettingContext)
+  const {settings} = useContext(SettingContext)
+  const {socials, name} = settings
   return (
     <footer className="min-h-[50vh] max-md:py-10  padding-x flex flex-col gap-5 ">
       <div className='  flex flex-col gap-10 md:flex-row justify-between  items-start'>

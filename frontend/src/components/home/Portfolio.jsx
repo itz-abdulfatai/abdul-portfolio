@@ -5,7 +5,8 @@ import SettingContext from "../../contexts/settingContext"
 import { useNavigate } from "react-router-dom"
 
 function Portfolio({heading}) {
-    const {portfolioHighlights} = useContext(SettingContext)
+    const {settings} = useContext(SettingContext)
+    const {portfolioHighlights} = settings;
     const navigate = useNavigate()
 
   return (

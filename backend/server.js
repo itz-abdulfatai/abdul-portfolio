@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import express from 'express'
 import morgan from 'morgan'
+import settingsRoute from './routes/settings.route.js'
 
 const app = express()
 
@@ -14,6 +15,7 @@ app.use(morgan('dev'))
 
 
 // Routes
+app.use('/settings', settingsRoute )
 
 
 

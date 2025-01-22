@@ -5,7 +5,8 @@ import Logo from "../global/Logo"
 import { scrollR } from "../../utils/scrollR"
 
 function About() {
-    const {about, projectsDone, yearsOfExperience, clientSatisfaction} = useContext(SettingContext)
+    const {settings} = useContext(SettingContext)
+    const { about, projectsDone, yearsOfExperience, clientSatisfaction } = settings;
 
     useEffect(() => {
       scrollR("aaaa", "bottom", true)

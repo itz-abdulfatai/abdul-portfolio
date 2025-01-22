@@ -4,7 +4,8 @@ import ProjectCard from "../components/global/ProjectCard"
 import Contact from "../components/home/Contact"
 
 function Works() {
-  const {portfolioHighlights} = useContext(SettingContext)
+  const {settings} = useContext({SettingContext})
+  const { portfolioHighlights } = settings
 
   return (
     <>
