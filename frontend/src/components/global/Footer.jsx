@@ -10,7 +10,7 @@ function Footer() {
   useEffect(() => {
     scrollR('lll', 'left', false)
     scrollR('rrr', 'right', false)
-    scrollR('ttt', 'bottom', true, 10)
+    scrollR('ttt', 'bottom', false, 10)
 
 }, [])
 

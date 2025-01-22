@@ -9,7 +9,7 @@ function Testimonials() {
     const {testimonials} = settings;
 
     useEffect(() => {
-        scrollR('tesii', 'bottom', true)
+        scrollR('tesii', 'bottom', false)
     }, [])
 
   return (

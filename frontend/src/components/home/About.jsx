@@ -9,7 +9,7 @@ function About() {
     const { about, projectsDone, yearsOfExperience, clientSatisfaction } = settings;
 
     useEffect(() => {
-      scrollR("aaaa", "bottom", true)
+      scrollR("aaaa", "bottom")
 
     }, [])
   return (
