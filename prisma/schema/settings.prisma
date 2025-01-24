@@ -1,0 +1,69 @@
+model Setting {
+  id                        String        @id @default(uuid())
+  name                      String        @unique
+  email                     String?
+  avatar                    String?
+  isAvaliableForFreelancing Boolean       @default(true)
+  heading                   String
+  about                     String
+  projectsDone              Int
+  yearsOfExperience         Int
+  clientSatisfaction        Int
+  tools                     Tool[]
+  projects                  Project[]
+  testimonials              Testimonial[]
+  socials                   social[]
+}
+
+model Tool {
+  id        String  @id @default(uuid())
+  name      String  @unique
+  icon      String?
+  use       String
+  setting   Setting @relation(fields: [settingId], references: [id])
+  settingId String
+}
+
+model Project {
+  id           String      @id @unique @default(uuid())
+  name         String
+  services     String[]
+  images       String[]
+  discription  String
+  type         String
+  public       Boolean     @default(true)
+  slug         String
+  clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
+  clientInfoId String?
+  setting      Setting     @relation(fields: [settingId], references: [id])
+  settingId    String
+}
+
+model ClientInfo {
+  id      String    @id @unique @default(uuid())
+  name    String
+  sector  String?
+  company String?
+  project Project[]
+
+  Testimonial Testimonial[]
+}
+
+model Testimonial {
+  id           String      @id @unique @default(uuid())
+  rating       Float
+  comment      String
+  clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
+  clientInfoId String?
+  setting      Setting     @relation(fields: [settingId], references: [id])
+  settingId    String
+}
+
+model social {
+  id        String  @id @unique @default(uuid())
+  name      String
+  icon      String?
+  link      String
+  setting   Setting @relation(fields: [settingId], references: [id])
+  settingId String
+}

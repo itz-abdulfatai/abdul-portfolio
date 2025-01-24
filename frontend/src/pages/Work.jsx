@@ -1,9 +1,12 @@
-import { useContext, useEffect } from "react";
+import React, { Suspense, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import SettingContext from "../contexts/settingContext";
 import Portfolio from "../components/home/Portfolio";
 import Contact from "../components/home/Contact";
 import { scrollR } from "../utils/scrollR";
+import Spinner from "../components/global/Spinner";
+
+const LazyImg = React.lazy(() => import('../components/work/LazyImg')) 
 
 function Work() {
   useEffect(() => {
@@ -59,19 +62,19 @@ function Work() {
         {
           work.images.map((img, index) => (
             index > 0 &&
-            <img
-              key={index}
-              className=" tttq rounded-3xl h-[50vh] md:h-screen"
-              src={img ||
-                `https://picsum.photos/${window.innerWidth}/${window.innerHeight}?random=1`}
-              alt=""
-            />
+            <Suspense key={index} fallback={<Spinner/>}>
+              <LazyImg/>
+            </Suspense>
+           
           ))
         }
       </section>
 
       <Portfolio heading='Next projects'/>
       <Contact/>
+      {/* <section>
+        <Spinner/>
+      </section> */}
     </>
   );
 }

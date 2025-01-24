@@ -1,0 +1,8 @@
+### server on test
+GET http://localhost:4040 
+
+
+
+
+### GET /images/my-avatar.jpg - test serving static files
+GET http://localhost:4040/images/my-avatar.jpg

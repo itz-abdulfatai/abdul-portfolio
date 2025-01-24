@@ -14,7 +14,7 @@ function About() {
     }, [])
   return (
     <section id="about" className=" flex items-center justify-center">
-        <div className=" aaaa relative w-[90%] rounded-3xl p-8 md:p-16 text-2xl h-[90%] bg-x2 flex flex-col gap-10">
+        <div className=" aaaa relative w-[90%] rounded-3xl p-4 md:p-16 text-2xl h-[90%] bg-x2 flex flex-col gap-10">
             <p className=" md:max-w-[90%] text-base lg:text-2xl ">{about}</p>
             <div className=" flex md:items-center flex-col md:flex-row gap-10">
               <div className=" flex flex-col gap-2">

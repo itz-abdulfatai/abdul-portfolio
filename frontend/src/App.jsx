@@ -4,12 +4,18 @@ import DashLayout from "./layouts/DashLayout"
 import Home from "./pages/Home"
 import Works from "./pages/Works"
 import Work from "./pages/Work"
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
+import SettingContext from "./contexts/settingContext"
+import Spinner from "./components/global/Spinner"
+import Error from "./components/global/Error"
+
+
 
 
 function App() {
 
   const {pathname} = useLocation()
+  const {loading, error} = useContext(SettingContext)
 
   const scrollToSection = (id) => {
     const element = document.getElementById(id);
@@ -22,6 +28,12 @@ function App() {
     scrollToSection('headd')
 
   }, [pathname])
+
+  if (loading) return <section className="h-screen"><Spinner/></section>
+  if (error) { 
+  console.log(error)
+    
+    return <section className="h-screen"><Error error={error}/></section> }
 
   return (
     <>

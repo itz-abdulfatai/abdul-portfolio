@@ -20,7 +20,7 @@ function Header() {
   return (
     <header id="headd" className="px-8 md:px-16 flex items-center justify-between py-5 relative">
       <Logo/>
-        <nav className={` absolute 
+        <nav className={` absolute z-50
            max-md:-top-[500px] max-md:opacity-0
           right-0 left-0 max-md:py-3 max-md:bg-x2 flex-col md:flex-row  md:static flex items-center justify-center flex-1 md:gap-4 transition-all duration-300 text-tertiary text-lg ${navActive && 'active'}`}>
             
