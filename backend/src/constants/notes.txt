@@ -1,0 +1,38 @@
+[
+  {
+    id: '08dd3d3d-aa5d-4b4e-8232-0bcc34493ba4',
+    name: 'Global Ventures',
+    sector: 'Finance',
+    company: null
+  },
+  {
+    id: 'ad4b5eb5-111b-4ea8-a4dd-394dc0ba17c5',
+    name: 'TechSphere',
+    sector: 'Tech',
+    company: null
+  },
+  {
+    id: 'bd9375d1-1d95-4767-bcb1-05f2fbfae199',
+    name: 'TrendyDesigns',
+    sector: 'Design',
+    company: null
+  },
+  {
+    id: '50561876-fbfb-4f96-ab13-ca91688f4193',
+    name: 'Healthify',
+    sector: 'Health',
+    company: null
+  },
+  {
+    id: 'ad96e60f-e282-4021-9047-3c1c3e2fe304',
+    name: 'QuickServe',
+    sector: 'Food',
+    company: null
+  },
+  {
+    id: 'f8568bb2-32af-4aed-b606-cebc2a8f51d9',
+    name: 'BrightIdeas',
+    sector: 'Marketing',
+    company: null
+  }
+]

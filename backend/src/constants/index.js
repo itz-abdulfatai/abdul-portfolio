@@ -37,7 +37,7 @@ export const mocksettings = {
       { name: "Vercel", icon: null, use: "Hosting" },
       { name: "Framer", icon: null, use: "Prototyping" },
     ],
-    portfolioHighlights: [
+    projects: [
         {
             name: "Lysta - Fintech Landing Page",
             services: ["Landing", "Dashboard"],

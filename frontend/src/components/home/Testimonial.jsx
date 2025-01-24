@@ -14,7 +14,11 @@ function Testimonial({testimonial}) {
         </p>
         <div className="flex-1 flex flex-col gap-1 justify-end">
                 <h3 className="font-[600]">{testimonial?.clientInfo.name}</h3>
-                <p>{testimonial?.clientInfo.company}</p>
+                {
+                  testimonial?.clientInfo?.company &&
+
+                <p>{testimonial?.clientInfo?.company}</p>
+                }
         </div>
 
     </div>

@@ -16,9 +16,15 @@ export function SettingContextProvider({ children }) {
    try {
      const response =  await axios.get('/api/settings')
      if (response.status == 200) {
+       console.log(response.data);
        setSettings(response.data);
+      //  set backup settings incase there is an error in the furure
+      localStorage.setItem('settings', response.data) 
 
+     } else {
+      throw new Error(`an error occured:  ${response?.data?.message || ''}`)
      }
+
    } catch (error) {
      console.error(error);
      setError(error.message);

@@ -5,7 +5,7 @@ import Contact from "../components/home/Contact"
 
 function Works() {
   const {settings} = useContext(SettingContext)
-  const { portfolioHighlights } = settings
+  const { projects } = settings
 
   return (
     <>
@@ -21,7 +21,7 @@ function Works() {
 
     <div className=" flex flex-wrap gap-5 justify-center">
         {
-            portfolioHighlights.map((p, i) => (
+            projects.map((p, i) => (
                <ProjectCard p={p} key={i}/>
 
             ))

@@ -19,8 +19,8 @@ function Work() {
 
   const { slug } = useParams();
   const { settings } = useContext(SettingContext);
-  const {portfolioHighlights, name} = settings
-  const work = portfolioHighlights.find((p) => p.slug === slug);
+  const {projects, name} = settings
+  const work = projects.find((p) => p.slug === slug);
   // console.log(slug)
   return (
     <>

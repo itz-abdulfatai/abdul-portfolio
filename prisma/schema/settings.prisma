@@ -29,7 +29,7 @@ model Project {
   name         String
   services     String[]
   images       String[]
-  discription  String
+  description  String
   type         String
   public       Boolean     @default(true)
   slug         String
@@ -45,7 +45,6 @@ model ClientInfo {
   sector  String?
   company String?
   project Project[]
-
   Testimonial Testimonial[]
 }
 

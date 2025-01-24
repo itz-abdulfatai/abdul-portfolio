@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom"
 
 function Portfolio({heading}) {
     const {settings} = useContext(SettingContext)
-    const {portfolioHighlights} = settings;
+    const {projects} = settings;
     const navigate = useNavigate()
 
   return (
@@ -18,7 +18,7 @@ function Portfolio({heading}) {
 
         <div className=" flex flex-wrap gap-5 justify-center">
             {
-                portfolioHighlights.map((p, i) => (
+                projects.map((p, i) => (
                   i < 4 &&  <ProjectCard p={p} key={i}/>
 
                 ))
