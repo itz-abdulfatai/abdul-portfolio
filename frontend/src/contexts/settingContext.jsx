@@ -19,16 +19,21 @@ export function SettingContextProvider({ children }) {
        console.log(response.data);
        setSettings(response.data);
       //  set backup settings incase there is an error in the furure
-      localStorage.setItem('settings', response.data) 
+      localStorage.setItem('settings', JSON.stringify(response.data)) 
 
      } else {
-      throw new Error(`an error occured:  ${response?.data?.message || ''}`)
+       //  use backup settings incase setting fetch fails
+       if (JSON.parse(localStorage.getItem('settings'))) setSettings(JSON.parse(localStorage.getItem('settings')))
+        else throw new Error(`an error occured:  ${response?.data?.message || ''}`)
      }
 
    } catch (error) {
      console.error(error);
-     setError(error.message);
-     // Handle error here, for example, show a toast message.
+     
+     //  use backup settings incase setting fetch fails
+     if (JSON.parse(localStorage.getItem('settings'))) setSettings(JSON.parse(localStorage.getItem('settings')))
+      else setError(error.message);
+    
     
    } finally {
      setLoading(false);
