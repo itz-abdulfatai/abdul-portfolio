@@ -48,7 +48,7 @@ export default Tools;
 function Tool({ tool, i }) {
 
   useEffect(() => {
-    scrollR(`tttt-${tool.name.replace(/[^a-zA-Z0-9]/g, '')}-${i}`, 'bottom', true, i * 50)
+    scrollR(`tttt-${tool.name.replace(/[^a-zA-Z0-9]/g, '')}-${i}`, 'bottom', false, i * 50)
     console.log(`tttt-${tool.name}-${i}:`, i * 50)
     
     
