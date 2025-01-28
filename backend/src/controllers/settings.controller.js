@@ -4,7 +4,7 @@ export async function getSettings(req, res) {
   try {
     const settings = await db.setting.findUnique({
       where: {
-        id: "44d5594c-a4ef-41a8-9543-b3e17fd10ac0",
+        id: process.env.SETTINGS_DB_ID,
         
       },cacheStrategy: {swr: 100, ttl: 600, tags: ['my_global_settings']},
       include: {

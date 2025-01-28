@@ -2,7 +2,7 @@
 GET http://localhost:4040/settings
 
 ### update settings /api/settings/id
-PATCH  http://localhost:4040/settings/44d5594c-a4ef-41a8-9543-b3e17fd10ac0
+PATCH  http://localhost:4040/settings/beecd0a5-24ab-4c4a-9977-acbb4e92ef96
 Content-Type: application/json
 
 {
@@ -50,7 +50,7 @@ Content-Type: application/json
 
 {
     "data": {
-        "name": "project x",
+        "name": "new project by same client",
         "services": ["1", "2", "3"],
         "images": [
             "https://picsum.photos/1440/800",
@@ -59,11 +59,38 @@ Content-Type: application/json
         ],
         "description": "x  x x x x xx x x x x x xx  x x x ",
         "type": "personal",
-        "public": false,
+        "public": true,
         "clientInfo": {
-            "name": "client xy",
+            "name": "another client",
             "sector": "alagbafo"
         }
     }
 }
 
+### add testimonial - should be restricted
+POST http://localhost:4040/settings/testimonials
+Content-Type: application/json
+
+{
+    "data": {
+        "rating": 5,
+        "comment": "cccc",
+        "clientInfo": {
+            "name": "agba client",
+            "sector": "agba sector",
+            "company": "another company"
+        }
+    }
+}
+
+### add tool - should be restricted
+POST http://localhost:4040/settings/tools
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "tool x",
+        "use": "for x",
+        "icon": "bx bxs-user-x"
+    }
+}

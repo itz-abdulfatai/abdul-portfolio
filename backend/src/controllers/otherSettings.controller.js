@@ -1,3 +1,4 @@
+import { getOrCreate } from "../constants/index.js"
 import db from "../utils/config/prisma.js"
 
 
@@ -102,6 +103,10 @@ export async function addSocials(req, res) {
     } catch (error) {
         console.error(error)
 console.error(error.stack)
+
+        if (error.message == '\nInvalid `prisma.social.create()` invocation:\n\n\nUnique constraint failed on the fields: (`name`)') {
+            return res.status(400).send({ message: 'A social with that name already exists' });
+        }
         return res.status(500).send({ message: `an error occured: ${error.message}` })
         
     }
@@ -117,25 +122,34 @@ export async function addProjects(req, res) {
     try {
         let clientInfoId = null;
 
-        if (data.clientInfoId) {
+       
 
-            clientInfoId = data.clientInfoId;
-        } else if (data.clientInfo && typeof data.clientInfo === 'object' && data.clientInfo.id) {
-            // Check if client exists
-            const existingClient = await db.clientInfo.findUnique({
-                where: { id: data.clientInfo.id }, // Example field to identify clients
-            });
-
-            if (existingClient) {
-                clientInfoId = existingClient.id;
-            } else {
-                // Create new client if not found
-                const newClient = await db.clientInfo.create({
-                    data: data.clientInfo,
-                });
-                clientInfoId = newClient.id;
-            }
+        if (data.clientInfo) {
+            clientInfoId = await getOrCreate(data.clientInfo)
+            console.log(clientInfoId)
+        } else {
+            clientInfoId = await getOrCreate({name: 'personal', sector: 'personal/ for sale'})
         }
+
+        // if (data.clientInfoId) {
+
+        //     clientInfoId = data.clientInfoId;
+        // } else if (data.clientInfo && typeof data.clientInfo === 'object' && data.clientInfo.id) {
+        //     // Check if client exists
+        //     const existingClient = await db.clientInfo.findUnique({
+        //         where: { id: data.clientInfo.id }, // Example field to identify clients
+        //     });
+
+        //     if (existingClient) {
+        //         clientInfoId = existingClient.id;
+        //     } else {
+        //         // Create new client if not found
+        //         const newClient = await db.clientInfo.create({
+        //             data: data.clientInfo,
+        //         });
+        //         clientInfoId = newClient.id;
+        //     }
+        // }
 
         // Create the project
         const newProject = await db.project.create({
@@ -155,8 +169,12 @@ export async function addProjects(req, res) {
         console.log(newProject);
         res.status(201).send({ message: 'Project added successfully', project: newProject });
     } catch (error) {
-        console.error(error)
-console.error(error.stack)
+        console.error(error.message)
+        console.error(error.stack)
+
+        if (error.message == '\nInvalid `prisma.project.create()` invocation:\n\n\nUnique constraint failed on the fields: (`name`)') {
+            return res.status(400).send({ message: 'A project with that name already exists' });
+        }
         return res.status(500).send({ message: `an error occured: ${error.message}` })
         
     }
@@ -172,10 +190,21 @@ export async function addTestimonials(req, res) {
 
 
         try {
+            let clientInfoId = null;
+
+            if (data.clientInfo) {
+                clientInfoId = await getOrCreate(data.clientInfo)
+                // console.log(clientInfoId)
+            } else {
+                clientInfoId = await getOrCreate({name: 'personal', sector: 'personal/ for sale'})
+            }
             const newTestimonial = await db.testimonial.create({
                 data: {
-                   ...data,
-                    settingId: process.env.SETTINGS_DB_ID
+                //    ...data,
+                    comment: data.comment,
+                    rating: data.rating,
+                    settingId: process.env.SETTINGS_DB_ID,
+                    clientInfoId
                 }
             })
 
@@ -184,6 +213,9 @@ export async function addTestimonials(req, res) {
         } catch (error) {
             console.error(error)
 console.error(error.stack)
+
+
+
             return res.status(500).send({ message: `an error occured: ${error.message}` })
             
         }
@@ -209,6 +241,10 @@ export async function addTools(req, res) {
         } catch (error) {
             console.error(error)
 console.error(error.stack)
+
+if (error.message == '\nInvalid `prisma.tool.create()` invocation:\n\n\nUnique constraint failed on the fields: (`name`)') {
+    return res.status(400).send({ message: 'A tool with that name already exists' });
+}
             return res.status(500).send({ message: `an error occured: ${error.message}` })
             
         }
