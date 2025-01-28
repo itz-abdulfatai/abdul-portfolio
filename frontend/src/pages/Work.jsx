@@ -5,6 +5,7 @@ import Portfolio from "../components/home/Portfolio";
 import Contact from "../components/home/Contact";
 import { scrollR } from "../utils/scrollR";
 import Spinner from "../components/global/Spinner";
+import {Helmet} from 'react-helmet'
 
 const LazyImg = React.lazy(() => import('../components/work/LazyImg')) 
 
@@ -24,6 +25,15 @@ function Work() {
   // console.log(slug)
   return (
     <>
+
+    <Helmet>
+      <title>{work.name} | {settings.name}</title>
+      <meta name="description" content={work.description} />
+      <meta property="og:title" content={`${work.name} | ${settings.name}`} />
+      <meta property="og:description" content={work.description} />
+      <meta property="og:image" content={work.images[0] || `https://picsum.photos/${window.innerWidth}/${window.innerHeight}?random=1`} />
+    </Helmet>
+    
       <section className="p-0 min-h-[50vh]">
         <div className="w-full bg-no-repeat bg-cover h-[60vh] md:h-screen py-14 text-center text-2xl md:text-5xl font-bold flex flex-col justify-between text-x2" style={{backgroundImage: `url(${work.images[0] ||
             `https://picsum.photos/${window.innerWidth}/${window.innerHeight}?random=1`})`}}>
