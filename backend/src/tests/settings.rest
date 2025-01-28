@@ -1,2 +1,69 @@
-# get settings /api/settings - protected
+# get settings /api/settings 
 GET http://localhost:4040/settings
+
+### update settings /api/settings/id
+PATCH  http://localhost:4040/settings/44d5594c-a4ef-41a8-9543-b3e17fd10ac0
+Content-Type: application/json
+
+{
+    "data": {
+        "clientSatisfaction": 100
+    }
+}
+
+
+### get all socials /api/settings/socials - should be restricted and not have caching
+GET http://localhost:4040/settings/socials
+
+
+### get all projects /api/settings/projects - should be restricted and not have caching
+GET http://localhost:4040/settings/projects
+
+
+### get all testimonials /api/settings/testimonials - should be restricted and not have caching
+GET http://localhost:4040/settings/testimonials
+
+
+### get all tools /api/settings/tools - should be restricted and not have caching
+GET http://localhost:4040/settings/tools
+
+
+
+### add social - should be restricted
+POST http://localhost:4040/settings/socials
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "social x",
+        "link": "https://x234.com",
+        "icon": "bx bxs-user-x",
+        "dddd": "ddd"
+
+    }
+}
+
+
+### add project - should be restricted
+POST http://localhost:4040/settings/projects
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "project x",
+        "services": ["1", "2", "3"],
+        "images": [
+            "https://picsum.photos/1440/800",
+            "https://picsum.photos/1440/800",
+            "https://picsum.photos/1440/800"
+        ],
+        "description": "x  x x x x xx x x x x x xx  x x x ",
+        "type": "personal",
+        "public": false,
+        "clientInfo": {
+            "name": "client xy",
+            "sector": "alagbafo"
+        }
+    }
+}
+

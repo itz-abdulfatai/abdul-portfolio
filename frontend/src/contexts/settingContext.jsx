@@ -28,7 +28,8 @@ export function SettingContextProvider({ children }) {
      }
 
    } catch (error) {
-     console.error(error);
+     console.error(error)
+console.error(error.stack);
      
      //  use backup settings incase setting fetch fails
      if (JSON.parse(localStorage.getItem('settings'))) setSettings(JSON.parse(localStorage.getItem('settings')))

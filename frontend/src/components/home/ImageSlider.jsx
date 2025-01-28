@@ -10,7 +10,7 @@ function ImageSlider() {
 {
     sliderimages.map(img => (
     //  <div key={img} className='   flex justify-stretch items-stretch '>
-    <div key={img} className="py-3 overflow-hidden  h-[200px] rotate-[-90deg]  flex justify-center items-center w-44 ">
+    <div key={img} className="py-3 overflow-hidden  h-[200px] flex justify-center items-center w-44 ">
 
          <img src={img} alt=""  className="h-[95%] rotate-[0deg] object-cover w-full" key={img}/>
     </div>
