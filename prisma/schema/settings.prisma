@@ -26,7 +26,7 @@ model Tool {
 
 model Project {
   id           String      @id @unique @default(uuid())
-  name         String
+  name         String     @unique
   services     String[]
   images       String[]
   description  String
@@ -41,7 +41,7 @@ model Project {
 
 model ClientInfo {
   id      String    @id @unique @default(uuid())
-  name    String
+  name    String   @unique
   sector  String?
   company String?
   project Project[]
@@ -60,7 +60,7 @@ model Testimonial {
 
 model social {
   id        String  @id @unique @default(uuid())
-  name      String
+  name      String @unique
   icon      String?
   link      String
   setting   Setting @relation(fields: [settingId], references: [id])

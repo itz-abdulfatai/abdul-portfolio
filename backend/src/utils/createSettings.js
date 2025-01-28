@@ -106,52 +106,52 @@ async function seed() {
                             {
                                 rating: 5,
                                 comment: "We are very pleased with the work of Yaroslav Grabovsky, who turned our website into a stunning showcase for our brand.",
-                               clientInfoId: 'f8568bb2-32af-4aed-b606-cebc2a8f51d9'
+                               clientInfoId: 'fe1a8933-8d80-4a64-a70c-f581eb660e37'
                             },
                             {
                                 rating: 2.5,
                                 comment: "The team exceeded our expectations by delivering a sleek and functional e-commerce platform within a tight deadline.",
-                               clientInfoId: 'ad96e60f-e282-4021-9047-3c1c3e2fe304'
+                               clientInfoId: 'fe1a8933-8d80-4a64-a70c-f581eb660e37'
                             },
                             {
                                 rating: 5,
                                 comment: "Their expertise in crafting a user-friendly dashboard helped our business streamline operations effortlessly.",
-                                clientInfoId: '50561876-fbfb-4f96-ab13-ca91688f4193'
+                                clientInfoId: 'eb9b927b-47a0-4d99-841a-1e2330e8aa3c'
                             },
                             {
                                 rating: 4.8,
                                 comment: "From start to finish, their professionalism and attention to detail made this project a breeze.",
-                               clientInfoId: '50561876-fbfb-4f96-ab13-ca91688f4193'
+                               clientInfoId: 'eb9b927b-47a0-4d99-841a-1e2330e8aa3c'
                             },
                             {
                                 rating: 5,
                                 comment: "The design and functionality they implemented transformed our website into an industry-leading platform.",
-                               clientInfoId: '50561876-fbfb-4f96-ab13-ca91688f4193'
+                               clientInfoId: '8b0e58b4-dd65-479d-a439-fecc0a05786b'
                             },
                             {
                                 rating: 4.7,
                                 comment: "Their dedication to creating a visually engaging and technically sound application impressed our entire team.",
-                               clientInfoId: '50561876-fbfb-4f96-ab13-ca91688f4193'
+                               clientInfoId: '8b0e58b4-dd65-479d-a439-fecc0a05786b'
                             },
                             {
                                 rating: 5,
                                 comment: "Exceptional work! They delivered a product that met our needs and exceeded our expectations.",
-                                clientInfoId: '50561876-fbfb-4f96-ab13-ca91688f4193'
+                                clientInfoId: '3d731a63-f748-488c-b523-1f859bb74374'
                             },
                             {
                                 rating: 4.9,
                                 comment: "Their approach to solving problems and providing innovative solutions is truly commendable.",
-                                clientInfoId: 'ad4b5eb5-111b-4ea8-a4dd-394dc0ba17c5' 
+                                clientInfoId: 'f48e0afd-a272-4027-9ae5-f04bf26901d6' 
                             },
                             {
                                 rating: 5,
                                 comment: "The mobile app they developed is intuitive and has received great feedback from our users.",
-                                clientInfoId: 'bd9375d1-1d95-4767-bcb1-05f2fbfae199'
+                                clientInfoId: 'f48e0afd-a272-4027-9ae5-f04bf26901d6'
                             },
                             {
                                 rating: 4.6,
                                 comment: "Working with this team was a delight. They made the entire process seamless and delivered high-quality results.",
-                                clientInfoId: '08dd3d3d-aa5d-4b4e-8232-0bcc34493ba4'
+                                clientInfoId: 'f48e0afd-a272-4027-9ae5-f04bf26901d6'
                             }
                            
                         ],
@@ -167,7 +167,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "The Finance landing page project showcases a stunning website design tailored for a cutting-edge crypto dashboard. Our goal was to create a user-friendly interface that seamlessly combines aesthetic appeal with robust functionality. The design features a sleek, modern layout that highlights key financial data, real-time market trends, and user account information. With intuitive navigation and visually engaging graphics, users can effortlessly track their crypto investments and stay informed about market movements. This project exemplifies our commitment to blending creativity with technical expertise, delivering a digital experience that not only looks exceptional but also provides practical, real-time financial insights.",
                                 type: "personal",
-                                clientInfoId: '08dd3d3d-aa5d-4b4e-8232-0bcc34493ba4',
+                                clientInfoId: '3d731a63-f748-488c-b523-1f859bb74374',
                                 slug: "lysta-fintech-landing-page"
                             },
                             {
@@ -176,7 +176,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "Nova is a fully-functional e-commerce platform designed to provide seamless online shopping experiences. The platform includes features like product filtering, secure payments, and user-friendly navigation, all tailored to meet modern e-commerce needs.",
                                 type: "job",
-                                clientInfoId: 'ad4b5eb5-111b-4ea8-a4dd-394dc0ba17c5',
+                                clientInfoId: '3d731a63-f748-488c-b523-1f859bb74374',
                                 slug: "nova-e-commerce-platform"
                             },
                             {
@@ -185,7 +185,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "Craftory highlights the artistic skills of individual creators with a minimalistic design and portfolio showcase. The project emphasizes clean layouts and bold visuals to make their work stand out.",
                                 type: "personal",
-                               clientInfoId:'bd9375d1-1d95-4767-bcb1-05f2fbfae199',
+                               clientInfoId:'3d731a63-f748-488c-b523-1f859bb74374',
                                 slug: "craftory-artisan-portfolio"
                             },
                             {
@@ -194,7 +194,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "QuickServe is a modern food delivery app design that prioritizes speed and convenience. The interface allows users to browse menus, track deliveries, and manage orders effortlessly. QuickServe is a modern food delivery app design that prioritizes speed and convenience. The interface allows users to browse menus, track deliveries, and manage orders effortlessly. QuickServe is a modern food delivery app design that prioritizes speed and convenience. The interface allows users to browse menus, track deliveries, and manage orders effortlessly.",
                                 type: "suggest",
-                               clientInfoId: '50561876-fbfb-4f96-ab13-ca91688f4193',
+                               clientInfoId: '3c71fe27-e484-49c4-8af2-cdf99f3cf3cc',
                                 slug: "quickserve-food-delivery-app"
                             },
                             {
@@ -203,7 +203,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "Brixel is a real estate website designed to simplify the property search process. The site includes advanced filtering options, dynamic property maps, and a sleek admin dashboard.",
                                 type: "job",
-                                clientInfoId: 'ad96e60f-e282-4021-9047-3c1c3e2fe304',
+                                clientInfoId: '3c71fe27-e484-49c4-8af2-cdf99f3cf3cc',
                                 slug: "brixel-real-estate-listings"
                             },
                             {
@@ -212,7 +212,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "ZenDeskify is a customer support portal designed for handling tickets and improving user engagement. It includes a dashboard for agents and a self-service FAQ section for users.",
                                 type: "personal",
-                                clientInfoId: 'f8568bb2-32af-4aed-b606-cebc2a8f51d9',
+                                clientInfoId: '8b0e58b4-dd65-479d-a439-fecc0a05786b',
                                 slug: "zendeskify-customer-support-portal"
                             },
                             {
@@ -221,7 +221,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "GlowUp is a vibrant beauty salon app that allows users to book appointments, view services, and get personalized style suggestions. The app is optimized for mobile use with a sleek interface.",
                                 type: "for sale",
-                                clientInfoId: '08dd3d3d-aa5d-4b4e-8232-0bcc34493ba4',
+                                clientInfoId: '8b0e58b4-dd65-479d-a439-fecc0a05786b',
                                 slug: "glowup-beauty-salon-app"
                             },
                             {
@@ -230,7 +230,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "CodeGenix is a resource hub for developers featuring coding tutorials, industry insights, and a collaborative forum. The design focuses on usability and community building.",
                                 type: "personal",
-                                clientInfoId: 'ad4b5eb5-111b-4ea8-a4dd-394dc0ba17c5',
+                                clientInfoId: 'fe1a8933-8d80-4a64-a70c-f581eb660e37',
                                 slug: "codegenix-developer-hub"
                             },
                             {
@@ -239,7 +239,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "EventFlow simplifies event management with features like ticket sales, real-time updates, and attendee tracking. Designed to make organizing events stress-free and efficient.",
                                 type: "suggest",
-                                clientInfoId: 'bd9375d1-1d95-4767-bcb1-05f2fbfae199',
+                                clientInfoId: 'fe1a8933-8d80-4a64-a70c-f581eb660e37',
                                 slug: "eventflow-event-management-app"
                             },
                             {
@@ -248,7 +248,7 @@ async function seed() {
                                 images: ['https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800', 'https://picsum.photos/1440/800'],
                                 description: "EcoCart is an e-commerce platform focused on sustainable shopping. The project integrates eco-friendly product tagging and a carbon footprint calculator to help users shop responsibly.",
                                 type: "for sale",
-                                clientInfoId: 'ad96e60f-e282-4021-9047-3c1c3e2fe304',
+                                clientInfoId: 'eb9b927b-47a0-4d99-841a-1e2330e8aa3c',
                                 slug: "ecocart-sustainable-e-commerce"
                             }
                         ],
@@ -289,5 +289,32 @@ async function seedClient() {
 
 }
 
+async function seedPersonalClient() {
+    try {
+        const personal = await db.clientInfo.createMany(
+            {
+                data: [
+                    {name: "personal", sector: "personal/ for sale"},
+                ],
+                skipDuplicates: true
+            }
+        )
+        console.log("personal Client data inserted successfully!");
+
+        console.log(personal)
+    } catch (error) {
+         console.error("Error inserting data:", error.message);
+
+         return
+
+        
+    }
+    
+
+
+}
+
 // seed();
 // seedClient();
+// seedPersonalClient();
+// personal project client id: not needed for now
