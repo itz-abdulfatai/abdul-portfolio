@@ -371,10 +371,102 @@ export async function updateTools(req, res) {
 }
 
 // delete
-export async function deleteSocials(req, res) {}
+export async function deleteSocials(req, res) {
+    const {id} = req.params
+    if (!id) return res.status(400).send("no or invalid parameters")
 
-export async function deleteProjects(req, res) {}
+        try {
+            const deleted = await db.social.delete({
+                where: {id}
+            })
 
-export async function deleteTestimonials(req, res) {}
+            if (!deleted) return res.status(404).send("social not found")
 
-export async function deleteTools(req, res) {}
+            res.send({message: "social deleted successfully"})
+        } catch (error) {
+            console.error(error)
+            console.error(error.stack)
+
+            if (error.message === '\nInvalid `prisma.social.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.') {
+                return res.status(404).send({message:"social not found"})
+            }
+
+            return res.status(500).send({message: `an error occured: ${error.message}`})
+            
+        }
+}
+
+export async function deleteProjects(req, res) {
+    const {id} = req.params
+    if (!id) return res.status(400).send("no or invalid parameters")
+
+        try {
+            const deleted = await db.project.delete({
+                where: {id}
+            })
+
+            if (!deleted) return res.status(404).send("project not found")
+
+            res.send({message: "project deleted successfully"})
+        } catch (error) {
+            console.error(error)
+            console.error(error.stack)
+
+            if (error.message === '\nInvalid `prisma.project.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.') {
+                return res.status(404).send({message:"project not found"})
+            }
+
+            return res.status(500).send({message: `an error occured: ${error.message}`})
+            
+        }
+}
+
+export async function deleteTestimonials(req, res) {
+    const {id} = req.params
+    if (!id) return res.status(400).send("no or invalid parameters")
+
+        try {
+            const deleted = await db.testimonial.delete({
+                where: {id}
+            })
+
+            if (!deleted) return res.status(404).send("testimonial not found")
+
+            res.send({message: "testimonial deleted successfully"})
+        } catch (error) {
+            console.error(error)
+            console.error(error.stack)
+
+            if (error.message === '\nInvalid `prisma.testimonial.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.') {
+                return res.status(404).send({message:"testimonial not found"})
+            }
+
+            return res.status(500).send({message: `an error occured: ${error.message}`})
+            
+        }
+}
+
+export async function deleteTools(req, res) {
+    const {id} = req.params
+    if (!id) return res.status(400).send("no or invalid parameters")
+
+        try {
+            const deleted = await db.tool.delete({
+                where: {id}
+            })
+
+            if (!deleted) return res.status(404).send("tool not found")
+
+            res.send({message: "tool deleted successfully"})
+        } catch (error) {
+            console.error(error)
+            console.error(error.stack)
+
+            if (error.message === '\nInvalid `prisma.tool.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.') {
+                return res.status(404).send({message:"tool not found"})
+            }
+
+            return res.status(500).send({message: `an error occured: ${error.message}`})
+            
+        }
+}

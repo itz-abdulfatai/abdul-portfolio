@@ -146,3 +146,19 @@ Content-Type: application/json
         "use": "for yxxxx"
     }
 }
+
+
+### delete social - should be restricted
+DELETE http://localhost:4040/settings/socials/6bfed573-d41f-4474-90bd-9b6f86d95c5b
+
+
+### delete project - should be restricted
+DELETE http://localhost:4040/settings/projects/89ed3f99-bd28-442f-ab14-546b6e5b0e85
+
+
+### delete testimonial - should be restricted
+DELETE http://localhost:4040/settings/testimonials/776a3a3a-02c4-44f7-b63c-073f44e3d8b3
+
+
+### delete tool - should be restricted
+DELETE http://localhost:4040/settings/tools/0c2eec97-cc3d-4aec-99dc-ba4b60d29864
