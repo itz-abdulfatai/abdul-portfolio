@@ -67,7 +67,8 @@ res.send({message: 'updated successfully'})
   } catch (error) {
         console.error(error)
 console.error(error.stack);
-    res.status(500).send({ message: `an error occured: ${error.message}` });
+return res.status(500).send({message: `an error occurred: ${error.message}`});
+
   }
 }
 

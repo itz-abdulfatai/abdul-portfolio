@@ -94,3 +94,55 @@ Content-Type: application/json
         "icon": "bx bxs-user-x"
     }
 }
+
+
+
+### update social - should be restricted
+PATCH http://localhost:4040/settings/socials/9883bc70-cf6b-433e-a0fb-f2b76b99a117
+Content-Type: application/json
+
+{
+    "data": {
+        "name": "updated social x",
+        "link": "https://abazus.com"
+       
+    }
+}
+
+
+### update project - should be restricted
+PATCH http://localhost:4040/settings/projects/88c6077b-93c3-4935-9fea-925408a1f2ca
+Content-Type: application/json
+
+{
+    "data": {
+        "services": ["fish", "clean", "wash"]
+    }
+}
+
+
+
+
+### update testimonial - should be restricted
+PATCH http://localhost:4040/settings/testimonials/77893077-e98a-47f9-a213-38c87ea9c11f
+Content-Type: application/json
+
+{
+    "data": {
+        "rating": 3,
+        "comment": "this is clean, this is what i mean"
+    }
+}
+
+
+
+
+### update tool - should be restricted
+PATCH http://localhost:4040/settings/tools/0c2eec97-cc3d-4aec-99dc-ba4b60d29864
+Content-Type: application/json
+
+{
+    "data": {
+        "use": "for yxxxx"
+    }
+}
