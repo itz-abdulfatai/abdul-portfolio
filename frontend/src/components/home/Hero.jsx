@@ -3,6 +3,7 @@ import Button from "../global/Button";
 import SettingContext from "../../contexts/settingContext";
 import ImageSlider from "./ImageSlider";
 import { scrollR } from "../../utils/scrollR";
+import { scrollToSection } from "../../utils/scrollIn";
 
 function Hero() {
   const { settings } =
@@ -14,12 +15,6 @@ function Hero() {
     scrollR("homme", "bottom", false);
   }, []);
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
   return (
     <section
       id="home"

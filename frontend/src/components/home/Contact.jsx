@@ -27,7 +27,7 @@ function Contact() {
 
             </div>
         </div>
-        <form className="rrr w-full flex flex-col gap-3">
+        <form className="rrr w-full flex flex-col max-sm:mt-10 gap-3">
             <fieldset className=" flex gap-3 ">
                 <div className=" form-row">
                     <label htmlFor="name">Name</label>

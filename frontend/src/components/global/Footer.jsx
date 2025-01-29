@@ -5,6 +5,7 @@ import { useContext, useEffect } from 'react'
 import SettingContext from '../../contexts/settingContext'
 import Logo from './Logo'
 import { scrollR } from '../../utils/scrollR'
+import { scrollToSection } from '../../utils/scrollIn'
 function Footer() {
 
   useEffect(() => {
@@ -21,9 +22,9 @@ function Footer() {
     <footer className="min-h-[50vh] max-md:py-10  padding-x flex flex-col gap-5 ">
       <div className='  flex flex-col gap-10 md:flex-row justify-between  items-start'>
 
-      <div className=' rrr flex flex-col gap-8 items-start w-full'>
+      <div className=' rrr flex flex-col gap-8 max-sm:text-center items-start w-full'>
         <h2 className=' text-[40px] md:text-[56px] max-w-[450px] leading-tight  font-[600]'>Let&apos;s work together today!</h2>
-        <Button text='Start project' className=' max-md:w-full  bg-highlight text-lg text-primary py-3 hover:bg-x hover:text-secondary'  icon={<i className='bx bx-chevron-right'></i>}/>
+        <Button text='Start project' onclick={() => {scrollToSection('contact')}} className=' max-md:w-full  bg-highlight text-lg text-primary py-3 hover:bg-x hover:text-secondary'  icon={<i className='bx bx-chevron-right'></i>}/>
         
 
 

@@ -8,6 +8,7 @@ import { useContext, useEffect } from "react"
 import SettingContext from "./contexts/settingContext"
 import Spinner from "./components/global/Spinner"
 import Error from "./components/global/Error"
+import { scrollToSection } from "./utils/scrollIn"
 
 
 
@@ -17,12 +18,6 @@ function App() {
   const {pathname} = useLocation()
   const {loading, error} = useContext(SettingContext)
 
-  const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "instant", block: "start" });
-    }
-  };
 
   useEffect(() => {
     scrollToSection('headd')

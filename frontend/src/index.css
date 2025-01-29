@@ -52,6 +52,7 @@
     body {
         max-width: 1440px;
         margin: 0 auto;
+        overflow-x: hidden;
         @apply min-h-[90vh] md:min-h-screen
     }
 
@@ -177,7 +178,7 @@
         @apply border border-solid
     }
     .padding-x {
-      @apply sm:px-32 px-8;
+      @apply sm:px-32 px-4;
     }
   
     .padding-y {
