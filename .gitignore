@@ -1,0 +1,96 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Directory for temporary files
+tmp/
+temp/
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+
+# Node.js dependencies
+node_modules/
+
+
+# Build files
+/dist/
+/build/
+/public/build/
+/out/
+/.next/
+
+# dotenv environment variable files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# React-related files
+coverage/
+.sass-cache/
+/.vscode/
+/.idea/
+
+# Webpack output
+*.cache
+.cache/
+*.gz
+
+# Testing
+/jest/
+jest-report.html
+.nyc_output/
+coverage/
+
+# MongoDB database dumps
+*.dump
+
+# Logs for debugging
+*.log
+
+# npm or yarn lock files if you prefer one over the other
+yarn.lock
+package-lock.json
+
+# Optional OS files
+*.orig
+
+# IDE and Editor Files
+.idea/
+*.sublime-project
+*.sublime-workspace
+.vscode/
+*.code-workspace
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux system files
+*~
+
+# Ignoring static asset files that are generated dynamically
+/static/media/
+
+*.rest
+**/*.rest
