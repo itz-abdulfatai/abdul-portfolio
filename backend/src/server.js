@@ -18,24 +18,24 @@ app.use(morgan('dev'))
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 app.use(express.static(path.join(__dirname, '../public')))
-app.use(express.static(path.join(__dirname, '../frontend/dist')));
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
 
 // api home / test
-app.get('/testingtesting', (req, res) => {
+app.get('/api/testingtesting', (req, res) => {
     res.json({ message: 'working!' })
 })
 
 
 
 // Routes
-app.use('/settings', settingsRoute )
-app.use('/auth', authRoute)
-app.use('/tickets', ticketsRoute)
+app.use('/api/settings', settingsRoute )
+app.use('/api/auth', authRoute)
+app.use('/api/tickets', ticketsRoute)
 
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
   });
 
 
