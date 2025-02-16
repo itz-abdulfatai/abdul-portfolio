@@ -10,11 +10,17 @@ import Spinner from "./components/global/Spinner"
 import Error from "./components/global/Error"
 import { scrollToSection } from "./utils/scrollIn"
 import NotFound from "./pages/NotFound"
-
-
+import ReactGA from 'react-ga4';
 
 
 function App() {
+
+  useEffect(() => {
+    ReactGA.initialize('G-GE32E0X9MH');
+    ReactGA.send('pageview');
+  }, []);
+
+
 
   const {pathname} = useLocation()
   const {loading, error} = useContext(SettingContext)

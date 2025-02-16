@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 // import { scrollR } from "../../utils/scrollR"
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
-
+import ReactGA from 'react-ga4';
 function Contact() {
   const { settings } = useContext(SettingContext);
   const { socials } = settings;
@@ -69,6 +69,11 @@ function Contact() {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
+
+    ReactGA.event({
+      category: 'Form',
+      action: 'Submitted Contact Form',
+    });
 
     const token =  await capRef.current.executeAsync()
 
