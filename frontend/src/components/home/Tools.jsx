@@ -55,7 +55,7 @@ function Tool({ tool, i }) {
 
   }, [tool.name, i])
 
-  return <div className={`tttt-${tool.name.replace(/[^a-zA-Z0-9]/g, '')}-${i} w-full md:w-[250px] lg:w-[265px] test-b border-x hover:border-x2 flex gap-3 p-3 rounded-xl hover:bg-x2 duration-300 transition-all  group items-center cursor-pointer`}>
+  return <div className={`tttt-${tool.name.replace(/[^a-zA-Z0-9]/g, '')}-${i} w-full sm:w-[250px] lg:w-[265px] test-b border-x hover:border-x2 flex gap-3 p-3 rounded-xl hover:bg-x2 duration-300 transition-all  group items-center cursor-pointer`}>
     {
         tool.icon && <i className={` bx ${tool.icon} group-hover:high-shadow transition-all text-3xl p-2 aspect-square bg-x2 duration-300 rounded-xl group-hover:bg-primary group-hover:text-highlight`}></i>
     }

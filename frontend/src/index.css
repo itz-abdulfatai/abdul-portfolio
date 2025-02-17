@@ -178,7 +178,7 @@
         @apply border border-solid
     }
     .padding-x {
-      @apply sm:px-32 px-4;
+      @apply md:px-32 px-4;
     }
   
     .padding-y {

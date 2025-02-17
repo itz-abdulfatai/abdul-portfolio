@@ -19,7 +19,7 @@ function Footer() {
   const {settings} = useContext(SettingContext)
   const {socials, name} = settings
   return (
-    <footer className="min-h-[50vh] max-md:py-10  padding-x flex flex-col gap-5 ">
+    <footer className="min-h-[50vh] max-md:py-10 py-5  padding-x flex flex-col gap-5 ">
       <div className='  flex flex-col gap-10 md:flex-row justify-between  items-start'>
 
       <div className=' rrr flex flex-col gap-8 max-sm:text-center items-start w-full'>
@@ -56,10 +56,10 @@ function Footer() {
 
       </div>
       </div>
-      <div className=' ttt flex justify-between items-center mt-10'>
+      <div className=' ttt flex justify-between flex-wrap items-center mt-10'>
         <Logo/>
         <p>
-        Built with <i className='bx bx-heart text-highlight'></i> by <Link className='text-highlight hover:text-tertiary transition' to={socials[Math.floor(Math.random() * socials.length)].link} target='blank'> {name}</Link> 
+        Built <span className='hidden sm:inline-block'>with <i className='bx bx-heart text-highlight'></i></span>  by <Link className='text-highlight hover:text-tertiary transition' to={socials[Math.floor(Math.random() * socials.length)].link} target='blank'> {name}</Link> 
         </p>
       </div>
     </footer>

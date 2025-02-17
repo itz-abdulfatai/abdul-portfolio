@@ -30,7 +30,7 @@ function About() {
                 <div className=" flex items-center"><p  className=" text-[40px] font-[600]">{clientSatisfaction}</p><span className=" text-[40px] font-[600] text-highlight">%</span></div>
                 <span className=" text-base">Client satisfaction</span>
               </div>
-<div className=" absolute bottom-20 right-14">
+<div className=" absolute bottom-20 right-14 hidden lg:block ">
 
               <Logo/>
 </div>
