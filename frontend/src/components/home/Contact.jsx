@@ -11,7 +11,7 @@ function Contact() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const [captchaToken, setCaptchaToken] = useState(null)
+  // const [captchaToken, setCaptchaToken] = useState(null)
 
   const capRef = useRef(null)
   // console.log(capRef.current)
@@ -21,10 +21,14 @@ function Contact() {
     // scrollR('rrr', 'right', false)
   }, []);
 
-  function onChange(token) {
-    setCaptchaToken(token)
+  // function onChange(token) {
+  //   if (token) {
+  //     setCaptchaToken(token)
+  //     console.log(token)
 
-  }
+  //   }
+
+  // }
 
 
   async function validateEmail(email) {
@@ -76,16 +80,17 @@ function Contact() {
     });
 
     const token =  await capRef.current.executeAsync()
+    if (token) {
 
-
-    if (!token && !captchaToken) {
+      // console.log('token gotten')
+      // console.log(token)
+    } else {
       setError('Please verify that you are not a robot')
       setLoading(false)
       setTimeout(() => {setError(null)}, 3000);
       return
     }
 
-    setCaptchaToken(token)
     console.log('has reach to message sending level')
     // alert('Message sent successfully')
     const formData = new FormData(e.target);
@@ -112,8 +117,11 @@ function Contact() {
           name: data.name,
           message: data.message,
           mail: data.mail,
+          token
         },
       };
+      // console.log('this is the body')
+      // console.log(body)
       const response = await axios.post("/api/tickets/create", body);
 
     //   console.log(response.data);
@@ -219,7 +227,7 @@ size="invisible"
 ref={capRef}
 theme="dark"
 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
-onChange={onChange}
+// onChange={onChange}
 />
 
 

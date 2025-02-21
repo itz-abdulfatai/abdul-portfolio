@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google-cloud/recaptcha-enterprise": "^5.13.0",
     "@prisma/client": "^6.2.1",
     "@prisma/extension-accelerate": "^1.2.1",
     "axios": "^1.7.9",
