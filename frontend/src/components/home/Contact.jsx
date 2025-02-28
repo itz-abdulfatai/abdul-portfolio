@@ -129,6 +129,14 @@ function Contact() {
         setMessage(response.data.message);
         setError(null);
         e.target.reset();
+
+        const seen = JSON.parse((sessionStorage.getItem('seen'))) == true;
+
+        if (seen) {
+          localStorage.setItem('submitted', JSON.stringify(true))
+        }
+
+
       } else {
         throw new Error(response?.data?.message);
       }

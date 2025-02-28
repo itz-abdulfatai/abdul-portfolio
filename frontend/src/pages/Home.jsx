@@ -7,6 +7,7 @@ import Testimonials from "../components/home/Testimonials"
 import Tools from "../components/home/Tools"
 import SettingContext from "../contexts/settingContext"
 import { useContext } from "react"
+import Popup from "../components/global/Popup"
 
 function Home() {
   const {settings} = useContext(SettingContext)
@@ -24,6 +25,7 @@ function Home() {
     <Portfolio heading='My portfolio highlights'/>
     <Testimonials/>
     <Contact/>
+    <Popup/>
     </>
   )
 }
