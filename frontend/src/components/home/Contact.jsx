@@ -134,6 +134,11 @@ function Contact() {
 
         if (seen) {
           localStorage.setItem('submitted', JSON.stringify(true))
+
+          ReactGA.event({
+            category: 'event-popup',
+            action: ' opted in for discount event',
+          });
         }
 
 

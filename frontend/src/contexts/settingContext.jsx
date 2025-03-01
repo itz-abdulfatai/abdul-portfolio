@@ -23,8 +23,9 @@ export function SettingContextProvider({ children }) {
 
      } else {
        //  use backup settings incase setting fetch fails
-       if (JSON.parse(localStorage.getItem('settings'))) setSettings(JSON.parse(localStorage.getItem('settings')))
-        else throw new Error(`an error occured:  ${response?.data?.message || ''}`)
+      //  if (JSON.parse(localStorage.getItem('settings'))) setSettings(JSON.parse(localStorage.getItem('settings')))
+      //   else
+       throw new Error(`an error occured:  ${response?.data?.message || ''}`)
      }
 
    } catch (error) {
