@@ -1,17 +1,32 @@
 import { useEffect, useState } from "react"
 import ReactGA from 'react-ga4';
 
+const preloadImages = (urls) => {
+  return urls.map((url) => {
+      const img = new Image();
+      img.src = url;
+      return img;
+  });
+};
 
 function Popup() {
     const [active, setActive] = useState(false)
     const [smallActive, setSmallActive] = useState(true)
-    const [activeImg, setActiveImg] = useState(1)
+    const [activeImg, setActiveImg] = useState(0)
+
+    const images = [
+      "/website-gif-1.gif",
+      "/website-gif-2.gif",
+      "/website-gif-3.gif",
+      "/website-gif-4.gif"
+  ];
+  const preloadedImages = preloadImages(images);
 
     useEffect(()=> {
         const interval = setInterval(() => {
-            setActiveImg((prev) => (prev === 4 ? 1 : prev + 1))
+            setActiveImg((prev) => (prev === 3 ? 0 : prev + 1))
         }, 8000)
-        console.log('active image is ' + activeImg);
+        // console.log('active image is ' + activeImg);
         return () => clearInterval(interval)
 
         
@@ -53,8 +68,8 @@ function Popup() {
       const submitted = JSON.parse((localStorage.getItem('submitted'))) == true;
     useEffect(() => {
         const seen = JSON.parse((sessionStorage.getItem('seen'))) == true;
-        console.log(submitted)
-        console.log(seen)
+        // console.log(submitted)
+        // console.log(seen)
 
         if (!seen && !submitted) {
             setTimeout(() => setActive(true), 1000); // Show after 1s if conditions match
@@ -82,10 +97,10 @@ function Popup() {
             <a onClick={closePopup} href="#contact" className=" text-center w-full p-3 bg-primary text-white hover:bg-x transition-colors rounded-lg">Claim  Deal Now!</a>
             </div>
         
-            <div className={` transition-colors duration-1000 w-full flex justify-center items-center overflow-hidden  ${activeImg == 1 && 'bg-[#466880]'}  ${activeImg == 3 && 'bg-[#142938]'} ${activeImg == 2 && 'bg-[#3eb8de]'} ${activeImg == 4 && 'bg-[#dcdbdc]'} `}>
+            <div className={` transition-colors duration-1000 w-full flex justify-center items-center overflow-hidden  ${activeImg == 0 && 'bg-[#466880]'}  ${activeImg == 2 && 'bg-[#142938]'} ${activeImg == 1 && 'bg-[#3eb8de]'} ${activeImg == 3 && 'bg-[#dcdbdc]'} `}>
 
-                <img src={`/website-gif-${activeImg}.gif`} alt="cover image"  className={` ${
-                  activeImg == 1 ? 'h-full sm:h-[63%] max-sm:scale-[1.4]. sm:hover:scale-105 sm:hover:brightness-75.' : activeImg == 2 ? 'h-full sm:h-[60%] max-sm:scale-[1.4]. sm:hover:scale-105.' : activeImg == 3 ? ' sm:h-[48%] max-sm:scale-[1.2] sm:hover:scale-105.' : activeImg == 4 ? ' sm:h-[63%] max-sm:scale-[1.1] sm:hover:scale-105.' : ''} object-cover transition-all  duration-500 ease-in `}/>
+                <img src={preloadedImages[activeImg].src} alt="cover image"  className={` ${
+                  activeImg == 0 ? 'h-full sm:h-[63%] max-sm:scale-[1.4]. sm:hover:scale-105 sm:hover:brightness-75.' : activeImg == 1 ? 'h-full sm:h-[60%] max-sm:scale-[1.4]. sm:hover:scale-105.' : activeImg == 2 ? ' sm:h-[48%] max-sm:scale-[1.2] sm:hover:scale-105.' : activeImg == 3 ? ' sm:h-[63%] max-sm:scale-[1.1] sm:hover:scale-105.' : ''} object-cover transition-all  duration-500 ease-in `}/>
             </div>
 
 
