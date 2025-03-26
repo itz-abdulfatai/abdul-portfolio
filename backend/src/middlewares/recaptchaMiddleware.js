@@ -26,7 +26,7 @@ export async function recaptchaMiddleware(req, res, next) {
       }
     );
 
-    console.log(response.data);
+    // console.log(response.data);
 
     if (!response.data.success) {
       return res

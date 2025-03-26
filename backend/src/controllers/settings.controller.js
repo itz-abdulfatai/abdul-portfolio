@@ -6,7 +6,7 @@ export async function getSettings(req, res) {
       where: {
         id: process.env.SETTINGS_DB_ID,
         
-      },cacheStrategy: {swr: 100, ttl: 600, tags: ['my_global_settings']},
+      },cacheStrategy: {swr: 100000, ttl: 200000, tags: ['my_global_settings']},
       include: {
         projects: {
           include: {

@@ -11,6 +11,8 @@ import Error from "./components/global/Error"
 import { scrollToSection } from "./utils/scrollIn"
 import NotFound from "./pages/NotFound"
 import ReactGA from 'react-ga4';
+import Quote from "./pages/Quote"
+import Contact from "./components/home/Contact"
 
 
 function App() {
@@ -48,6 +50,8 @@ function App() {
       <Route element={<Home/>} path="/"/>
       <Route element={<Works/>} path="/works"/>
       <Route element={<Work/>} path="/works/:slug"/>
+      <Route element={<Quote/>} path="/quote"/>
+      <Route element={<Contact/>} path="/contact"/>
 
 
 

@@ -8,10 +8,22 @@ import Tools from "../components/home/Tools"
 import SettingContext from "../contexts/settingContext"
 import { useContext } from "react"
 import Popup from "../components/global/Popup"
+// import ClickSpark from "../components/global/ClickSpark"
 
 function Home() {
   const {settings} = useContext(SettingContext)
   return (
+  //   <ClickSpark 
+  //   sparkColor='#dcf763'
+
+  //   sparkSize={10}
+  
+  //   sparkRadius={15}
+  
+  //   sparkCount={8}
+  
+  //   duration={400}
+  // >
     <>
     <Helmet>
       <title>Home | {settings.name}</title>
@@ -27,6 +39,8 @@ function Home() {
     <Contact/>
     <Popup/>
     </>
+
+    // {/* </ClickSpark> */}
   )
 }
 

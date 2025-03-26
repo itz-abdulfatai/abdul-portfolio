@@ -4,8 +4,11 @@ import SettingContext from "../../contexts/settingContext";
 import ImageSlider from "./ImageSlider";
 import { scrollR } from "../../utils/scrollR";
 import { scrollToSection } from "../../utils/scrollIn";
+import { useNavigate } from "react-router-dom";
 
 function Hero() {
+  const navigate = useNavigate()
+
   const { settings } =
     useContext(SettingContext);
     const {avatar, isAvaliableForFreelancing, heading} = settings
@@ -45,7 +48,7 @@ function Hero() {
             icon={<i className="bx bx-chevron-right"></i>}
             text="Order the service"
             onclick={() => {
-              scrollToSection("contact");
+              navigate("/quote");
             }}
             textColor={"primary"}
           />

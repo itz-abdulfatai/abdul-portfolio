@@ -3,6 +3,7 @@ import SettingContext from "../../contexts/settingContext"
 import Count from "../global/Count"
 import Logo from "../global/Logo"
 import { scrollR } from "../../utils/scrollR"
+import CountUp from "../global/CountUp"
 
 function About() {
     const {settings} = useContext(SettingContext)
@@ -27,7 +28,11 @@ function About() {
               </div>
 
               <div className=" flex flex-col gap-2">
-                <div className=" flex items-center"><p  className=" text-[40px] font-[600]">{clientSatisfaction}</p><span className=" text-[40px] font-[600] text-highlight">%</span></div>
+                <div className=" flex items-center">
+                  {/* <p  className=" text-[40px] font-[600]">{clientSatisfaction}</p> */}
+                  <CountUp   from={0} to={clientSatisfaction} separator="," direction="up" duration={1}
+ className="count-up-text text-[40px] font-[600]" />
+                  <span className=" text-[40px] font-[600] text-highlight">%</span></div>
                 <span className=" text-base">Client satisfaction</span>
               </div>
 <div className=" absolute bottom-20 right-14 hidden lg:block ">

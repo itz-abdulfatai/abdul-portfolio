@@ -4,7 +4,7 @@ const Spinner = () => {
 
       <div className="spinner-container">
     <div className="cube"><div className="cube__inner"></div></div>
-    <div className="cube"><div className="cube__inner"></div></div>
+    <div className="cube"><div className="cube__inner middle_cube_2"></div></div>
     <div className="cube"><div className="cube__inner"></div></div>
   </div>
   

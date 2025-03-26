@@ -51,6 +51,7 @@
 
     body {
         max-width: 1440px;
+        scroll-behavior: smooth;
         margin: 0 auto;
         overflow-x: hidden;
         @apply min-h-[90vh] md:min-h-screen
@@ -98,6 +99,10 @@
     transform-origin: center bottom;
     animation: morph var(--uib-speed) ease-in-out infinite;
     transition: background-color 0.3s ease;
+  }
+
+  .middle_cube_2 {
+    background-color: var(--highlight-color);
   }
   
   .cube:nth-child(2) {
@@ -199,7 +204,7 @@
     }
 
     .form-input {
-        @apply rounded-xl bg-x2 p-3 placeholder:text-x placeholder:text-sm focus:border-blue-600 w-full
+        @apply rounded-xl bg-x2 p-3 placeholder:text-tertiary placeholder:text-sm focus:border-blue-600 w-full
     }
 
     input, textarea {

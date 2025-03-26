@@ -1,10 +1,12 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import SettingContext from "../../contexts/settingContext";
-import { Link } from "react-router-dom";
+import RotatingText from "../global/RotatingText";
+// import { Link } from "react-router-dom";
 // import { scrollR } from "../../utils/scrollR"
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import ReactGA from 'react-ga4';
+import Icon from "../global/Icon";
 function Contact() {
   const { settings } = useContext(SettingContext);
   const { socials } = settings;
@@ -168,7 +170,31 @@ function Contact() {
     >
       <div className=" lll w-full  flex flex-col gap-5">
         <h2 className="text-[40px] font-[600] max-w-[400px] leading-tight">
-          Contact me for collaboration
+          Contact me for
+          {/* for collaboration */}
+          <RotatingText
+
+  texts={[' a project', ' partnerships', ' best solutions']}
+
+  mainClassName="px-0 sm:px-0 md:px-0 bg-xl text-secondary overflow-hidden py-0.5 sm:py-1 md:py-2  rounded-lg"
+
+  staggerFrom={"last"}
+
+  initial={{ y: "100%" }}
+
+  animate={{ y: 0 }}
+
+  exit={{ y: "-120%" }}
+
+  staggerDuration={0.025}
+
+  splitLevelClassName="overflow-hidden pb-0.5 sm:pb-1 md:pb-1"
+
+  transition={{ type: "spring", damping: 40, stiffness: 500 }}
+
+  rotationInterval={4000}
+
+/>
         </h2>
         <p className=" max-w-[350px] text-tertiary ">
           Reach out today to discuss your project needs and start collaborating
@@ -251,25 +277,4 @@ sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY}
 
 export default Contact;
 
-function Icon({ social }) {
-  return (
-    <Link
-      to={social.link}
-      target="_blank"
-      title={social.name}
-      className=" inline-flex justify-center items-center"
-    >
-      {social.name == "Fiverr" ? (
-        <i
-          className={` font-extrabold not-italic  text-3xl  p-2 test-b  rounded-xl border-x2 hover:border-transparent hover:text-primary hover:bg-secondary transition-all duration-200 w-[52px]   h-[52px] flex justify-center items-center overflow-hidden hover:primary-sh  `}
-        >
-          fi
-        </i>
-      ) : (
-        <i
-          className={`bx ${social.icon} overflow-hidden text-3xl  p-2 test-b  rounded-xl border-x2 hover:border-transparent hover:text-primary hover:bg-secondary transition-all duration-200 w-[50px]   h-[50px] flex justify-center items-center hover:primary-sh `}
-        ></i>
-      )}
-    </Link>
-  );
-}
+

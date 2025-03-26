@@ -32,19 +32,32 @@ function Header() {
             <a href='#home' className="nav-link">Home</a>
             <a href='#about' className="nav-link">About</a>
             <Link to='/works' className="nav-link">Works</Link>
+            <Link to='/quote' className="nav-link">Quote</Link>
             <a href='#testimonials' className="nav-link">Reviews</a>
             </> :
             <>
 
 <Link to='/' className="nav-link">Home</Link>
 <Link to='/works' className="nav-link">Works</Link>
+<Link to='/quote' className="nav-link">Quote</Link>
+
 {/* <Link to='#portfolio' className="nav-link">Work</Link> */}
 {/* <Link to='#testimonials' className="nav-link">Reviews</Link> */}
             </>
             
 }
         </nav>
-        <a href={  `#contact`}  className=" hidden md:block px-5 py-2 bg-[#d9d9d9] text-primary rounded-xl capitalize hover:bg-x hover:text-secondary transition-all font-[500] duration-500">contact Me</a>
+
+        {
+          isHome ?
+          <a href={  `#contact`}  className=" hidden md:block px-5 py-2 bg-[#d9d9d9] text-primary rounded-xl capitalize hover:bg-x hover:text-secondary transition-all font-[500] duration-500">contact Me</a>
+
+          : 
+
+          <Link to={  `/contact`}  className=" hidden md:block px-5 py-2 bg-[#d9d9d9] text-primary rounded-xl capitalize hover:bg-x hover:text-secondary transition-all font-[500] duration-500">contact Me</Link>
+
+        }
+
 
         <button
         onClick={() => setNavActive(!navActive)}        

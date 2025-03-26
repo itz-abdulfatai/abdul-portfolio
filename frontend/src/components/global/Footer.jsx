@@ -1,19 +1,19 @@
 
 import { Link } from 'react-router-dom'
 import Button from './Button'
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import SettingContext from '../../contexts/settingContext'
 import Logo from './Logo'
-import { scrollR } from '../../utils/scrollR'
+// import { scrollR } from '../../utils/scrollR'
 import { scrollToSection } from '../../utils/scrollIn'
 function Footer() {
 
-  useEffect(() => {
-    scrollR('lll', 'left', false)
-    scrollR('rrr', 'right', false)
-    scrollR('ttt', 'bottom', false, 10)
+//   useEffect(() => {
+//     scrollR('lll', 'left', false)
+//     scrollR('rrr', 'right', false)
+//     scrollR('ttt', 'bottom', false, 10)
 
-}, [])
+// }, [])
 
   
   const {settings} = useContext(SettingContext)
