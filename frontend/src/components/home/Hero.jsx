@@ -48,7 +48,7 @@ function Hero() {
             icon={<i className="bx bx-chevron-right"></i>}
             text="Order the service"
             onclick={() => {
-              navigate("/quote");
+              navigate("/quote?source=hero");
             }}
             textColor={"primary"}
           />

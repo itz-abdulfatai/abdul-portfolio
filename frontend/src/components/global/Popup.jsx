@@ -95,7 +95,7 @@ function Popup() {
                 {/* <h2 className="text-sm font-bold">Dont miss out!</h2> */}
                 <img src="/dark-logo.png" className="w-24" alt="" />
             <p className="text-[26px] font-bold">1 Year FREE Hosting + WordPress or Shopify Site - Starting at $199! </p>
-            <Link onClick={closePopup} to="/quote" className=" text-center w-full p-3 bg-primary text-white hover:bg-x transition-colors rounded-lg">Claim  Deal Now!</Link>
+            <Link onClick={closePopup} to="/quote?source=199-popup" className=" text-center w-full p-3 bg-primary text-white hover:bg-x transition-colors rounded-lg">Claim  Deal Now!</Link>
             </div>
         
             <div className={` transition-colors duration-1000 w-full flex justify-center items-center overflow-hidden  ${activeImg == 0 && 'bg-[#466880]'}  ${activeImg == 2 && 'bg-[#142938]'} ${activeImg == 1 && 'bg-[#3eb8de]'} ${activeImg == 3 && 'bg-[#dcdbdc]'} `}>

@@ -137,7 +137,7 @@ function Quote() {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="rrr w-full lg:w-1/2 flex flex-col max-sm:mt-10 gap-3"
+        className="rrr w-full lg:w-1/2 flex flex-col max-sm:mt-10 gap-8"
       >
         <fieldset className="flex gap-3 max-sm:flex-col">
           <div className="form-row">
@@ -200,7 +200,7 @@ function Quote() {
           <textarea className="form-input" id="additional" name="additional" rows="4" placeholder="Share any other details about your project" />
         </fieldset>
 
-        <div className="mt-8 border-t pt-6">
+        <div className="mt-8 border-t pt-6 flex flex-col gap-8">
           <h3 className="text-lg font-semibold mb-4">Enhanced Website Solutions</h3>
 
           <fieldset className="form-row">

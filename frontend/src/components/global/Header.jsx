@@ -32,14 +32,14 @@ function Header() {
             <a href='#home' className="nav-link">Home</a>
             <a href='#about' className="nav-link">About</a>
             <Link to='/works' className="nav-link">Works</Link>
-            <Link to='/quote' className="nav-link">Quote</Link>
+            <Link to='/quote?source=nav' className="nav-link">Quote</Link>
             <a href='#testimonials' className="nav-link">Reviews</a>
             </> :
             <>
 
 <Link to='/' className="nav-link">Home</Link>
 <Link to='/works' className="nav-link">Works</Link>
-<Link to='/quote' className="nav-link">Quote</Link>
+<Link to='/quote?source=nav' className="nav-link">Quote</Link>
 
 {/* <Link to='#portfolio' className="nav-link">Work</Link> */}
 {/* <Link to='#testimonials' className="nav-link">Reviews</Link> */}
