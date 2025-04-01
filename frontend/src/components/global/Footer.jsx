@@ -4,9 +4,11 @@ import Button from './Button'
 import { useContext } from 'react'
 import SettingContext from '../../contexts/settingContext'
 import Logo from './Logo'
+import { useNavigate } from 'react-router-dom'
 // import { scrollR } from '../../utils/scrollR'
-import { scrollToSection } from '../../utils/scrollIn'
+// import { scrollToSection } from '../../utils/scrollIn'
 function Footer() {
+  const navigate = useNavigate()
 
 //   useEffect(() => {
 //     scrollR('lll', 'left', false)
@@ -24,7 +26,7 @@ function Footer() {
 
       <div className=' rrr flex flex-col gap-8 max-sm:text-center items-start w-full'>
         <h2 className=' text-[40px] md:text-[56px] max-w-[450px] leading-tight  font-[600]'>Let&apos;s work together today!</h2>
-        <Button text='Start project' onclick={() => {scrollToSection('contact')}} className=' max-md:w-full  bg-highlight text-lg text-primary py-3 hover:bg-x hover:text-secondary'  icon={<i className='bx bx-chevron-right'></i>}/>
+        <Button text='Start project' onclick={() => {navigate("/quote?source=site-footer");}} className=' max-md:w-full  bg-highlight text-lg text-primary py-3 hover:bg-x hover:text-secondary'  icon={<i className='bx bx-chevron-right'></i>}/>
         
 
 
