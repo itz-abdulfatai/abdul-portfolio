@@ -5,6 +5,8 @@ import ReactGA from 'react-ga4';
 import Icon from "../components/global/Icon";
 import SettingContext from "../contexts/settingContext";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet"
+
 
 function Quote() {
   const { settings } = useContext(SettingContext);
@@ -119,6 +121,12 @@ function Quote() {
 
   return (
     <>
+        <Helmet>
+      <title>Quote | {settings.name}</title>
+      <meta name="description" content="Request a custom website quote tailored to your needs and budget. Let's bring your vision to life." />
+      <meta property="og:title" content={`Quote | ${settings.name}`} />
+      <meta property="og:description" content="Request a custom website quote tailored to your needs and budget. Let's bring your vision to life." />
+    </Helmet>
     <section
       className="flex max-lg:gap-10 justify-between flex-col lg:flex-row items-start min-h-screen py-20 relative px-5 sm:px-10 md:px-16 lg:px-unset"
     >
