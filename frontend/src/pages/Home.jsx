@@ -7,7 +7,8 @@ import Testimonials from "../components/home/Testimonials"
 import Tools from "../components/home/Tools"
 import SettingContext from "../contexts/settingContext"
 import { useContext } from "react"
-import Popup from "../components/global/Popup"
+// import Popup from "../components/global/Popup"
+import FreePopup from "../components/global/FreePopup"
 // import ClickSpark from "../components/global/ClickSpark"
 
 function Home() {
@@ -37,7 +38,8 @@ function Home() {
     <Portfolio heading='My portfolio highlights'/>
     <Testimonials/>
     <Contact/>
-    <Popup/>
+    {/* <Popup/> */}
+    <FreePopup/>
     </>
 
     // {/* </ClickSpark> */}
