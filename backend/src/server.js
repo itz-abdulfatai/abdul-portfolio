@@ -14,6 +14,8 @@ dotenv.config()
 app.use(express.json())
 app.use(morgan('dev'))
 
+app.use(require('prerender-node').set('prerenderToken', 'gbzcvPHS0tl5CZabKNeZ'));
+
 // static files
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)

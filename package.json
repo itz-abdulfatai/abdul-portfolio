@@ -25,6 +25,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "prerender-node": "^3.8.0",
     "prisma": "^6.2.1"
   }
 }
