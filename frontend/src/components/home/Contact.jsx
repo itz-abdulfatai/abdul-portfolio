@@ -7,8 +7,10 @@ import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
 import ReactGA from 'react-ga4';
 import Icon from "../global/Icon";
+// import Spinner from "../global/Spinner";
+import Error from "../global/Error";
 function Contact() {
-  const { settings } = useContext(SettingContext);
+  const { settings} = useContext(SettingContext);
   const { socials } = settings;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -201,9 +203,13 @@ function Contact() {
           on something amazing!
         </p>
         <div className=" h-40  flex md:max-w-[80%] items-end flex-wrap gap-2">
+          {socials && 
+          <>
           {socials.map((social, index) => (
             <Icon social={social} key={index} />
           ))}
+          </>
+          }
         </div>
       </div>
       <form

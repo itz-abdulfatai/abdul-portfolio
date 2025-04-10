@@ -6,6 +6,7 @@ import Contact from "../components/home/Contact";
 import { scrollR } from "../utils/scrollR";
 import Spinner from "../components/global/Spinner";
 import {Helmet} from 'react-helmet'
+import Error from "../components/global/Error";
 
 const LazyImg = React.lazy(() => import('../components/work/LazyImg')) 
 
@@ -19,23 +20,31 @@ function Work() {
 
 
   const { slug } = useParams();
-  const { settings } = useContext(SettingContext);
+  const { settings, loading, error } = useContext(SettingContext);
   const {projects, name} = settings
-  const work = projects.find((p) => p.slug === slug);
+  let work = {}
+
+  if (projects && !loading && !error) {
+    work = projects.find((p) => p.slug === slug)
+  }
   // console.log(slug)
   // console.log(work)
   return (
     <>
+    {loading && <Spinner/>}
+    {error && <Error error={error}/>}
 
     <Helmet>
-      <title>{work.name} | {settings.name}</title>
+      <title>{work.name ?? 'works'} | {settings.name ?? 'Abdulfatai Aliyu'}</title>
       <meta name="description" content={work.description} />
       <meta property="og:title" content={`${work.name} | ${settings.name}`} />
       <meta property="og:description" content={work.description} />
       <meta property="og:image" content={work.images[0] || `https://picsum.photos/${window.innerWidth}/${window.innerHeight}?random=1`} />
     </Helmet>
-    
-      <section className="p-0 min-h-[50vh]">
+    {
+      work && 
+      <>
+ <section className="p-0 min-h-[50vh]">
       <h1 className="text-center  text-secondary p-3 text-xl md:text-4xl font-bold">
                 {work.name}
               </h1>
@@ -106,11 +115,15 @@ function Work() {
       </section>
       }
 
-      <Portfolio heading='Next projects'/>
+      <Portfolio heading='Other projects'/>
       <Contact/>
       {/* <section>
         <Spinner/>
-      </section> */}
+      </section> */}      
+      
+      </>
+    }
+     
     </>
   );
 }

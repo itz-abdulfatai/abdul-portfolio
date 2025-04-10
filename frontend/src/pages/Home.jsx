@@ -27,9 +27,9 @@ function Home() {
   // >
     <>
     <Helmet>
-      <title>Home | {settings.name}</title>
+      <title>Home | {settings.name ?? 'Abdulfatai Aliyu'}</title>
       <meta name="description" content="I am a full-stack developer with a passion for creating responsive, user-friendly websites." />
-      <meta property="og:title" content={`Home | ${Portfolio}`} />
+      <meta property="og:title" content={`Home | ${settings.name ?? 'Abdulfatai Aliyu'}`} />
       <meta property="og:description" content="I am a full-stack developer with a passion for creating responsive, user-friendly websites." />
     </Helmet>
     <Hero/>

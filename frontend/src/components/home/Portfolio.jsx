@@ -5,9 +5,11 @@ import SettingContext from "../../contexts/settingContext"
 import { useNavigate } from "react-router-dom"
 import { shuffle } from "../../utils/helper"
 import { scrollR } from "../../utils/scrollR"
+import Spinner from "../global/Spinner"
+import Error from "../global/Error"
 
 function Portfolio({heading}) {
-    const {settings} = useContext(SettingContext)
+    const {settings, loading, error} = useContext(SettingContext)
     const {projects} = settings;
     const navigate = useNavigate()
 
@@ -24,13 +26,22 @@ function Portfolio({heading}) {
         </div>
 
         <div className=" flex flex-wrap gap-5 justify-center">
-            {
+          {loading && <Spinner/>}
+          {error && <Error error={error}/>}
+          {projects && 
+          <>
+          {
                 shuffle(projects).map((p, i) => (
                   i < 4 &&  <ProjectCard p={p} key={i}/>
 
                 ))
 
             }
+          
+          </>
+          
+          }
+            
             
         </div>
     </section>

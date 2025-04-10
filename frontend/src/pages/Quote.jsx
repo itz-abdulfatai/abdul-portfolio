@@ -10,7 +10,11 @@ import { Helmet } from "react-helmet"
 
 function Quote() {
   const { settings } = useContext(SettingContext);
-  const { socials } = settings;
+  let socials = []
+  if (settings) {
+    socials = settings.socials
+  }
+  // const { socials } = settings;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
@@ -122,9 +126,9 @@ function Quote() {
   return (
     <>
         <Helmet>
-      <title>Quote | {settings.name}</title>
+      <title>Quote | {settings.name ?? 'Abdulfatai Aliyu'}</title>
       <meta name="description" content="Request a custom website quote tailored to your needs and budget. Let's bring your vision to life." />
-      <meta property="og:title" content={`Quote | ${settings.name}`} />
+      <meta property="og:title" content={`Quote | ${settings.name ?? 'Abdulfatai Aliyu'}`} />
       <meta property="og:description" content="Request a custom website quote tailored to your needs and budget. Let's bring your vision to life." />
     </Helmet>
     <section
@@ -138,7 +142,7 @@ function Quote() {
           Tell us about your project and we&apos;ll provide a tailored solution that meets your needs and budget.
         </p>
         <div className="flex md:max-w-[80%] items-end flex-wrap gap-2">
-          {socials.map((social, index) => (
+          {socials && socials.map((social, index) => (
             <Icon social={social} key={index} />
           ))}
         </div>

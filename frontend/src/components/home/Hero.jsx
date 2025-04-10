@@ -11,7 +11,7 @@ function Hero() {
 
   const { settings } =
     useContext(SettingContext);
-    const {avatar, isAvaliableForFreelancing, heading} = settings
+    const {avatar, isAvaliableForFreelancing} = settings
   // console.log(name)
 
   useEffect(() => {
@@ -32,13 +32,25 @@ function Hero() {
           />
           <span className=" dot"></span>
           <p className="text-tertiary">
-            {" "}
-            {isAvaliableForFreelancing
-              ? "Available for freelancing"
-              : "Currently Unavailable"}{" "}
+            {
+              settings ? 
+              <>
+              { isAvaliableForFreelancing
+                ? "Available for freelancing":
+                 "Currently Unavailable"
+                }
+              </>
+
+                : 'error fetching availability'
+            }
+               
           </p>
         </div>
-        <h1 className=" text-[40px] lg:text-[55px] font-[600]">{heading}</h1>
+        <h1 className=" text-[40px] lg:text-[55px] font-[600]">
+          {/* {heading} */}
+          Transform your creative ideas into reality with expert design solutions
+          
+        </h1>
         <div className=" flex gap-5 flex-col md:flex-row max-md:items-center ">
           <Button
             className={

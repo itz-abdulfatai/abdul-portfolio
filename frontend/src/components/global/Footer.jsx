@@ -17,9 +17,21 @@ function Footer() {
 
 // }, [])
 
-  
+
+
   const {settings} = useContext(SettingContext)
-  const {socials, name} = settings
+  let socials = []
+  let name = 'Abdulfatai Aliyu'
+  if (settings) {
+    socials = settings.socials
+    name = settings.name
+  }
+  // const {socials, name} = settings
+
+let randomSocial = 'https://instagram.com/itz_abdul.fatai'
+  if (socials && socials.length > 0) {
+    randomSocial = socials[Math.floor(Math.random() * socials.length)].link
+  }
   return (
     <footer className="min-h-[50vh] max-md:py-10 py-5  padding-x flex flex-col gap-5 ">
       <div className='  flex flex-col gap-10 md:flex-row justify-between  items-start'>
@@ -44,15 +56,23 @@ function Footer() {
         </div>
 
         <div className='flex flex-col gap-1'>
-          <h3 className='font-[600] mb-1 capitalize'>socials</h3>
           {
-            socials.map((social, i) => ( i < 4 &&
+            socials && 
+            <>
+
+<h3 className='font-[600] mb-1 capitalize'>socials</h3>
+          {
+            socials?.map((social, i) => ( i < 4 &&
               <Link key={social.name} to={social.link} target='_blank' >
                 {social.name}
               </Link>
             ))
             
           }
+            
+            </>
+          }
+         
 
         </div>
 
@@ -61,7 +81,7 @@ function Footer() {
       <div className=' ttt flex justify-between flex-wrap items-center mt-10'>
         <Logo/>
         <p>
-        Built <span className='hidden sm:inline-block'>with <i className='bx bx-heart text-highlight'></i></span>  by <Link className='text-highlight hover:text-tertiary transition' to={socials[Math.floor(Math.random() * socials.length)].link} target='blank'> {name}</Link> 
+        Built <span className='hidden sm:inline-block'>with <i className='bx bx-heart text-highlight'></i></span>  by <Link className='text-highlight hover:text-tertiary transition' to={randomSocial} target='_blank'> {name ?? 'Abdulfatai Aliyu'}</Link> 
         </p>
       </div>
     </footer>

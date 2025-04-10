@@ -4,10 +4,10 @@ import DashLayout from "./layouts/DashLayout"
 import Home from "./pages/Home"
 import Works from "./pages/Works"
 import Work from "./pages/Work"
-import { useContext, useEffect } from "react"
-import SettingContext from "./contexts/settingContext"
-import Spinner from "./components/global/Spinner"
-import Error from "./components/global/Error"
+import {  useEffect } from "react"
+// import SettingContext from "./contexts/settingContext"
+// import Spinner from "./components/global/Spinner"
+// import Error from "./components/global/Error"
 import { scrollToSection } from "./utils/scrollIn"
 import NotFound from "./pages/NotFound"
 import ReactGA from 'react-ga4';
@@ -25,7 +25,7 @@ function App() {
 
 
   const {pathname} = useLocation()
-  const {loading, error} = useContext(SettingContext)
+  // const {loading, error} = useContext(SettingContext)
 
 
   useEffect(() => {
@@ -33,11 +33,11 @@ function App() {
 
   }, [pathname])
 
-  if (loading) return <section className="h-screen"><Spinner/></section>
-  if (error) { 
-  console.log(error)
+  // if (loading) return <section className="h-screen"><Spinner/></section>
+  // if (error) { 
+  // console.log(error)
     
-    return <section className="h-screen"><Error error={error}/></section> }
+  //   return <section className="h-screen"><Error error={error}/></section> }
 
   return (
     <>

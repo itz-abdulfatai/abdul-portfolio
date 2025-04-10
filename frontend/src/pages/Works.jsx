@@ -4,18 +4,20 @@ import ProjectCard from "../components/global/ProjectCard"
 import Contact from "../components/home/Contact"
 import { Helmet } from "react-helmet"
 import { shuffle } from "../utils/helper"
+import Spinner from "../components/global/Spinner"
+import Error from "../components/global/Error"
 
 function Works() {
-  const {settings} = useContext(SettingContext)
+  const {settings, loading, error} = useContext(SettingContext)
   const { projects } = settings
 
   return (
     <>
 
     <Helmet>
-      <title>Works | {settings.name}</title>
+      <title>Works | {settings.name ?? 'Abdulfatai Aliyu'}</title>
       <meta name="description" content="Browse through my diverse portfolio to see the creative projects I’ve crafted for satisfied clients." />
-      <meta property="og:title" content={`Portfolio | ${settings.name}`} />
+      <meta property="og:title" content={`Portfolio | ${settings.name ?? 'Abdulfatai Aliyu'}`} />
       <meta property="og:description" content="Browse through my diverse portfolio to see the creative projects I’ve crafted for satisfied clients." />
     </Helmet>
     <section id="portfolio" className=" flex flex-col gap-10 py-14">
@@ -29,13 +31,22 @@ function Works() {
     </p>
 
     <div className=" flex flex-wrap gap-5 justify-center">
-        {
+      {loading && <Spinner/>}
+      {error && <Error error={error}/>}
+      {projects &&
+      <>
+       {
             shuffle(projects).map((p, i) => (
                <ProjectCard p={p} key={i}/>
 
             ))
 
         }
+      </>
+      
+      
+      } 
+       
         
     </div>
 </section>
