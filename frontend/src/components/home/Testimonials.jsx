@@ -4,11 +4,13 @@ import { useContext, useEffect } from "react"
 import SettingContext from "../../contexts/settingContext"
 import { scrollR } from "../../utils/scrollR"
 import { shuffle } from "../../utils/helper"
-import Spinner from "../global/Spinner"
-import Error from "../global/Error"
+// import Spinner from "../global/Spinner"
+// import Error from "../global/Error"
+import LittleSpinner from "../global/LittleSpinner"
+import Button from "../global/Button"
 
 function Testimonials() {
-    const {settings, loading, error} = useContext(SettingContext)
+    const {settings, loading, error, fetchSettings} = useContext(SettingContext)
     const {testimonials} = settings;
 
     useEffect(() => {
@@ -16,12 +18,22 @@ function Testimonials() {
     }, [])
 
   return (
-    <section id="testimonials" className=" tesii flex flex-col gap-10">
+    <section id="testimonials" className=" tesii flex flex-col gap-10 min-h-0">
      
 
 <h2 className=" text-[40px] font-[600] text-tertiary">What our customers say</h2>
-{loading && <Spinner/>}
-      {error && <Error error={error}/>}
+{loading &&   
+<div className="w-full  pt-9 h-14 ">
+  <LittleSpinner />
+</div>
+
+}
+      {error && 
+      <div className="w-full  pt-9 h-14 flex items-center gap-4 ">
+        Error loading testimonials
+        <Button onclick={fetchSettings} text='Retry' className='underline'/>
+      </div>
+      }
       {testimonials && 
 
       <>

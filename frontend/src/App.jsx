@@ -71,13 +71,6 @@ function App() {
       <Route path="*" element={<NotFound/>}/>
 
     </Routes>
-    {/* preload needed images */}
-    <div className="hidden w-0 h-0">
-      <img src="/website-gif-1.gif" alt="" />
-      <img src="/website-gif-2.gif" alt="" />
-      <img src="/website-gif-3.gif" alt="" />
-      <img src="/website-gif-4.gif" alt="" />
-    </div>
     </>
 
   )

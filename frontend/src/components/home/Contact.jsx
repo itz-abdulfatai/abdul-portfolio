@@ -9,8 +9,9 @@ import ReactGA from 'react-ga4';
 import Icon from "../global/Icon";
 // import Spinner from "../global/Spinner";
 import Error from "../global/Error";
+import LittleSpinner from "../global/LittleSpinner";
 function Contact() {
-  const { settings} = useContext(SettingContext);
+  const { settings, loading:settingsLoading} = useContext(SettingContext);
   const { socials } = settings;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -202,15 +203,22 @@ function Contact() {
           Reach out today to discuss your project needs and start collaborating
           on something amazing!
         </p>
+        {settingsLoading && 
+          <div className="w-full  pt-9 h-14 ">
+          <LittleSpinner />
+
+          </div>
+          }
+          {!loading && socials && 
         <div className=" h-40  flex md:max-w-[80%] items-end flex-wrap gap-2">
-          {socials && 
+
           <>
           {socials.map((social, index) => (
             <Icon social={social} key={index} />
           ))}
           </>
-          }
         </div>
+          }
       </div>
       <form
         onSubmit={handleSubmit}

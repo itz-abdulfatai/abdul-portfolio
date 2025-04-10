@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 function Hero() {
   const navigate = useNavigate()
 
-  const { settings } =
+  const { settings, loading, error } =
     useContext(SettingContext);
     const {avatar, isAvaliableForFreelancing} = settings
   // console.log(name)
@@ -33,15 +33,14 @@ function Hero() {
           <span className=" dot"></span>
           <p className="text-tertiary">
             {
-              settings ? 
+              loading ? 'loading availability...':
+              error ? 'Available for freelancing':
               <>
               { isAvaliableForFreelancing
                 ? "Available for freelancing":
                  "Currently Unavailable"
                 }
               </>
-
-                : 'error fetching availability'
             }
                
           </p>

@@ -1,11 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import SettingContext from "../../contexts/settingContext";
 import { scrollR } from "../../utils/scrollR";
-import Spinner from "../global/Spinner";
-import Error from "../global/Error";
+// import Spinner from "../global/Spinner";
+// import Error from "../global/Error";
+import LittleSpinner from "../global/LittleSpinner";
+import Button from "../global/Button";
 
 function Tools() {
-  const { settings, loading, error } = useContext(SettingContext);
+  const { settings, loading, error, fetchSettings } = useContext(SettingContext);
   const { tools } = settings;
   const [full, setFull] = useState(false);
 
@@ -15,7 +17,7 @@ function Tools() {
     // scrollR('tttt', 'bottom', false)
   }, []);
   return (
-    <section id="tools" className=" flex flex-col gap-10 justify-center">
+    <section id="tools" className=" flex flex-col gap-10 justify-center min-h-0">
       <h2 className=" h22 text-secondary  text-2xl md:text-[40px] font-[600]">
         Essential tools I use
       </h2>
@@ -24,9 +26,22 @@ function Tools() {
         exceptional, high-performing websites and applications.
       </p>
       <div className="  flex flex-wrap gap-4 ">
-        {loading && <Spinner />}
-        {error && <Error error={error} />}
-        {tools && (
+        {loading &&
+
+        <div className="w-full  pt-9 h-14 ">
+          <LittleSpinner className='' />
+
+        </div>
+
+}
+        
+        {error && 
+        <div className="w-full  pt-9 h-14 flex items-center gap-4 ">
+          Error loading tools
+          <Button onclick={fetchSettings} text='Retry' className='underline'/>
+        </div>
+        }
+        {!loading && tools && (
           <>
             {tools.map((tool, index) =>
               !full ? (

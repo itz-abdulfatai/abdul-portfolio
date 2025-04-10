@@ -6,10 +6,11 @@ import Icon from "../components/global/Icon";
 import SettingContext from "../contexts/settingContext";
 import { useLocation } from "react-router-dom";
 import { Helmet } from "react-helmet"
+import LittleSpinner from "../components/global/LittleSpinner";
 
 
 function Quote() {
-  const { settings } = useContext(SettingContext);
+  const { settings, loading:settingsLoading } = useContext(SettingContext);
   let socials = []
   if (settings) {
     socials = settings.socials
@@ -141,11 +142,24 @@ function Quote() {
         <p className="max-w-[350px] text-tertiary">
           Tell us about your project and we&apos;ll provide a tailored solution that meets your needs and budget.
         </p>
+
+        {
+          settingsLoading &&
+          <div className="w-full  pt-9 h-14 ">
+          <LittleSpinner />
+
+          </div>
+        }
+
+
+        {
+          !settingsLoading && socials &&
         <div className="flex md:max-w-[80%] items-end flex-wrap gap-2">
-          {socials && socials.map((social, index) => (
+          {socials.map((social, index) => (
             <Icon social={social} key={index} />
           ))}
         </div>
+        }
       </div>
       <form
         onSubmit={handleSubmit}

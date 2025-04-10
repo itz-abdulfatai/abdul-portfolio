@@ -4,11 +4,13 @@ import ProjectCard from "../components/global/ProjectCard"
 import Contact from "../components/home/Contact"
 import { Helmet } from "react-helmet"
 import { shuffle } from "../utils/helper"
-import Spinner from "../components/global/Spinner"
-import Error from "../components/global/Error"
+// import Spinner from "../components/global/Spinner"
+// import Error from "../components/global/Error"
+import LittleSpinner from "../components/global/LittleSpinner"
+import Button from "../components/global/Button"
 
 function Works() {
-  const {settings, loading, error} = useContext(SettingContext)
+  const {settings, loading, error, fetchSettings} = useContext(SettingContext)
   const { projects } = settings
 
   return (
@@ -31,9 +33,18 @@ function Works() {
     </p>
 
     <div className=" flex flex-wrap gap-5 justify-center">
-      {loading && <Spinner/>}
-      {error && <Error error={error}/>}
-      {projects &&
+      {loading && 
+      <div className="w-full  pt-9 h-14 ">
+        <LittleSpinner />
+      </div>
+      }
+      {error && 
+      <div className="w-full  pt-9 h-14 flex items-center gap-4 ">
+        Error loading projects
+        <Button onclick={fetchSettings} text='Retry' className='underline'/>
+      </div>
+      }
+      {!loading && projects &&
       <>
        {
             shuffle(projects).map((p, i) => (

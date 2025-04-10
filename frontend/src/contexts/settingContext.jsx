@@ -9,7 +9,7 @@ export function SettingContextProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  
+  // async function fetchSettings() {alert('fetching settings')}
   async function fetchSettings  () {
     setLoading(true);
     setError(null);
@@ -48,7 +48,7 @@ console.error(error.stack);
   }, [])
 
   return (
-    <SettingContext.Provider value={{settings, loading, error}}>
+    <SettingContext.Provider value={{settings, loading, error, fetchSettings}}>
       {children}
     </SettingContext.Provider>
   );
