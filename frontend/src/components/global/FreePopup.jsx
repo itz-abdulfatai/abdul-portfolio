@@ -16,17 +16,17 @@ function FreePopup() {
     const [activeImg, setActiveImg] = useState(0)
 
     const images = [
-      "/website-gif-1.gif",
-      "/website-gif-2.gif",
-      "/website-gif-3.gif",
-      "/website-gif-4.gif"
+      "/website-gif-1.png",
+      "/website-gif-2.png",
+      "/website-gif-3.png",
+      "/website-gif-4.png"
   ];
   const preloadedImages = preloadImages(images);
 
     useEffect(()=> {
         const interval = setInterval(() => {
             setActiveImg((prev) => (prev === 3 ? 0 : prev + 1))
-        }, 8000)
+        }, 5000)
         // console.log('active image is ' + activeImg);
         return () => clearInterval(interval)
 
@@ -115,7 +115,7 @@ function FreePopup() {
             <div className={` transition-colors duration-1000 w-full flex justify-center items-center overflow-hidden  ${activeImg == 0 && 'bg-[#466880]'}  ${activeImg == 2 && 'bg-[#142938]'} ${activeImg == 1 && 'bg-[#3eb8de]'} ${activeImg == 3 && 'bg-[#dcdbdc]'} `}>
 
                 <img src={preloadedImages[activeImg].src} alt="cover image"  className={` ${
-                  activeImg == 0 ? 'h-full sm:h-[63%] max-sm:scale-[1.4]. sm:hover:scale-105 sm:hover:brightness-75.' : activeImg == 1 ? 'h-full sm:h-[60%] max-sm:scale-[1.4]. sm:hover:scale-105.' : activeImg == 2 ? ' sm:h-[48%] max-sm:scale-[1.2] sm:hover:scale-105.' : activeImg == 3 ? ' sm:h-[63%] max-sm:scale-[1.1] sm:hover:scale-105.' : ''} object-cover transition-all  duration-500 ease-in `}/>
+                  activeImg == 0 ? 'h-full sm:h-[63%] scale-[0.98] max-sm:scale-[1.4]. sm:hover:scale-105 sm:hover:brightness-75.' : activeImg == 1 ? 'h-full sm:h-[60%] scale-[0.98] max-sm:scale-[1.4]. sm:hover:scale-105.' : activeImg == 2 ? ' sm:h-[48%] scale-[0.98] max-sm:scale-[1.2] sm:hover:scale-105.' : activeImg == 3 ? ' sm:h-[63%] scale-[0.98] max-sm:scale-[1.1] sm:hover:scale-105.' : ''} object-cover transition-all  duration-500 ease-in `}/>
             </div>
 
 

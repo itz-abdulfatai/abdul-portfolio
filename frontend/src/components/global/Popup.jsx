@@ -16,17 +16,17 @@ function Popup() {
     const [activeImg, setActiveImg] = useState(0)
 
     const images = [
-      "/website-gif-1.gif",
-      "/website-gif-2.gif",
-      "/website-gif-3.gif",
-      "/website-gif-4.gif"
+      "/website-gif-1.png",
+      "/website-gif-2.png",
+      "/website-gif-3.png",
+      "/website-gif-4.png"
   ];
   const preloadedImages = preloadImages(images);
 
     useEffect(()=> {
         const interval = setInterval(() => {
             setActiveImg((prev) => (prev === 3 ? 0 : prev + 1))
-        }, 8000)
+        }, 5000)
         // console.log('active image is ' + activeImg);
         return () => clearInterval(interval)
 
