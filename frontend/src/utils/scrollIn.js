@@ -1,6 +1,6 @@
-export const scrollToSection = (id) => {
+export const scrollToSection = (id, behavior = 'instant') => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: "instant", block: "start" });
+      element.scrollIntoView({ behavior, block: "start" });
     }
   };

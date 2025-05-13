@@ -78,7 +78,7 @@ function FreePopup() {
         // console.log(seen)
 
         if (!seen && !submitted) {
-            setTimeout(() => setActive(true), 1000); // Show after 1s if conditions match
+            setTimeout(() => setActive(true), 10000); // Show after 1s if conditions match
           } else {
             closePopup();
           }

@@ -3,7 +3,7 @@ import Button from "../global/Button";
 import SettingContext from "../../contexts/settingContext";
 import ImageSlider from "./ImageSlider";
 import { scrollR } from "../../utils/scrollR";
-import { scrollToSection } from "../../utils/scrollIn";
+// import { scrollToSection } from "../../utils/scrollIn";
 import { useNavigate } from "react-router-dom";
 
 function Hero() {
@@ -45,19 +45,19 @@ function Hero() {
                
           </p>
         </div>
-        <h1 className=" text-[40px] lg:text-[55px] font-[600]">
+        <h1 className=" text-[35px] lg:text-[50px] font-[600]">
           {/* {heading} */}
-          Transform your creative ideas into reality with expert design solutions
+          Bring your creative vision to life with professional design expertise
           
         </h1>
-        <div className=" flex gap-5 flex-col md:flex-row max-md:items-center ">
+        <div className=" flex gap-5 flex-col md:flex-row max-md:items-center max-sm:w-[90%] max-md:w-[60%] ">
           <Button
             className={
-              "max-md:w-full hover:bg-x bg-highlight hover:text-secondary"
+              "max-md:w-full hover:bg-x bg-highlight max-md:py-3 hover:text-secondary"
             }
             bg={"highlight"}
             icon={<i className="bx bx-chevron-right"></i>}
-            text="Order the service"
+            text="Start your project"
             onclick={() => {
               navigate("/quote?source=hero");
             }}
@@ -66,13 +66,14 @@ function Hero() {
 
           <Button
             className={
-              "max-md:w-full hover:border-secondary border border-[#363636] bg-[#252525]  text-secondary"
+              "max-md:w-full hover:border-secondary border border-[#363636] max-md:py-3  bg-[#252525]  text-secondary"
             }
             bg={"highlight"}
-            icon={<i className="bx bx-down-arrow-alt"></i>}
-            text="scroll down"
+            icon={<i className="bx bx-right-arrow-alt"></i>}
+            text="View recent work"
             onclick={() => {
-              scrollToSection("about");
+              // scrollToSection("about");
+              navigate("/works")
             }}
             textColor={"primary"}
           />

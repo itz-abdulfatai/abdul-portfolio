@@ -98,6 +98,9 @@ function Work() {
             <h3 className="font-[600] capitalize text-lg">Client</h3> <span>{work.clientInfo.name}</span>
           </div>
           <div className="w-80 flex gap-10 ">
+            <h3 className="font-[600] capitalize text-lg">sector</h3> <span>{work.clientInfo.sector}</span>
+          </div>
+          <div className="w-80 flex gap-10 ">
             <h3 className="font-[600] capitalize text-lg">services</h3>
             <div className="flex flex-col gap-3 max-h-52  overflow-auto items-start">
 
@@ -105,9 +108,6 @@ function Work() {
               <span key={service} className="px-2 capitalize py-1 text-primary rounded-lg bg-highlight">{service}</span>
             ))}
             </div>
-          </div>
-          <div className="w-80 flex gap-10 ">
-            <h3 className="font-[600] capitalize text-lg">sector</h3> <span>{work.clientInfo.sector}</span>
           </div>
         </div>
       </div>

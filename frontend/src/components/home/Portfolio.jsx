@@ -23,7 +23,7 @@ function Portfolio({heading}) {
     <section id="portfolio" className="pppppppp flex flex-col gap-10 py-14 min-h-0">
         <div className=" flex flex-col md:flex-row justify-between gap-5">
             <h2 className="  text-[25px] lg:text-[40px] font-[600]">{heading}</h2>
-            <Button onclick={() => {navigate('/works')}} text='View all works' icon={ <i className='bx bx-chevron-right' ></i>} className={'bg-highlight text-primary hover:bg-x hover:text-secondary'} />
+            <Button onclick={() => {navigate('/works')}} text='View all works' icon={ <i className='bx bx-chevron-right' ></i>} className={'bg-highlight text-primary hover:bg-x hover:text-secondary max-md:py-3'} />
         </div>
 
         <div className=" flex flex-wrap gap-5 justify-center">

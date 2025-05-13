@@ -12,8 +12,8 @@ function Works() {
   const { projects } = settings
   const [activeTab, setActiveTab] = useState('jobs')
 
-  const jobs = projects?.filter(p => p.type === "job") || [];
-  const portfolio = projects?.filter(p => p.type !== "job") || [];
+  const jobs = projects?.filter(p => p.type === "job").sort((a, b) => b.priority - a.priority) || [];
+  const portfolio = projects?.filter(p => p.type !== "job").sort((a, b) => b.priority - a.priority) || [];
 
   return (
     <>
@@ -32,32 +32,34 @@ function Works() {
         </p>
 
         <div className="flex flex-col gap-10">
-          {/* Tabs Navigation */}
-          <div className="flex gap-4 justify-center items-center">
-            <button 
-              onClick={() => setActiveTab('jobs')}
-              className={`px-5 py-2 text-lg rounded font-medium transition-all duration-300 flex justify-center items-center ${
-                activeTab === 'jobs' 
-                ? 'bg-highlight text-tertiary'  
-                : 'text-gray-500 md:hover:text-tertiary bg-x2'
-              }`}
-            >
-              Jobs
-            </button>
-            <button 
-              onClick={() => setActiveTab('portfolio')}
-              className={` px-5 py-2 text-lg rounded font-medium transition-all duration-300 flex justify-center items-center ${
-                activeTab === 'portfolio' 
-                ? 'bg-highlight text-tertiary' 
-                : 'text-gray-500 hover:text-tertiary bg-x2'
-              }`}
-            >
-              Portfolio Projects
-            </button>
+          {/* Sticky Tabs Navigation */}
+          <div className="sm:sticky sm:top-0 -mx-8 sm:bg-primary/95 sm:backdrop-blur-sm sm:shadow-md sm:z-40">
+            <div className="flex gap-4 justify-center items-center py-4">
+              <button 
+                onClick={() => {setActiveTab('jobs'); scrollToSection('works-heading', "smooth")}}
+                className={`px-5 py-2 text-lg rounded font-medium transition-all duration-300 flex justify-center items-center ${
+                  activeTab === 'jobs' 
+                  ? 'bg-highlight text-tertiary'  
+                  : 'text-gray-500 md:hover:text-tertiary bg-x2'
+                }`}
+              >
+                Jobs
+              </button>
+              <button 
+                onClick={() => {setActiveTab('portfolio'); scrollToSection('works-heading', "smooth")}}
+                className={`px-5 py-2 text-lg rounded font-medium transition-all duration-300 flex justify-center items-center ${
+                  activeTab === 'portfolio' 
+                  ? 'bg-highlight text-tertiary' 
+                  : 'text-gray-500 hover:text-tertiary bg-x2'
+                }`}
+              >
+                Portfolio Projects
+              </button>
+            </div>
           </div>
 
           {/* Tab Content */}
-          <div>
+          <div id="tab-content">
             {activeTab === 'jobs' && (
               <div className="flex flex-wrap gap-5 justify-center">
                 {loading && (
@@ -97,7 +99,7 @@ function Works() {
             )}
           </div>
         </div>
-        <div className="text-center">
+        <div className=" sm:hidden text-center">
           <button 
             onClick={() => {
               setActiveTab(activeTab === 'jobs' ? 'portfolio' : 'jobs')
