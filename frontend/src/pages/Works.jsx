@@ -53,7 +53,7 @@ function Works() {
                   : 'text-gray-500 hover:text-tertiary bg-x2'
                 }`}
               >
-                Portfolio Projects
+                Personal Projects
               </button>
             </div>
           </div>

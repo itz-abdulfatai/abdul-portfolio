@@ -1,15 +1,15 @@
-model User {
-    id        String   @id @default(uuid())
-    name      String  @unique
-    email     String   @unique
-    password  String
-    role      Role     @default(USER)
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    softDelete Boolean? @default(false)
-}
+// model User {
+//     id        String   @id @default(uuid())
+//     name      String  @unique
+//     email     String   @unique
+//     password  String
+//     role      Role     @default(USER)
+//     createdAt DateTime @default(now())
+//     updatedAt DateTime @updatedAt
+//     softDelete Boolean? @default(false)
+// }
 
-enum Role {
-    ADMIN
-    USER
-}
+// enum Role {
+//     ADMIN
+//     USER
+// }

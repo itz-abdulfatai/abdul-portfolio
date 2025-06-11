@@ -1,77 +1,77 @@
-model Setting {
-  id                        String        @id @default(uuid())
-  name                      String        @unique
-  email                     String?
-  avatar                    String?
-  isAvaliableForFreelancing Boolean       @default(true)
-  heading                   String
-  about                     String
-  projectsDone              Int
-  yearsOfExperience         Int
-  clientSatisfaction        Int
-  tools                     Tool[]
-  projects                  Project[]
-  testimonials              Testimonial[]
-  socials                   social[]
-}
+// model Setting {
+//   id                        String        @id @default(uuid())
+//   name                      String        @unique
+//   email                     String?
+//   avatar                    String?
+//   isAvaliableForFreelancing Boolean       @default(true)
+//   heading                   String
+//   about                     String
+//   projectsDone              Int
+//   yearsOfExperience         Int
+//   clientSatisfaction        Int
+//   tools                     Tool[]
+//   projects                  Project[]
+//   testimonials              Testimonial[]
+//   socials                   social[]
+// }
 
-model Tool {
-  id         String   @id @default(uuid())
-  name       String   @unique
-  icon       String?
-  use        String
-  setting    Setting  @relation(fields: [settingId], references: [id])
-  settingId  String
-  softDelete Boolean? @default(false)
-}
+// model Tool {
+//   id         String   @id @default(uuid())
+//   name       String   @unique
+//   icon       String?
+//   use        String
+//   setting    Setting  @relation(fields: [settingId], references: [id])
+//   settingId  String
+//   softDelete Boolean? @default(false)
+// }
 
-model Project {
-  id           String      @id @unique @default(uuid())
-  name         String      @unique
-  services     String[]
-  images       String[]
-  description  String
-  type         String
-  priority     Float?      @default(1)
-  public       Boolean     @default(true)
-  slug         String
-  clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
-  clientInfoId String?
-  setting      Setting     @relation(fields: [settingId], references: [id])
-  settingId    String
-  softDelete   Boolean?    @default(false)
-  github       String?
-  link         String?
-}
+// model Project {
+//   id           String      @id @unique @default(uuid())
+//   name         String      @unique
+//   services     String[]
+//   images       String[]
+//   description  String
+//   type         String
+//   priority     Float?      @default(1)
+//   public       Boolean     @default(true)
+//   slug         String
+//   clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
+//   clientInfoId String?
+//   setting      Setting     @relation(fields: [settingId], references: [id])
+//   settingId    String
+//   softDelete   Boolean?    @default(false)
+//   github       String?
+//   link         String?
+// }
 
-model ClientInfo {
-  id          String        @id @unique @default(uuid())
-  name        String        @unique
-  email       String?
-  sector      String?
-  company     String?
-  project     Project[]
-  Testimonial Testimonial[]
-  softDelete  Boolean?      @default(false)
-}
+// model ClientInfo {
+//   id          String        @id @unique @default(uuid())
+//   name        String        @unique
+//   email       String?
+//   sector      String?
+//   company     String?
+//   project     Project[]
+//   Testimonial Testimonial[]
+//   softDelete  Boolean?      @default(false)
+// }
 
-model Testimonial {
-  id           String      @id @unique @default(uuid())
-  rating       Float
-  comment      String
-  clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
-  clientInfoId String?
-  setting      Setting     @relation(fields: [settingId], references: [id])
-  settingId    String
-  softDelete   Boolean?    @default(false)
-}
+// model Testimonial {
+//   id           String      @id @unique @default(uuid())
+//   rating       Float
+//   comment      String
+//   clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
+//   clientInfoId String?
+//   setting      Setting     @relation(fields: [settingId], references: [id])
+//   settingId    String
+//   softDelete   Boolean?    @default(false)
+// }
 
-model social {
-  id         String   @id @unique @default(uuid())
-  name       String   @unique
-  icon       String?
-  link       String
-  setting    Setting  @relation(fields: [settingId], references: [id])
-  settingId  String
-  softDelete Boolean? @default(false)
-}
+// model social {
+//   id         String   @id @unique @default(uuid())
+//   name       String   @unique
+//   icon       String?
+//   link       String
+//   setting    Setting  @relation(fields: [settingId], references: [id])
+//   settingId  String
+//   softDelete Boolean? @default(false)
+// }

@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  // previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model Setting {
+  id                        String        @id @default(uuid())
+  name                      String        @unique
+  email                     String?
+  avatar                    String?
+  isAvaliableForFreelancing Boolean       @default(true)
+  heading                   String
+  about                     String
+  projectsDone              Int
+  yearsOfExperience         Int
+  clientSatisfaction        Int
+  tools                     Tool[]
+  projects                  Project[]
+  testimonials              Testimonial[]
+  socials                   social[]
+}
+
+model Tool {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  icon       String?
+  use        String
+  setting    Setting  @relation(fields: [settingId], references: [id])
+  settingId  String
+  softDelete Boolean? @default(false)
+}
+
+model Project {
+  id           String      @id @unique @default(uuid())
+  name         String      @unique
+  services     String[]
+  images       String[]
+  description  String
+  type         String
+  priority     Float?      @default(1)
+  public       Boolean     @default(true)
+  slug         String
+  clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
+  clientInfoId String?
+  setting      Setting     @relation(fields: [settingId], references: [id])
+  settingId    String
+  softDelete   Boolean?    @default(false)
+  github       String?
+  link         String?
+}
+
+model ClientInfo {
+  id          String        @id @unique @default(uuid())
+  name        String        @unique
+  email       String?
+  sector      String?
+  company     String?
+  project     Project[]
+  Testimonial Testimonial[]
+  softDelete  Boolean?      @default(false)
+}
+
+model Testimonial {
+  id           String      @id @unique @default(uuid())
+  rating       Float
+  comment      String
+  clientInfo   ClientInfo? @relation(fields: [clientInfoId], references: [id])
+  clientInfoId String?
+  setting      Setting     @relation(fields: [settingId], references: [id])
+  settingId    String
+  softDelete   Boolean?    @default(false)
+}
+
+model social {
+  id         String   @id @unique @default(uuid())
+  name       String   @unique
+  icon       String?
+  link       String
+  setting    Setting  @relation(fields: [settingId], references: [id])
+  settingId  String
+  softDelete Boolean? @default(false)
+}
+
+
+model User {
+    id        String   @id @default(uuid())
+    name      String  @unique
+    email     String   @unique
+    password  String
+    role      Role     @default(USER)
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    softDelete Boolean? @default(false)
+}
+
+enum Role {
+    ADMIN
+    USER
+}
