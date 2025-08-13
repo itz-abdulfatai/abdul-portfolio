@@ -1,79 +1,62 @@
-import { Route, Routes, useLocation } from "react-router-dom"
-import MainLayout from "./layouts/MainLayout"
-import DashLayout from "./layouts/DashLayout"
-import Home from "./pages/Home"
-import Works from "./pages/Works"
-import Work from "./pages/Work"
-import {  useEffect } from "react"
+import { Route, Routes, useLocation } from "react-router-dom";
+import MainLayout from "./layouts/MainLayout";
+import DashLayout from "./layouts/DashLayout";
+import Home from "./pages/Home";
+import Works from "./pages/Works";
+import Work from "./pages/Work";
+import { useEffect } from "react";
 // import SettingContext from "./contexts/settingContext"
 // import Spinner from "./components/global/Spinner"
 // import Error from "./components/global/Error"
-import { scrollToSection } from "./utils/scrollIn"
-import NotFound from "./pages/NotFound"
-import ReactGA from 'react-ga4';
-import Quote from "./pages/Quote"
-import Contact from "./components/home/Contact"
-
+import { scrollToSection } from "./utils/scrollIn";
+import NotFound from "./pages/NotFound";
+import ReactGA from "react-ga4";
+import Quote from "./pages/Quote";
+import Contact from "./components/home/Contact";
+// import ImageUpload from "./components/global/ImageUpload";
 
 function App() {
-
   useEffect(() => {
-    ReactGA.initialize('G-GE32E0X9MH');
-    ReactGA.send('pageview');
+    ReactGA.initialize("G-GE32E0X9MH");
+    ReactGA.send("pageview");
   }, []);
 
-
-
-  const {pathname} = useLocation()
+  const { pathname } = useLocation();
   // const {loading, error} = useContext(SettingContext)
 
-
   useEffect(() => {
-    scrollToSection('headd')
-
-  }, [pathname])
+    scrollToSection("headd");
+  }, [pathname]);
 
   // if (loading) return <section className="h-screen"><Spinner/></section>
-  // if (error) { 
+  // if (error) {
   // console.log(error)
-    
+
   //   return <section className="h-screen"><Error error={error}/></section> }
 
   return (
     <>
+      <Routes>
+        {/* main layout */}
 
-    <Routes>
+        <Route element={<MainLayout />}>
+          <Route element={<Home />} path="/" />
+          <Route element={<Works />} path="/works" />
+          <Route element={<Work />} path="/works/:slug" />
+          <Route element={<Quote />} path="/quote" />
+          <Route element={<Contact />} path="/contact" />
+          {/* <Route element={<ImageUpload />} path="/uploader" /> */}
+        </Route>
 
-      {/* main layout */}
+        {/* dash layout */}
 
-      <Route element={<MainLayout/>}>
-      <Route element={<Home/>} path="/"/>
-      <Route element={<Works/>} path="/works"/>
-      <Route element={<Work/>} path="/works/:slug"/>
-      <Route element={<Quote/>} path="/quote"/>
-      <Route element={<Contact/>} path="/contact"/>
+        <Route element={<DashLayout />}></Route>
 
-
-
-      </Route>
-
-
-
-      {/* dash layout */}
-
-      <Route element={<DashLayout/>}>
-
-      </Route>
-
-
-
-      {/* no layout */}
-      <Route path="*" element={<NotFound/>}/>
-
-    </Routes>
+        {/* no layout */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </>
-
-  )
+  );
 }
 
-export default App
+export default App;
