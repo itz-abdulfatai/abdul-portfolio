@@ -9,7 +9,7 @@ function ImageUpload() {
 
   async function uploadImg(img) {
     const pass = prompt("what is the pass?");
-    if (!pass || pass.trim() !== "inside life") {
+    if (!pass || pass.trim() !== "inside") {
       alert("wrong pass");
       return;
     }

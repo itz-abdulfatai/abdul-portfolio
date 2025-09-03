@@ -13,7 +13,7 @@ import NotFound from "./pages/NotFound";
 import ReactGA from "react-ga4";
 import Quote from "./pages/Quote";
 import Contact from "./components/home/Contact";
-// import ImageUpload from "./components/global/ImageUpload";
+import ImageUpload from "./components/global/ImageUpload";
 
 function App() {
   useEffect(() => {
@@ -45,7 +45,7 @@ function App() {
           <Route element={<Work />} path="/works/:slug" />
           <Route element={<Quote />} path="/quote" />
           <Route element={<Contact />} path="/contact" />
-          {/* <Route element={<ImageUpload />} path="/uploader" /> */}
+          <Route element={<ImageUpload />} path="/uploader" />
         </Route>
 
         {/* dash layout */}
