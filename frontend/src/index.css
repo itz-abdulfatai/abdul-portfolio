@@ -198,6 +198,9 @@
     .primary-sh {
         text-shadow: 0px 0px 10px var(--primary-color);
     }
+    .secondary-sh {
+        text-shadow: 0px 0px 10px var(--secondary-color);
+    }
 
     .form-row {
         @apply flex flex-col gap-3 w-full

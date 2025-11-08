@@ -12,8 +12,14 @@ function Works() {
   const { projects } = settings
   const [activeTab, setActiveTab] = useState('jobs')
 
-  const jobs = projects?.filter(p => p.type === "job").sort((a, b) => b.priority - a.priority) || [];
-  const portfolio = projects?.filter(p => p.type !== "job").sort((a, b) => b.priority - a.priority) || [];
+  const jobs =
+    projects
+      ?.filter((p) => p.type === "job")
+      .sort((a, b) => Number(b.priority) - Number(a.priority)) || [];
+  const portfolio =
+    projects
+      ?.filter((p) => p.type !== "job")
+      .sort((a, b) => Number(b.priority) - Number(a.priority)) || [];
 
   return (
     <>
