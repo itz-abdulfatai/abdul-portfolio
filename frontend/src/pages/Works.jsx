@@ -15,12 +15,13 @@ function Works() {
   const jobs =
     projects
       ?.filter((p) => p.type === "job")
-      .sort((a, b) => Number(b.priority) - Number(a.priority)) || [];
+      .sort((a, b) => (Number(b.priority) || 0) - (Number(a.priority) || 0)) ||
+    [];
   const portfolio =
     projects
       ?.filter((p) => p.type !== "job")
-      .sort((a, b) => Number(b.priority) - Number(a.priority)) || [];
-
+      .sort((a, b) => (Number(b.priority) || 0) - (Number(a.priority) || 0)) ||
+    [];
   return (
     <>
       <Helmet>

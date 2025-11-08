@@ -87,7 +87,7 @@ function Quote() {
     formData.forEach((value, key) => {
       data[key] = value;
     });
-    console.log(data);
+    // console.log(data);
 
     if (source && source !== "undefined" && source !== null && source !== "") {
       data.source = source;
@@ -142,14 +142,14 @@ function Quote() {
   return (
     <>
       <Helmet>
-        <title>Quote | {settings.name ?? "Abdulfatai Aliyu"}</title>
+        <title>Quote | {settings?.name ?? "Abdulfatai Aliyu"}</title>
         <meta
           name="description"
           content="Request a custom website quote tailored to your needs and budget. Let's bring your vision to life."
         />
         <meta
           property="og:title"
-          content={`Quote | ${settings.name ?? "Abdulfatai Aliyu"}`}
+          content={`Quote | ${settings?.name ?? "Abdulfatai Aliyu"}`}
         />
         <meta
           property="og:description"

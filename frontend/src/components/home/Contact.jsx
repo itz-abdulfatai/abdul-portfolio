@@ -74,7 +74,7 @@ function Contact() {
         }
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return "email validation failed, Try again later";
     }
   }
