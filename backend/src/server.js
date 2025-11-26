@@ -5,7 +5,7 @@ import path, {dirname} from 'path'
 import settingsRoute from './routes/settings.route.js'
 import authRoute from './routes/auth.route.js'
 import ticketsRoute from './routes/tickets.route.js'
-import prerenderNode from 'prerender-node'
+// import prerenderNode from 'prerender-node'
 
 import {fileURLToPath} from 'url'
 const app = express()
@@ -15,7 +15,7 @@ dotenv.config()
 app.use(express.json())
 app.use(morgan('dev'))
 
-app.use(prerenderNode.set('prerenderToken', 'gbzcvPHS0tl5CZabKNeZ'));
+// app.use(prerenderNode.set('prerenderToken', 'gbzcvPHS0tl5CZabKNeZ'));
 
 // static files
 const __filename = fileURLToPath(import.meta.url)
