@@ -9,41 +9,52 @@ import SettingContext from "../contexts/settingContext"
 import { useContext } from "react"
 // import Popup from "../components/global/Popup"
 import FreePopup from "../components/global/FreePopup"
+import Certifications from "../components/home/Certifications";
 // import ClickSpark from "../components/global/ClickSpark"
 
 function Home() {
-  const {settings} = useContext(SettingContext)
+  const { settings } = useContext(SettingContext);
   return (
-  //   <ClickSpark 
-  //   sparkColor='#dcf763'
+    //   <ClickSpark
+    //   sparkColor='#dcf763'
 
-  //   sparkSize={10}
-  
-  //   sparkRadius={15}
-  
-  //   sparkCount={8}
-  
-  //   duration={400}
-  // >
+    //   sparkSize={10}
+
+    //   sparkRadius={15}
+
+    //   sparkCount={8}
+
+    //   duration={400}
+    // >
     <>
-    <Helmet>
-      <title>Home | {settings.name ?? 'Abdulfatai Aliyu'}</title>
-      <meta name="description" content="I am a full-stack developer with a passion for creating responsive, user-friendly websites." />
-      <meta property="og:title" content={`Home | ${settings.name ?? 'Abdulfatai Aliyu'}`} />
-      <meta property="og:description" content="I am a full-stack developer with a passion for creating responsive, user-friendly websites." />
-    </Helmet>
-    <Hero/>
-    <About/>
-    <Tools/>
-    <Portfolio heading='My portfolio highlights'/>
-    <Testimonials/>
-    <Contact/>
-    {/* <Popup/> */}
-    <FreePopup/>
+      <Helmet>
+        <title>Home | {settings.name ?? "Abdulfatai Aliyu"}</title>
+        <meta
+          name="description"
+          content="I am a full-stack developer with a passion for creating responsive, user-friendly websites."
+        />
+        <meta
+          property="og:title"
+          content={`Home | ${settings.name ?? "Abdulfatai Aliyu"}`}
+        />
+        <meta
+          property="og:description"
+          content="I am a full-stack developer with a passion for creating responsive, user-friendly websites."
+        />
+      </Helmet>
+      <Hero />
+      <About />
+      <Tools />
+      <Portfolio heading="My portfolio highlights" />
+      <Certifications />
+      <Testimonials />
+      <Contact />
+      {/* <Popup/> */}
+      <FreePopup />
     </>
 
     // {/* </ClickSpark> */}
-  )
+  );
 }
 
 export default Home
