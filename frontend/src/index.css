@@ -175,6 +175,22 @@
       transform: scaleY(0.8) scaleX(1.2);
     }
   }
+
+
+   .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .snap-center {
+          scroll-snap-align: center;
+        }
+        .name-item {
+          user-select: none;
+          -webkit-user-select: none;
+        }
 }
 
 @layer utilities {

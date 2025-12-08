@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-checkk
 import { useEffect, useRef, useState } from "react";
 
 /** @type {import('../../types').CertificationType[]} */
@@ -36,6 +36,15 @@ const baseCerts = [
     dateIssued: new Date("2024-05-20"),
     issuingOrganization: "Microsoft",
     description: "Covers Azure core services, security, and cloud concepts",
+  },
+  {
+    name: "Stripe Payments Specialist",
+    imageLink: "https://picsum.photos/800/600?random=5",
+    certLink: "https://example.com/certs/stripe-payments",
+    dateIssued: new Date("2023-08-01"),
+    expiryDate: new Date("2025-08-01"),
+    issuingOrganization: "Stripe",
+    description: "Training on integrating and managing online payments",
   },
   {
     name: "Stripe Payments Specialist",
@@ -387,7 +396,7 @@ function Certifications() {
   return (
     <section id="certs" className="flex flex-col gap-10 justify-center">
       <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
-        My Certifications
+        My Certifications ({n})
       </h2>
 
       <div className="min-h-[420px] flex flex-col sm:flex-row items-center gap-6">
