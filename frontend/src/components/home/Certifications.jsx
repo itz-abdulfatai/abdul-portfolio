@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 const dummyCertifications = [
   {
     name: "AWS Cloud Practitioner",
-    imageLink: "https://picsum.photos/800/600?random=1",
+    imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/aws-cloud-practitioner",
     dateIssued: new Date("2024-01-15"),
     expiryDate: new Date("2027-01-15"),
@@ -14,7 +14,7 @@ const dummyCertifications = [
   },
   {
     name: "Meta Frontend Developer",
-    imageLink: "https://picsum.photos/800/600?random=2",
+    imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/meta-frontend",
     dateIssued: new Date("2023-11-10"),
     issuingOrganization: "Meta",
@@ -22,7 +22,7 @@ const dummyCertifications = [
   },
   {
     name: "Google UX Design",
-    imageLink: "https://picsum.photos/800/600?random=3",
+    imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/google-ux",
     dateIssued: new Date("2024-03-05"),
     expiryDate: new Date("2026-03-05"),
@@ -31,7 +31,7 @@ const dummyCertifications = [
   },
   {
     name: "Microsoft Azure Fundamentals",
-    imageLink: "https://picsum.photos/800/600?random=4",
+    imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/azure-fundamentals",
     dateIssued: new Date("2024-05-20"),
     issuingOrganization: "Microsoft",
@@ -39,7 +39,50 @@ const dummyCertifications = [
   },
   {
     name: "Stripe Payments Specialist",
-    imageLink: "https://picsum.photos/800/600?random=5",
+    imageLink: "/placeholder-cert1.png",
+    certLink: "https://example.com/certs/stripe-payments",
+    dateIssued: new Date("2023-08-01"),
+    expiryDate: new Date("2025-08-01"),
+    issuingOrganization: "Stripe",
+    description: "Training on integrating and managing online payments",
+  },
+  {
+    name: "AWS Cloud Practitioner",
+    imageLink: "/placeholder-cert1.png",
+    certLink: "https://example.com/certs/aws-cloud-practitioner",
+    dateIssued: new Date("2024-01-15"),
+    expiryDate: new Date("2027-01-15"),
+    issuingOrganization: "Amazon Web Services",
+    description: "Entry level cloud certification covering core AWS services",
+  },
+  {
+    name: "Meta Frontend Developer",
+    imageLink: "/placeholder-cert1.png",
+    certLink: "https://example.com/certs/meta-frontend",
+    dateIssued: new Date("2023-11-10"),
+    issuingOrganization: "Meta",
+    description: "Covers modern frontend development with React and JavaScript",
+  },
+  {
+    name: "Google UX Design",
+    imageLink: "/placeholder-cert1.png",
+    certLink: "https://example.com/certs/google-ux",
+    dateIssued: new Date("2024-03-05"),
+    expiryDate: new Date("2026-03-05"),
+    issuingOrganization: "Google",
+    description: "User experience fundamentals and design thinking principles",
+  },
+  {
+    name: "Microsoft Azure Fundamentals",
+    imageLink: "/placeholder-cert1.png",
+    certLink: "https://example.com/certs/azure-fundamentals",
+    dateIssued: new Date("2024-05-20"),
+    issuingOrganization: "Microsoft",
+    description: "Covers Azure core services, security, and cloud concepts",
+  },
+  {
+    name: "Stripe Payments Specialist",
+    imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/stripe-payments",
     dateIssued: new Date("2023-08-01"),
     expiryDate: new Date("2025-08-01"),
@@ -307,7 +350,7 @@ function Certifications() {
 
       <div className="min-h-[420px] flex flex-col sm:flex-row items-center gap-6">
         {/* LEFT - names with top and bottom arrows */}
-        <div className="flex-1 max-w-[420px] w-full flex flex-col items-start gap-3">
+        <div className=" flex flex-col items-start gap-3 ">
           <div className="flex flex-col items-center w-full">
             <button
               onClick={(e) => {
@@ -342,21 +385,22 @@ function Certifications() {
             </button>
 
             <div
-              ref={namesContainerRef}
-              className="w-full overflow-y-auto py-4 no-scrollbar"
+              className="w-full overflow-y-auto py-4 no-scrollbar  "
               style={{
-                maxHeight: "320px",
                 paddingTop: "12px",
                 paddingBottom: "12px",
                 width: "100%",
               }}
             >
-              <div className="flex flex-col items-start gap-4 px-3">
+              <div className="flex max-sm:flex-row  max-sm: flex-col items-start gap-2 2xl:gap-4 px-3">
                 {certs.map((cert, idx) => (
                   <div
                     key={cert.name}
-                    ref={(el) => (nameRefs.current[idx] = el)}
-                    className="cursor-pointer select-none"
+                    className={`cursor-pointer select-none text-[13px] 2xl:text-sm ${
+                      idx === activeIndex
+                        ? "text-highlight font-semibold"
+                        : "text-x font-medium"
+                    }`}
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveIndex(idx);
@@ -364,10 +408,9 @@ function Certifications() {
                     style={{
                       transformOrigin: "left center",
                       transition:
-                        "transform 200ms linear, opacity 200ms linear, color 200ms linear",
+                        "transform 200ms linear, opacity 200ms linear, color 200ms linear, fontSize 200ms linear",
                       padding: "6px 8px",
                       borderRadius: 6,
-                      fontSize: 16,
                       color:
                         idx === activeIndex
                           ? "var(--highlight-color, #b7ff4a)"
@@ -420,11 +463,11 @@ function Certifications() {
           <div className="relative">
             <div
               ref={imagesContainerRef}
-              className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar"
+              className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3"
               style={{
                 display: "flex",
-                gap: 12,
-                padding: "24px 12px",
+                // gap: 12,
+                // padding: "24px 12px",
                 scrollSnapType: "x mandatory",
                 alignItems: "center",
                 // disable native visible scrollbar
@@ -461,6 +504,7 @@ function Certifications() {
                 >
                   <img
                     src={cert.imageLink}
+                    draggable={false}
                     alt={cert.name}
                     style={{
                       width: "100%",
