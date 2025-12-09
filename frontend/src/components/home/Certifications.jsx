@@ -95,6 +95,10 @@ function Certifications() {
   const [certs] = useState(dummyCertifications);
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const [itemPct, setItemPct] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
+  );
+
   // const namesContainerRef = useRef(null);
   const imagesContainerRef = useRef(null);
   // const nameRefs = useRef([]);
@@ -214,7 +218,6 @@ function Certifications() {
 
     let raf = 0;
 
-    
     const onImagesScroll = () => {
       if (programmaticScrollRef.current) {
         applyVisuals();
@@ -282,7 +285,7 @@ function Certifications() {
       window.clearTimeout(programmaticTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+  }, [activeIndex, itemPct]);
 
   // arrow controls for names list, arrows placed top and bottom
   // const goPrev = () => {
@@ -292,6 +295,40 @@ function Certifications() {
   //   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
   // };
 
+  // responsive resize: update itemPct, re-run visuals and re-center
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let timeout = 0;
+    const handleResize = () => {
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => {
+        const isSmall = window.innerWidth < 640;
+        const newPct = isSmall ? 0.8 : 0.62;
+        setItemPct((prev) => {
+          if (Math.abs(prev - newPct) < 0.001) return prev;
+          return newPct;
+        });
+
+        // rerun visuals and re-center after layout updates
+        requestAnimationFrame(() => {
+          applyVisuals();
+          const el = imageRefs.current[activeIndex];
+          scrollItemToCenter(imagesContainerRef.current, el, "x");
+        });
+      }, 120);
+    };
+
+    // initial run + listen
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.clearTimeout(timeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
   return (
     <section id="certs" className="flex flex-col gap-10 justify-center">
       <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
@@ -300,7 +337,7 @@ function Certifications() {
 
       <div className="min-h-[420px] flex flex-col sm:flex-row items-center gap-6">
         {/* LEFT - names with top and bottom arrows */}
-        <div className=" flex flex-col items-start gap-3 ">
+        <div className=" flex flex-col items-start gap-3 max-sm:hidden ">
           <div className="flex flex-col items-center w-full">
             <div
               className="w-full overflow-y-auto py-4 no-scrollbar  "
@@ -313,7 +350,7 @@ function Certifications() {
               <div className="flex max-sm:flex-rowW  flex-col items-start gap-2 2xl:gap-4 px-3">
                 {certs.map((cert, idx) => (
                   <div
-                    key={cert.name}
+                    key={`${cert.name}-${idx}`}
                     className={`cursor-pointer select-none text-[13px] 2xl:text-sm ${
                       idx === activeIndex
                         ? "text-highlight font-semibold"
@@ -343,6 +380,28 @@ function Certifications() {
             </div>
           </div>
         </div>
+        {/* mobile single active name (non-scrollable) */}
+        <div
+          className="flex sm:hidden w-full justify-center items-center py-2 px-3"
+          style={{
+            overflow: "hidden", // prevent any scrolling
+            touchAction: "none", // disable browser touch gestures on this element
+          }}
+        >
+          <div
+            // key={`${certs[activeIndex].name}-${activeIndex}`}
+            className="w-full text-center select-none text-highlight"
+            style={{
+              whiteSpace: "nowrap",
+              textOverflow: "ellipsis",
+              overflow: "hidden",
+              fontWeight: 600,
+            }}
+            aria-hidden={false}
+          >
+            {certs[activeIndex].name}
+          </div>
+        </div>
 
         {/* RIGHT - images */}
         <div className="flex-1 w-full">
@@ -362,7 +421,7 @@ function Certifications() {
             >
               {certs.map((cert, idx) => (
                 <div
-                  key={cert.name}
+                  key={`${cert.name}-${idx}`}
                   ref={(el) => (imageRefs.current[idx] = el)}
                   onClick={(e) => {
                     e.preventDefault();
@@ -370,8 +429,8 @@ function Certifications() {
                   }}
                   className="snap-center flex-shrink-0 rounded-xl overflow-hidden"
                   style={{
-                    flex: "0 0 62%",
-                    minWidth: "62%",
+                    flex: `0 0 ${itemPct * 100}%`,
+                    minWidth: `${itemPct * 100}%`,
                     height: 320,
                     display: "flex",
                     alignItems: "center",
