@@ -332,12 +332,12 @@ function Certifications() {
   return (
     <section id="certs" className="flex flex-col gap-10 justify-center">
       <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
-        My Certifications
+        My Certifications ({certs.length})
       </h2>
 
-      <div className="min-h-[420px] flex flex-col sm:flex-row items-center gap-6">
+      <div className="min-h-[420px] flex flex-col lg:flex-row items-center gap-6">
         {/* LEFT - names with top and bottom arrows */}
-        <div className=" flex flex-col items-start gap-3 max-sm:hidden ">
+        <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
           <div className="flex flex-col items-center w-full">
             <div
               className="w-full overflow-y-auto py-4 no-scrollbar  "
@@ -382,7 +382,7 @@ function Certifications() {
         </div>
         {/* mobile single active name (non-scrollable) */}
         <div
-          className="flex sm:hidden w-full justify-center items-center py-2 px-3"
+          className="flex lg:hidden w-full justify-center items-center py-2 px-3"
           style={{
             overflow: "hidden", // prevent any scrolling
             touchAction: "none", // disable browser touch gestures on this element
