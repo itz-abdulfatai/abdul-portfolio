@@ -95,9 +95,9 @@ function Certifications() {
   const [certs] = useState(dummyCertifications);
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const namesContainerRef = useRef(null);
+  // const namesContainerRef = useRef(null);
   const imagesContainerRef = useRef(null);
-  const nameRefs = useRef([]);
+  // const nameRefs = useRef([]);
   const imageRefs = useRef([]);
 
   // programmatic scroll guard to avoid feedback loops
@@ -105,10 +105,6 @@ function Certifications() {
   const programmaticTimeoutRef = useRef(0);
 
   // visual constants
-  const MAX_NAME_SCALE = 1.15;
-  const MIN_NAME_SCALE = 0.85;
-  const MAX_NAME_OPACITY = 1;
-  const MIN_NAME_OPACITY = 0.45;
 
   const MAX_IMG_SCALE = 1;
   const MIN_IMG_SCALE = 0.8;
@@ -143,36 +139,7 @@ function Certifications() {
   };
 
   const applyVisuals = () => {
-    const namesContainer = namesContainerRef.current;
     const imagesContainer = imagesContainerRef.current;
-
-    if (namesContainer) {
-      const cRect = namesContainer.getBoundingClientRect();
-      const cCenterY = cRect.top + cRect.height / 2;
-      nameRefs.current.forEach((el, idx) => {
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        const itemCenter = r.top + r.height / 2;
-        const distance = clamp(
-          Math.abs(itemCenter - cCenterY) / (cRect.height / 2),
-          0,
-          1
-        ); // 0..1
-        const t = 1 - distance;
-        const scale = MIN_NAME_SCALE + (MAX_NAME_SCALE - MIN_NAME_SCALE) * t;
-        const opacity =
-          MIN_NAME_OPACITY + (MAX_NAME_OPACITY - MIN_NAME_OPACITY) * t;
-        el.style.transform = `translateX(${(1 - t) * 6}px) scale(${scale})`;
-        el.style.opacity = `${opacity}`;
-        el.style.transition =
-          "transform 150ms linear, opacity 150ms linear, color 150ms linear";
-        el.style.color =
-          t > 0.7
-            ? "var(--highlight-color, #b7ff4a)"
-            : `rgba(255,255,255,${0.65 + 0.35 * t})`;
-        el.style.fontWeight = t > 0.7 ? "600" : "500";
-      });
-    }
 
     if (imagesContainer) {
       const iRect = imagesContainer.getBoundingClientRect();
@@ -230,9 +197,9 @@ function Certifications() {
 
   // when activeIndex changes we programmatically center both lists
   useEffect(() => {
-    const targetName = nameRefs.current[activeIndex];
+    // const targetName = nameRefs.current[activeIndex];
     const targetImg = imageRefs.current[activeIndex];
-    scrollItemToCenter(namesContainerRef.current, targetName, "y");
+    // scrollItemToCenter(namesContainerRef.current, targetName, "y");
     scrollItemToCenter(imagesContainerRef.current, targetImg, "x");
     // also update visuals immediately
     applyVisuals();
@@ -241,31 +208,14 @@ function Certifications() {
 
   // attach scroll, wheel, and touch handlers
   useEffect(() => {
-    const namesContainer = namesContainerRef.current;
+    // const namesContainer = namesContainerRef.current;
     const imagesContainer = imagesContainerRef.current;
-    if (!namesContainer || !imagesContainer) return;
+    if (!imagesContainer) return;
 
     let raf = 0;
 
-    const onNamesScroll = (ev) => {
-      if (programmaticScrollRef.current) {
-        // avoid reacting to programmatic scroll
-        applyVisuals();
-        return;
-      }
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const newIndex = computeClosestIndex(
-          namesContainer,
-          nameRefs.current,
-          "y"
-        );
-        if (newIndex !== activeIndex) setActiveIndex(newIndex);
-        applyVisuals();
-      });
-    };
-
-    const onImagesScroll = (ev) => {
+    
+    const onImagesScroll = () => {
       if (programmaticScrollRef.current) {
         applyVisuals();
         return;
@@ -283,11 +233,11 @@ function Certifications() {
     };
 
     // prevent entire page from scrolling when wheel is used on the containers
-    const onNamesWheel = (e) => {
-      // vertical scroll belongs to names container so let it scroll there but prevent page
-      e.preventDefault();
-      namesContainer.scrollTop += e.deltaY;
-    };
+    // const onNamesWheel = (e) => {
+    //   // vertical scroll belongs to names container so let it scroll there but prevent page
+    //   e.preventDefault();
+    //   namesContainer.scrollTop += e.deltaY;
+    // };
     const onImagesWheel = (e) => {
       // horizontal scroll for images: translate vertical wheel into horizontal scroll
       e.preventDefault();
@@ -301,19 +251,19 @@ function Certifications() {
       e.stopPropagation();
     };
 
-    namesContainer.addEventListener("scroll", onNamesScroll, { passive: true });
+    // namesContainer.addEventListener("scroll", onNamesScroll, { passive: true });
     imagesContainer.addEventListener("scroll", onImagesScroll, {
       passive: true,
     });
 
-    namesContainer.addEventListener("wheel", onNamesWheel, { passive: false });
+    // namesContainer.addEventListener("wheel", onNamesWheel, { passive: false });
     imagesContainer.addEventListener("wheel", onImagesWheel, {
       passive: false,
     });
 
-    namesContainer.addEventListener("touchmove", onTouchMovePrevent, {
-      passive: false,
-    });
+    // namesContainer.addEventListener("touchmove", onTouchMovePrevent, {
+    //   passive: false,
+    // });
     imagesContainer.addEventListener("touchmove", onTouchMovePrevent, {
       passive: false,
     });
@@ -322,11 +272,11 @@ function Certifications() {
     applyVisuals();
 
     return () => {
-      namesContainer.removeEventListener("scroll", onNamesScroll);
+      // namesContainer.removeEventListener("scroll", onNamesScroll);
       imagesContainer.removeEventListener("scroll", onImagesScroll);
-      namesContainer.removeEventListener("wheel", onNamesWheel);
+      // namesContainer.removeEventListener("wheel", onNamesWheel);
       imagesContainer.removeEventListener("wheel", onImagesWheel);
-      namesContainer.removeEventListener("touchmove", onTouchMovePrevent);
+      // namesContainer.removeEventListener("touchmove", onTouchMovePrevent);
       imagesContainer.removeEventListener("touchmove", onTouchMovePrevent);
       if (raf) cancelAnimationFrame(raf);
       window.clearTimeout(programmaticTimeoutRef.current);
@@ -335,12 +285,12 @@ function Certifications() {
   }, [activeIndex]);
 
   // arrow controls for names list, arrows placed top and bottom
-  const goPrev = () => {
-    setActiveIndex((i) => Math.max(0, i - 1));
-  };
-  const goNext = () => {
-    setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
-  };
+  // const goPrev = () => {
+  //   setActiveIndex((i) => Math.max(0, i - 1));
+  // };
+  // const goNext = () => {
+  //   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
+  // };
 
   return (
     <section id="certs" className="flex flex-col gap-10 justify-center">
@@ -352,38 +302,6 @@ function Certifications() {
         {/* LEFT - names with top and bottom arrows */}
         <div className=" flex flex-col items-start gap-3 ">
           <div className="flex flex-col items-center w-full">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                goPrev();
-              }}
-              aria-label="previous"
-              className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 mb-2"
-              title="previous"
-              style={{ alignSelf: "flex-start" }}
-            >
-              {/* up arrow */}
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-              >
-                <path
-                  d="M12 19V5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M5 12l7-7 7 7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-
             <div
               className="w-full overflow-y-auto py-4 no-scrollbar  "
               style={{
@@ -392,7 +310,7 @@ function Certifications() {
                 width: "100%",
               }}
             >
-              <div className="flex max-sm:flex-row  max-sm: flex-col items-start gap-2 2xl:gap-4 px-3">
+              <div className="flex max-sm:flex-rowW  flex-col items-start gap-2 2xl:gap-4 px-3">
                 {certs.map((cert, idx) => (
                   <div
                     key={cert.name}
@@ -423,38 +341,6 @@ function Certifications() {
                 ))}
               </div>
             </div>
-
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                goNext();
-              }}
-              aria-label="next"
-              className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 mt-2"
-              title="next"
-              style={{ alignSelf: "flex-start" }}
-            >
-              {/* down arrow */}
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="white"
-                strokeWidth="2"
-              >
-                <path
-                  d="M12 5v14"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M19 12l-7 7-7-7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
           </div>
         </div>
 
@@ -505,12 +391,9 @@ function Certifications() {
                   <img
                     src={cert.imageLink}
                     draggable={false}
+                    className=" select-none w-full h-full object-cover block"
                     alt={cert.name}
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
                       transformOrigin: "center center",
                     }}
                   />
@@ -593,3 +476,36 @@ function Certifications() {
 }
 
 export default Certifications;
+
+
+//  <button
+//               onClick={(e) => {
+//                 e.preventDefault();
+//                 goNext();
+//               }}
+//               aria-label="next"
+//               className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 mt-2"
+//               title="next"
+//               style={{ alignSelf: "flex-start" }}
+//             >
+//               {/* down arrow */}
+//               <svg
+//                 width="18"
+//                 height="18"
+//                 viewBox="0 0 24 24"
+//                 fill="none"
+//                 stroke="white"
+//                 strokeWidth="2"
+//               >
+//                 <path
+//                   d="M12 5v14"
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                 />
+//                 <path
+//                   d="M19 12l-7 7-7-7"
+//                   strokeLinecap="round"
+//                   strokeLinejoin="round"
+//                 />
+//               </svg>
+//             </button>
