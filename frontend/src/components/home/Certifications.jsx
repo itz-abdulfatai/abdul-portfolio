@@ -94,10 +94,54 @@ const dummyCertifications = [
 function Certifications() {
   const [certs] = useState(dummyCertifications);
   const [activeIndex, setActiveIndex] = useState(0);
+  
 
   const [itemPct, setItemPct] = useState(() =>
     typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
   );
+
+  // auto rotate timer
+  const autoRotateIntervalRef = useRef(null);
+
+  function autorotateActiveIndex() {
+    setActiveIndex((i) => (i + 1) % certs.length);
+  }
+
+  const startAutoRotate = () => {
+    if (autoRotateIntervalRef.current) return; // already running
+    autoRotateIntervalRef.current = window.setInterval(
+      autorotateActiveIndex,
+      5000
+    );
+  };
+
+  const pauseAutoRotate = () => {
+    if (autoRotateIntervalRef.current) {
+      window.clearInterval(autoRotateIntervalRef.current);
+      autoRotateIntervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    startAutoRotate();
+
+    // Pause when page loses focus, resume when it regains focus
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        pauseAutoRotate();
+      } else {
+        startAutoRotate();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      pauseAutoRotate();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [certs.length]);
 
   // const namesContainerRef = useRef(null);
   const imagesContainerRef = useRef(null);
@@ -330,7 +374,12 @@ function Certifications() {
   }, [activeIndex]);
 
   return (
-    <section id="certs" className="flex flex-col gap-10 justify-center">
+    <section
+      id="certs"
+      className="flex flex-col gap-10 justify-center"
+      onMouseEnter={pauseAutoRotate}
+      onMouseLeave={startAutoRotate}
+    >
       <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
         My Certifications ({certs.length})
       </h2>
@@ -339,19 +388,12 @@ function Certifications() {
         {/* LEFT - names with top and bottom arrows */}
         <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
           <div className="flex flex-col items-center w-full">
-            <div
-              className="w-full overflow-y-auto py-4 no-scrollbar  "
-              style={{
-                paddingTop: "12px",
-                paddingBottom: "12px",
-                width: "100%",
-              }}
-            >
+            <div className="w-full overflow-y-auto py-4 no-scrollbar pt-3 pb-3 ">
               <div className="flex max-sm:flex-rowW  flex-col items-start gap-2 2xl:gap-4 px-3">
                 {certs.map((cert, idx) => (
                   <div
                     key={`${cert.name}-${idx}`}
-                    className={`cursor-pointer select-none text-[13px] 2xl:text-sm ${
+                    className={`cursor-pointer select-none text-[13px] px-2 py-1.5 2xl:text-sm rounded-md ${
                       idx === activeIndex
                         ? "text-highlight font-semibold"
                         : "text-x font-medium"
@@ -364,8 +406,6 @@ function Certifications() {
                       transformOrigin: "left center",
                       transition:
                         "transform 200ms linear, opacity 200ms linear, color 200ms linear, fontSize 200ms linear",
-                      padding: "6px 8px",
-                      borderRadius: 6,
                       color:
                         idx === activeIndex
                           ? "var(--highlight-color, #b7ff4a)"
@@ -382,21 +422,14 @@ function Certifications() {
         </div>
         {/* mobile single active name (non-scrollable) */}
         <div
-          className="flex lg:hidden w-full justify-center items-center py-2 px-3"
+          className="flex lg:hidden w-full overflow-hidden  justify-center items-center py-2 px-3"
           style={{
-            overflow: "hidden", // prevent any scrolling
             touchAction: "none", // disable browser touch gestures on this element
           }}
         >
           <div
             // key={`${certs[activeIndex].name}-${activeIndex}`}
-            className="w-full text-center select-none text-highlight"
-            style={{
-              whiteSpace: "nowrap",
-              textOverflow: "ellipsis",
-              overflow: "hidden",
-              fontWeight: 600,
-            }}
+            className="w-full text-center select-none text-highlight whitespace-nowrap truncate overflow-hidden font-semibold"
             aria-hidden={false}
           >
             {certs[activeIndex].name}
@@ -408,13 +441,9 @@ function Certifications() {
           <div className="relative">
             <div
               ref={imagesContainerRef}
-              className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3"
+              className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3 flex items-center"
               style={{
-                display: "flex",
-                // gap: 12,
-                // padding: "24px 12px",
                 scrollSnapType: "x mandatory",
-                alignItems: "center",
                 // disable native visible scrollbar
                 WebkitOverflowScrolling: "touch",
               }}
@@ -427,24 +456,19 @@ function Certifications() {
                     e.preventDefault();
                     setActiveIndex(idx);
                   }}
-                  className="snap-center flex-shrink-0 rounded-xl overflow-hidden"
+                  className="snap-center flex-shrink-0 rounded-xl overflow-hidden h-[320px] flex items-center justify-center cursor-pointer "
                   style={{
                     flex: `0 0 ${itemPct * 100}%`,
                     minWidth: `${itemPct * 100}%`,
-                    height: 320,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
+
                     background:
                       "linear-gradient(180deg, #111 0%, #0b0b0b 100%)",
-                    borderRadius: 12,
                     boxShadow:
                       idx === activeIndex
                         ? "0 8px 30px rgba(0,0,0,0.6)"
                         : "0 4px 12px rgba(0,0,0,0.4)",
                     transition:
                       "transform 220ms linear, opacity 220ms linear, box-shadow 220ms linear",
-                    cursor: "pointer",
                   }}
                 >
                   <img
@@ -461,14 +485,7 @@ function Certifications() {
             </div>
 
             {/* left image arrow */}
-            <div
-              style={{
-                position: "absolute",
-                left: 8,
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            >
+            <div className=" absolute left-2 top-1/2 -translate-y-1/2">
               <button
                 onClick={(e) => {
                   e.preventDefault();
@@ -495,14 +512,7 @@ function Certifications() {
             </div>
 
             {/* right image arrow */}
-            <div
-              style={{
-                position: "absolute",
-                right: 8,
-                top: "50%",
-                transform: "translateY(-50%)",
-              }}
-            >
+            <div className=" absolute right-2 top-1/2 -translate-y-1/2">
               <button
                 onClick={(e) => {
                   e.preventDefault();

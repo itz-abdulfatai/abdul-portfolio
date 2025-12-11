@@ -1,6 +1,6 @@
 export type CertificationType = {
-  name: string;
-  imageLink: string; // picsum placeholder image link
+  name: string; // used
+  imageLink: string; // used
   certLink: string;
   dateIssued?: Date;
   expiryDate?: Date;
