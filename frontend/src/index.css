@@ -27,6 +27,10 @@
 
     }
 
+    .custom-cursor {
+        cursor: url("./assets/images/c3.png"), auto;
+    }
+
     nav.active {
         @apply max-md:top-[100%] opacity-100
     }
@@ -232,4 +236,34 @@
         @apply focus:outline-none test-b border-transparent 
     }
 
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@layer utilities {
+    .animate-fadeIn {
+        animation: fadeIn 0.3s ease-out;
+    }
+
+    .animate-scaleIn {
+        animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 }
