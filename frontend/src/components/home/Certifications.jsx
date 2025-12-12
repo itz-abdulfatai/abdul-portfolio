@@ -415,7 +415,7 @@ function Certifications() {
           <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
             <div className="flex flex-col items-center w-full">
               <div className="w-full overflow-y-auto py-4 no-scrollbar pt-3 pb-3 ">
-                <div className="flex max-sm:flex-rowW  flex-col items-start gap-2 2xl:gap-4 px-3">
+                <div className="flex  flex-col items-start gap-2 2xl:gap-4 px-3">
                   {certs.map((cert, idx) => (
                     <div
                       key={`${cert.name}-${idx}`}
@@ -506,6 +506,9 @@ function Certifications() {
                           setShowModal(true);
                         }}
                         className={`group-hover:bg-blackb group-hover:bg-opacity-20  absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-all duration-300 custom-cursor`}
+                        role="button"
+                        aria-label={`View ${cert.name} certification details`}
+                        tabIndex={0}
                       ></div>
                     )}
                     <img

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function CertModal({
   cert,
@@ -28,7 +27,8 @@ function CertModal({
     return () => {
       document.body.style.overflow = ""; // cleanup
     };
-  }, [showModal, onClose, onOpen]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showModal]);
 
   const showDesc = () => {
     setShowDescription(true);
@@ -43,12 +43,13 @@ function CertModal({
           }}
         >
           <div
-            className="w-full max-w-[500px] bg-primary overflow-hiddenn flex flex-col rounded-2xl max-h-[85vh] sm:max-h-[95vh] overflow-y-auto  animate-scaleIn relative"
+            className="w-full max-w-[500px] bg-primary  flex flex-col rounded-2xl max-h-[85vh] sm:max-h-[95vh] overflow-y-auto  animate-scaleIn relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               className=" absolute top-4 right-4 cursor-pointer z-10 w-8 h-8 rounded-full bg-secondary hover:bg-primary  group flex justify-center items-center transition-colors duration-300"
               onClick={() => setShowModal(false)}
+              aria-label="Close modal"
             >
               <i className="bx bx-x text-primary group-hover:text-secondary transition-colors duration-300"></i>
             </button>
