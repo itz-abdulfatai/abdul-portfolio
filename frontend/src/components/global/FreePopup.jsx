@@ -142,7 +142,8 @@ function FreePopup() {
                     : activeImg == 3
                     ? " sm:h-[63%] scale-[0.98] max-sm:scale-[1.1] sm:hover:scale-105."
                     : ""
-                } object-cover transition-all  duration-500 ease-in `}
+                } object-cover transition-all  duration-500 ease-in select-none `}
+                draggable="false"
               />
             </div>
 

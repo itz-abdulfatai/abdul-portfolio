@@ -33,6 +33,9 @@ function CertModal({
   const showDesc = () => {
     setShowDescription(true);
   };
+  const hideDesc = () => {
+    setShowDescription(false);
+  };
   return (
     <>
       {certification && showModal && (
@@ -47,14 +50,31 @@ function CertModal({
             className="w-full max-w-[500px] bg-primary  flex flex-col rounded-2xl max-h-[85vh] sm:max-h-[95vh] overflow-y-auto  animate-scaleIn relative"
             onClick={(e) => e.stopPropagation()}
           >
-            <button
-              className=" absolute top-4 right-4 cursor-pointer z-10 w-8 h-8 rounded-full bg-secondary hover:bg-primary  group flex justify-center items-center transition-colors duration-300"
-              onClick={() => setShowModal(false)}
-              aria-label="Close modal"
-            >
-              <i className="bx bx-x text-primary group-hover:text-secondary transition-colors duration-300"></i>
-            </button>
-            <div className="w-full rounded-t-2xl overflow-hidden relative group flex-none h-[260px] sm:h-96">
+            <div className="w-full rounded-t-2xl overflow-hidden relative flex-none h-[260px] sm:h-96 ">
+              <div className="absolute top-4 left-4 right-4 z-20 flex items-center max-md:justify-end justify-between pointer-events-none">
+                <a
+                  href={certification.certLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pointer-events-auto bg-secondary hover:bg-primary
+               px-4 py-1.5 text-sm font-medium text-primary hover:text-secondary
+               rounded-2xl transition-all duration-300 flex items-center gap-2
+               border border-secondary group max-md:hidden"
+                >
+                  View Certificate
+                  <i className="bx bx-right-top-arrow-circle group-hover:translate-x-1 transition-transform text-base"></i>
+                </a>
+
+                <button
+                  className="pointer-events-auto w-8 h-8 rounded-full bg-secondary hover:bg-primary
+               flex items-center justify-center transition-colors duration-300 group"
+                  onClick={() => setShowModal(false)}
+                  aria-label="Close modal"
+                >
+                  <i className="bx bx-x text-primary group-hover:text-secondary transition-colors duration-300"></i>
+                </button>
+              </div>
+
               <img
                 src={certification.imageLink}
                 alt={certification.name}
@@ -62,7 +82,7 @@ function CertModal({
               />
             </div>
 
-            <div className="p-6 flex flex-col gap-5 flex-1 overflow-y-auto ">
+            <div className="p-6 flex flex-col gap-5 sm:gap-3 2xl:gap-5 flex-1 overflow-y-auto ">
               <div className="space-y-2">
                 <h3 className="capitalize font-bold text-lg text-secondary leading-tight">
                   {certification.name}
@@ -72,7 +92,7 @@ function CertModal({
                 </p>
               </div>
 
-              <div className="flex items-center gap-3 text-sm text-tertiary border-l-2 border-highlight/40 pl-3 py-2">
+              <div className="flex items-center gap-3 text-sm text-tertiary border-l-2 border-highlight/40 pl-3 py-2 md:py-1 2xl:py-2">
                 <i className="bx bx-calendar text-highlight"></i>
                 <div className="flex flex-wrap gap-1">
                   {certification.dateIssued && (
@@ -88,7 +108,13 @@ function CertModal({
 
               {certification.description && showDescription ? (
                 <div className="bg-x/30 rounded-lg p-4 text-sm text-secondary leading-relaxed border border-x/50 animate-fadeIn whitespace-pre-line">
-                  {certification.description}
+                  <p>{certification.description}</p>
+                  <button
+                    className=" text-highlight  mt-5 text-right w-full hover:text-secondary transition-colors duration-300"
+                    onClick={hideDesc}
+                  >
+                    Hide description
+                  </button>
                 </div>
               ) : (
                 <button
@@ -104,7 +130,7 @@ function CertModal({
 
               <a
                 href={certification.certLink}
-                className="self-start px-4 py-2 text-sm font-medium text-highlight hover:text-secondary bg-x/40 hover:bg-x/60 rounded-lg transition-all duration-300 flex items-center gap-2 border border-secondary group"
+                className="self-start px-4 py-2 md:hidden text-sm font-medium text-highlight hover:text-secondary bg-x/40 hover:bg-x/60 rounded-lg transition-all duration-300 flex items-center gap-2 border border-secondary group"
                 target="_blank"
                 rel="noopener noreferrer"
               >
