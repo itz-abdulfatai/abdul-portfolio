@@ -106,245 +106,262 @@ function Certifications() {
   const [certs] = useState(dummyCertifications);
   const [activeIndex, setActiveIndex] = useState(1);
   const [showModal, setShowModal] = useState(false);
+const scrollTimeoutRef = useRef(null);
+const [itemPct, setItemPct] = useState(() =>
+  typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
+);
 
-  const [itemPct, setItemPct] = useState(() =>
-    typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
-  );
+// auto rotate timer
+// const autoRotateIntervalRef = useRef(null);
 
-  // auto rotate timer
-  // const autoRotateIntervalRef = useRef(null);
+// function autorotateActiveIndex() {
+//   setActiveIndex((i) => (i + 1) % certs.length);
+// }
 
-  // function autorotateActiveIndex() {
-  //   setActiveIndex((i) => (i + 1) % certs.length);
-  // }
+// const isMobileScreen = () =>
+//   typeof window !== "undefined" && window.innerWidth < 640;
 
-  // const isMobileScreen = () =>
-  //   typeof window !== "undefined" && window.innerWidth < 640;
+// const startAutoRotate = () => {
+//   if (isMobileScreen()) return; // disable on mobile
+//   if (autoRotateIntervalRef.current) return; // already running
+//   autoRotateIntervalRef.current = window.setInterval(
+//     autorotateActiveIndex,
+//     5000
+//   );
+// };
 
-  // const startAutoRotate = () => {
-  //   if (isMobileScreen()) return; // disable on mobile
-  //   if (autoRotateIntervalRef.current) return; // already running
-  //   autoRotateIntervalRef.current = window.setInterval(
-  //     autorotateActiveIndex,
-  //     5000
-  //   );
-  // };
+// const pauseAutoRotate = () => {
+//   if (autoRotateIntervalRef.current) {
+//     window.clearInterval(autoRotateIntervalRef.current);
+//     autoRotateIntervalRef.current = null;
+//   }
+// };
 
-  // const pauseAutoRotate = () => {
-  //   if (autoRotateIntervalRef.current) {
-  //     window.clearInterval(autoRotateIntervalRef.current);
-  //     autoRotateIntervalRef.current = null;
-  //   }
-  // };
+// useEffect(() => {
+//   startAutoRotate();
 
-  // useEffect(() => {
-  //   startAutoRotate();
+//   // Pause when page loses focus, resume when it regains focus
+//   const handleVisibilityChange = () => {
+//     if (document.hidden) {
+//       pauseAutoRotate();
+//     } else {
+//       startAutoRotate();
+//     }
+//   };
 
-  //   // Pause when page loses focus, resume when it regains focus
-  //   const handleVisibilityChange = () => {
-  //     if (document.hidden) {
-  //       pauseAutoRotate();
-  //     } else {
-  //       startAutoRotate();
-  //     }
-  //   };
+//   document.addEventListener("visibilitychange", handleVisibilityChange);
 
-  //   document.addEventListener("visibilitychange", handleVisibilityChange);
+//   return () => {
+//     pauseAutoRotate();
+//     document.removeEventListener("visibilitychange", handleVisibilityChange);
+//   };
+//   // eslint-disable-next-line react-hooks/exhaustive-deps
+// }, [certs.length]);
 
-  //   return () => {
-  //     pauseAutoRotate();
-  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [certs.length]);
+// const namesContainerRef = useRef(null);
+const imagesContainerRef = useRef(null);
+// const nameRefs = useRef([]);
+const imageRefs = useRef([]);
 
-  // const namesContainerRef = useRef(null);
-  const imagesContainerRef = useRef(null);
-  // const nameRefs = useRef([]);
-  const imageRefs = useRef([]);
+// programmatic scroll guard to avoid feedback loops
+const programmaticScrollRef = useRef(false);
+const programmaticTimeoutRef = useRef(0);
 
-  // programmatic scroll guard to avoid feedback loops
-  const programmaticScrollRef = useRef(false);
-  const programmaticTimeoutRef = useRef(0);
+// visual constants
 
-  // visual constants
+const MAX_IMG_SCALE = 1;
+const MIN_IMG_SCALE = 0.8;
+const MAX_IMG_OPACITY = 1;
+const MIN_IMG_OPACITY = 0.5;
 
-  const MAX_IMG_SCALE = 1;
-  const MIN_IMG_SCALE = 0.8;
-  const MAX_IMG_OPACITY = 1;
-  const MIN_IMG_OPACITY = 0.5;
+// helpers
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-  // helpers
-  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const computeClosestIndex = (container, refsArray, axis = "y") => {
+  if (!container) return 0;
+  const cRect = container.getBoundingClientRect();
+  const center =
+    axis === "y" ? cRect.top + cRect.height / 2 : cRect.left + cRect.width / 2;
 
-  const computeClosestIndex = (container, refsArray, axis = "y") => {
-    if (!container) return 0;
-    const cRect = container.getBoundingClientRect();
-    const center =
-      axis === "y"
-        ? cRect.top + cRect.height / 2
-        : cRect.left + cRect.width / 2;
+  let bestIndex = 0;
+  let bestDistance = Infinity;
+  refsArray.forEach((el, i) => {
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const itemCenter =
+      axis === "y" ? r.top + r.height / 2 : r.left + r.width / 2;
+    const dist = Math.abs(itemCenter - center);
+    if (dist < bestDistance) {
+      bestDistance = dist;
+      bestIndex = i;
+    }
+  });
+  return bestIndex;
+};
 
-    let bestIndex = 0;
-    let bestDistance = Infinity;
-    refsArray.forEach((el, i) => {
+const applyVisuals = () => {
+  const imagesContainer = imagesContainerRef.current;
+
+  if (imagesContainer) {
+    const iRect = imagesContainer.getBoundingClientRect();
+    const iCenterX = iRect.left + iRect.width / 2;
+    imageRefs.current.forEach((el) => {
       if (!el) return;
       const r = el.getBoundingClientRect();
-      const itemCenter =
-        axis === "y" ? r.top + r.height / 2 : r.left + r.width / 2;
-      const dist = Math.abs(itemCenter - center);
-      if (dist < bestDistance) {
-        bestDistance = dist;
-        bestIndex = i;
-      }
+      const itemCenterX = r.left + r.width / 2;
+      const distance = clamp(
+        Math.abs(itemCenterX - iCenterX) / (iRect.width / 2),
+        0,
+        1
+      );
+      const t = 1 - distance;
+      const scale = MIN_IMG_SCALE + (MAX_IMG_SCALE - MIN_IMG_SCALE) * t;
+      const opacity = MIN_IMG_OPACITY + (MAX_IMG_OPACITY - MIN_IMG_OPACITY) * t;
+      el.style.transform = `scale(${scale})`;
+      el.style.opacity = `${opacity}`;
+      el.style.transition =
+        "transform 180ms linear, opacity 180ms linear, box-shadow 180ms linear";
+      el.style.boxShadow = `${
+        t > 0.85 ? "0 8px 30px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.4)"
+      }`;
     });
-    return bestIndex;
-  };
+  }
+};
 
-  const applyVisuals = () => {
-    const imagesContainer = imagesContainerRef.current;
+// scroll active item into center of its container
+const scrollItemToCenter = (container, el, axis = "y") => {
+  if (!container || !el) return;
+  // mark programmatic so scroll handler does not override activeIndex
+  programmaticScrollRef.current = true;
+  window.clearTimeout(programmaticTimeoutRef.current);
+  // use scrollIntoView with axis specific options
+  if (axis === "y") {
+    el.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest",
+    });
+  } else {
+    el.scrollIntoView({
+      behavior: "smooth",
+      inline: "center",
+      block: "nearest",
+    });
+  }
+  // keep guard active for a short while while scroll finishes
+  programmaticTimeoutRef.current = window.setTimeout(() => {
+    programmaticScrollRef.current = false;
+    applyVisuals();
+  }, 420);
+};
 
-    if (imagesContainer) {
-      const iRect = imagesContainer.getBoundingClientRect();
-      const iCenterX = iRect.left + iRect.width / 2;
-      imageRefs.current.forEach((el) => {
-        if (!el) return;
-        const r = el.getBoundingClientRect();
-        const itemCenterX = r.left + r.width / 2;
-        const distance = clamp(
-          Math.abs(itemCenterX - iCenterX) / (iRect.width / 2),
-          0,
-          1
-        );
-        const t = 1 - distance;
-        const scale = MIN_IMG_SCALE + (MAX_IMG_SCALE - MIN_IMG_SCALE) * t;
-        const opacity =
-          MIN_IMG_OPACITY + (MAX_IMG_OPACITY - MIN_IMG_OPACITY) * t;
-        el.style.transform = `scale(${scale})`;
-        el.style.opacity = `${opacity}`;
-        el.style.transition =
-          "transform 180ms linear, opacity 180ms linear, box-shadow 180ms linear";
-        el.style.boxShadow = `${
-          t > 0.85 ? "0 8px 30px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.4)"
-        }`;
-      });
-    }
-  };
+// when activeIndex changes we programmatically center both lists
+useEffect(() => {
+  // const targetName = nameRefs.current[activeIndex];
+  const targetImg = imageRefs.current[activeIndex];
+  // scrollItemToCenter(namesContainerRef.current, targetName, "y");
+  scrollItemToCenter(imagesContainerRef.current, targetImg, "x");
+  // also update visuals immediately
+  applyVisuals();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [activeIndex]);
 
-  // scroll active item into center of its container
-  const scrollItemToCenter = (container, el, axis = "y") => {
-    if (!container || !el) return;
-    // mark programmatic so scroll handler does not override activeIndex
-    programmaticScrollRef.current = true;
-    window.clearTimeout(programmaticTimeoutRef.current);
-    // use scrollIntoView with axis specific options
-    if (axis === "y") {
-      el.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-        inline: "nearest",
-      });
-    } else {
-      el.scrollIntoView({
-        behavior: "smooth",
-        inline: "center",
-        block: "nearest",
-      });
-    }
-    // keep guard active for a short while while scroll finishes
-    programmaticTimeoutRef.current = window.setTimeout(() => {
-      programmaticScrollRef.current = false;
+// attach scroll, wheel, and touch handlers
+useEffect(() => {
+  // const namesContainer = namesContainerRef.current;
+  const imagesContainer = imagesContainerRef.current;
+  if (!imagesContainer) return;
+
+  let raf = 0;
+
+  const onImagesScroll = () => {
+    if (programmaticScrollRef.current) {
       applyVisuals();
-    }, 420);
+      return;
+    }
+
+    // 1. Keep visuals smooth and immediate
+    if (raf) cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(applyVisuals);
+
+    // 2. Debounce the state update so it only happens when swipe "settles"
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      const newIndex = computeClosestIndex(
+        imagesContainer,
+        imageRefs.current,
+        "x"
+      );
+      if (newIndex !== activeIndex) {
+        setActiveIndex(newIndex);
+      }
+    }, 150); // 150ms of no scrolling means the user has likely stopped
   };
 
-  // when activeIndex changes we programmatically center both lists
-  useEffect(() => {
-    // const targetName = nameRefs.current[activeIndex];
-    const targetImg = imageRefs.current[activeIndex];
-    // scrollItemToCenter(namesContainerRef.current, targetName, "y");
-    scrollItemToCenter(imagesContainerRef.current, targetImg, "x");
-    // also update visuals immediately
-    applyVisuals();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+  // prevent entire page from scrolling when wheel is used on the containers
+  // const onNamesWheel = (e) => {
+  //   // vertical scroll belongs to names container so let it scroll there but prevent page
+  //   e.preventDefault();
+  //   namesContainer.scrollTop += e.deltaY;
+  // };
+  const onImagesWheel = (e) => {
+    // horizontal scroll for images: translate vertical wheel into horizontal scroll
+    e.preventDefault();
+    imagesContainer.scrollLeft += e.deltaY;
+  };
 
-  // attach scroll, wheel, and touch handlers
-  useEffect(() => {
-    // const namesContainer = namesContainerRef.current;
-    const imagesContainer = imagesContainerRef.current;
-    if (!imagesContainer) return;
+  const handleScrollEnd = () => {
+    const finalIndex = computeClosestIndex(
+      imagesContainer,
+      imageRefs.current,
+      "x"
+    );
+    setActiveIndex(finalIndex);
+  };
 
-    let raf = 0;
+  // for touchmove: prevent overscroll on page while user interacts with containers
+  const onTouchMovePrevent = (e) => {
+    // only prevent when touch is inside the container to avoid blocking whole page gestures
+    // do nothing else here. Browsers require passive:false for preventDefault to work
+    e.stopPropagation();
+  };
 
-    const onImagesScroll = () => {
-      if (programmaticScrollRef.current) {
-        applyVisuals();
-        return;
-      }
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        const newIndex = computeClosestIndex(
-          imagesContainer,
-          imageRefs.current,
-          "x"
-        );
-        if (newIndex !== activeIndex) setActiveIndex(newIndex);
-        applyVisuals();
-      });
-    };
+  // namesContainer.addEventListener("scroll", onNamesScroll, { passive: true });
+  imagesContainer.addEventListener("scrollend", handleScrollEnd);
+  imagesContainer.addEventListener("scroll", onImagesScroll, {
+    passive: true,
+  });
 
-    // prevent entire page from scrolling when wheel is used on the containers
-    // const onNamesWheel = (e) => {
-    //   // vertical scroll belongs to names container so let it scroll there but prevent page
-    //   e.preventDefault();
-    //   namesContainer.scrollTop += e.deltaY;
-    // };
-    const onImagesWheel = (e) => {
-      // horizontal scroll for images: translate vertical wheel into horizontal scroll
-      e.preventDefault();
-      imagesContainer.scrollLeft += e.deltaY;
-    };
+  // namesContainer.addEventListener("wheel", onNamesWheel, { passive: false });
+  imagesContainer.addEventListener("wheel", onImagesWheel, {
+    passive: false,
+  });
 
-    // for touchmove: prevent overscroll on page while user interacts with containers
-    const onTouchMovePrevent = (e) => {
-      // only prevent when touch is inside the container to avoid blocking whole page gestures
-      // do nothing else here. Browsers require passive:false for preventDefault to work
-      e.stopPropagation();
-    };
+  // namesContainer.addEventListener("touchmove", onTouchMovePrevent, {
+  //   passive: false,
+  // });
+  imagesContainer.addEventListener("touchmove", onTouchMovePrevent, {
+    passive: false,
+  });
 
-    // namesContainer.addEventListener("scroll", onNamesScroll, { passive: true });
-    imagesContainer.addEventListener("scroll", onImagesScroll, {
-      passive: true,
-    });
+  // initial visuals
+  applyVisuals();
 
-    // namesContainer.addEventListener("wheel", onNamesWheel, { passive: false });
-    imagesContainer.addEventListener("wheel", onImagesWheel, {
-      passive: false,
-    });
+  return () => {
+    // namesContainer.removeEventListener("scroll", onNamesScroll);
+    imagesContainer.removeEventListener("scroll", onImagesScroll);
+    // namesContainer.removeEventListener("wheel", onNamesWheel);
+    imagesContainer.removeEventListener("wheel", onImagesWheel);
+    // namesContainer.removeEventListener("touchmove", onTouchMovePrevent);
+    imagesContainer.removeEventListener("touchmove", onTouchMovePrevent);
+    if (raf) cancelAnimationFrame(raf);
+    window.clearTimeout(programmaticTimeoutRef.current);
 
-    // namesContainer.addEventListener("touchmove", onTouchMovePrevent, {
-    //   passive: false,
-    // });
-    imagesContainer.addEventListener("touchmove", onTouchMovePrevent, {
-      passive: false,
-    });
-
-    // initial visuals
-    applyVisuals();
-
-    return () => {
-      // namesContainer.removeEventListener("scroll", onNamesScroll);
-      imagesContainer.removeEventListener("scroll", onImagesScroll);
-      // namesContainer.removeEventListener("wheel", onNamesWheel);
-      imagesContainer.removeEventListener("wheel", onImagesWheel);
-      // namesContainer.removeEventListener("touchmove", onTouchMovePrevent);
-      imagesContainer.removeEventListener("touchmove", onTouchMovePrevent);
-      if (raf) cancelAnimationFrame(raf);
-      window.clearTimeout(programmaticTimeoutRef.current);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex, itemPct]);
+    imagesContainer.removeEventListener("scrollend", handleScrollEnd);
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [activeIndex, itemPct]);
 
   // arrow controls for names list, arrows placed top and bottom
   // const goPrev = () => {
