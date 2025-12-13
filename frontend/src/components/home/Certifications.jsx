@@ -102,7 +102,6 @@ const dummyCertifications = [
   },
 ];
 
-// const mountedRef = { current: false };
 
 function Certifications() {
   const [certs] = useState(dummyCertifications);
@@ -111,61 +110,11 @@ function Certifications() {
   const scrollTimeoutRef = useRef(null);
   const mounted = useRef(false);
   const lastInteractionRef = useRef("init");
-  // const touchStartRef = useRef({ x: 0, y: 0, moved: false });
   const [itemPct, setItemPct] = useState(() =>
     typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
   );
 
-  // auto rotate timer
-  // const autoRotateIntervalRef = useRef(null);
-
-  // function autorotateActiveIndex() {
-  //   setActiveIndex((i) => (i + 1) % certs.length);
-  // }
-
-  // const isMobileScreen = () =>
-  //   typeof window !== "undefined" && window.innerWidth < 640;
-
-  // const startAutoRotate = () => {
-  //   if (isMobileScreen()) return; // disable on mobile
-  //   if (autoRotateIntervalRef.current) return; // already running
-  //   autoRotateIntervalRef.current = window.setInterval(
-  //     autorotateActiveIndex,
-  //     5000
-  //   );
-  // };
-
-  // const pauseAutoRotate = () => {
-  //   if (autoRotateIntervalRef.current) {
-  //     window.clearInterval(autoRotateIntervalRef.current);
-  //     autoRotateIntervalRef.current = null;
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   startAutoRotate();
-
-  //   // Pause when page loses focus, resume when it regains focus
-  //   const handleVisibilityChange = () => {
-  //     if (document.hidden) {
-  //       pauseAutoRotate();
-  //     } else {
-  //       startAutoRotate();
-  //     }
-  //   };
-
-  //   document.addEventListener("visibilitychange", handleVisibilityChange);
-
-  //   return () => {
-  //     pauseAutoRotate();
-  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
-  //   };
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [certs.length]);
-
-  // const namesContainerRef = useRef(null);
   const imagesContainerRef = useRef(null);
-  // const nameRefs = useRef([]);
   const imageRefs = useRef([]);
 
   // programmatic scroll guard to avoid feedback loops
@@ -240,7 +189,6 @@ function Certifications() {
   const scrollItemToCenter = (container, el) => {
     if (!container || !el) return;
 
-    // mark programmatic so the scroll handler won't treat this as a user scroll
     programmaticScrollRef.current = true;
     window.clearTimeout(programmaticTimeoutRef.current);
 
@@ -255,7 +203,7 @@ function Certifications() {
     // animate the container scroll (only the container will scroll, not the whole page)
     try {
       container.scrollTo({ left, behavior: "smooth" });
-    // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars
     } catch (err) {
       // fallback for older browsers
       container.scrollLeft = left;
@@ -351,57 +299,10 @@ function Certifications() {
       }, 180); // slightly increased debounce for slow swipes
     };
 
-    // wheel: turn vertical wheel into horizontal scroll
-    // const onImagesWheel = (e) => {
-    //   e.preventDefault();
-    //   imagesContainer.scrollLeft += e.deltaY;
-    // };
-
-    // touch handling: detect horizontal gestures and prevent vertical page scroll while swiping horizontally
-    // const onTouchStart = (e) => {
-    //   const t = e.touches ? e.touches[0] : e;
-    //   touchStartRef.current = { x: t.clientX, y: t.clientY, moved: false };
-    // };
-
-    // const onTouchMove = (e) => {
-    //   const t = e.touches ? e.touches[0] : e;
-    //   const dx = Math.abs(t.clientX - touchStartRef.current.x);
-    //   const dy = Math.abs(t.clientY - touchStartRef.current.y);
-
-    //   // if horizontal gesture dominates mark it moved but do not prevent default.
-    //   // letting the browser perform native horizontal scrolling yields the best performance
-    //   // and keeps scroll-snap and momentum intact.
-    //   if (dx > dy && dx > 5) {
-    //     touchStartRef.current.moved = true;
-    //   }
-    // };
-
-    // const onPointerUp = () => {
-    //   // run compute after small delay to allow scroll-snap to finish
-    //   window.clearTimeout(scrollEndFallbackTimeout);
-    //   scrollEndFallbackTimeout = window.setTimeout(() => {
-    //     computeAndSetIndex();
-    //   }, 60);
-    // };
-
-    // Attach events. note: for touchmove we must set passive:false so preventDefault works
+    // Attach events.
     imagesContainer.addEventListener("scroll", onImagesScroll, {
       passive: true,
     });
-    // imagesContainer.addEventListener("wheel", onImagesWheel, {
-    //   passive: false,
-    // });
-    // imagesContainer.addEventListener("touchstart", onTouchStart, {
-    //   passive: true,
-    // });
-    // imagesContainer.addEventListener("touchmove", onTouchMove, {
-    //   passive: true,
-    // });
-
-    // scrollend is handy but not supported everywhere — use fallback listeners too
-    // imagesContainer.addEventListener("pointerup", onPointerUp);
-    // imagesContainer.addEventListener("touchend", onPointerUp);
-    // imagesContainer.addEventListener("mouseup", onPointerUp);
 
     // initial visuals
     applyVisuals();
@@ -409,12 +310,6 @@ function Certifications() {
     return () => {
       if (raf) cancelAnimationFrame(raf);
       imagesContainer.removeEventListener("scroll", onImagesScroll);
-      // imagesContainer.removeEventListener("wheel", onImagesWheel);
-      // imagesContainer.removeEventListener("touchstart", onTouchStart);
-      // imagesContainer.removeEventListener("touchmove", onTouchMove);
-      // imagesContainer.removeEventListener("pointerup", onPointerUp);
-      // imagesContainer.removeEventListener("touchend", onPointerUp);
-      // imagesContainer.removeEventListener("mouseup", onPointerUp);
 
       window.clearTimeout(scrollEndFallbackTimeout);
       window.clearTimeout(programmaticTimeoutRef.current);
@@ -422,14 +317,6 @@ function Certifications() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeIndex, itemPct]);
-
-  // arrow controls for names list, arrows placed top and bottom
-  // const goPrev = () => {
-  //   setActiveIndex((i) => Math.max(0, i - 1));
-  // };
-  // const goNext = () => {
-  //   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
-  // };
 
   // responsive resize: update itemPct, re-run visuals and re-center
   useEffect(() => {
@@ -470,19 +357,12 @@ function Certifications() {
       {showModal && (
         <CertModal
           cert={certs[activeIndex]}
-          // onOpen={pauseAutoRotate}
           showModal={showModal}
           setShowModal={setShowModal}
-          // onClose={startAutoRotate}
         />
       )}
 
-      <section
-        id="certs"
-        className="flex flex-col gap-10 justify-center"
-        // onMouseEnter={pauseAutoRotate}
-        // onMouseLeave={startAutoRotate}
-      >
+      <section id="certs" className="flex flex-col gap-10 justify-center">
         <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
           My Certifications ({certs.length}) <br />
           <span className="text-xs font-normal">
@@ -530,7 +410,6 @@ function Certifications() {
           {/* mobile single active name (non-scrollable) */}
           <div className="flex lg:hidden w-full overflow-hidden  justify-center items-center py-2 px-3">
             <div
-              // key={`${certs[activeIndex].name}-${activeIndex}`}
               className="w-full text-center select-none text-highlight whitespace-nowrap truncate overflow-hidden font-semibold"
               aria-hidden={false}
             >
@@ -667,35 +546,3 @@ function Certifications() {
 
 export default Certifications;
 
-
-//  <button
-//               onClick={(e) => {
-//                 e.preventDefault();
-//                 goNext();
-//               }}
-//               aria-label="next"
-//               className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 mt-2"
-//               title="next"
-//               style={{ alignSelf: "flex-start" }}
-//             >
-//               {/* down arrow */}
-//               <svg
-//                 width="18"
-//                 height="18"
-//                 viewBox="0 0 24 24"
-//                 fill="none"
-//                 stroke="white"
-//                 strokeWidth="2"
-//               >
-//                 <path
-//                   d="M12 5v14"
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                 />
-//                 <path
-//                   d="M19 12l-7 7-7-7"
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                 />
-//               </svg>
-//             </button>
