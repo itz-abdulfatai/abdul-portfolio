@@ -407,7 +407,10 @@ function Certifications() {
         // onMouseLeave={startAutoRotate}
       >
         <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
-          My Certifications ({certs.length})
+          My Certifications ({certs.length}) <br />
+          <span className="text-xs font-normal">
+            tap certification to view details
+          </span>
         </h2>
 
         <div className="min-h-[420px] flex flex-col lg:flex-row items-center gap-6">
