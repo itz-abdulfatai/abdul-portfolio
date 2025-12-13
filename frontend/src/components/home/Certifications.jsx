@@ -220,7 +220,7 @@ const applyVisuals = () => {
       el.style.transform = `scale(${scale})`;
       el.style.opacity = `${opacity}`;
       el.style.transition =
-        "transform 180ms linear, opacity 180ms linear, box-shadow 180ms linear";
+        "transform 180ms ease-out, opacity 180ms ease-out, box-shadow 180ms ease-out";
       el.style.boxShadow = `${
         t > 0.85 ? "0 8px 30px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.4)"
       }`;
@@ -363,246 +363,246 @@ useEffect(() => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [activeIndex, itemPct]);
 
-  // arrow controls for names list, arrows placed top and bottom
-  // const goPrev = () => {
-  //   setActiveIndex((i) => Math.max(0, i - 1));
-  // };
-  // const goNext = () => {
-  //   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
-  // };
+// arrow controls for names list, arrows placed top and bottom
+// const goPrev = () => {
+//   setActiveIndex((i) => Math.max(0, i - 1));
+// };
+// const goNext = () => {
+//   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
+// };
 
-  // responsive resize: update itemPct, re-run visuals and re-center
-  useEffect(() => {
-    if (typeof window === "undefined") return;
+// responsive resize: update itemPct, re-run visuals and re-center
+useEffect(() => {
+  if (typeof window === "undefined") return;
 
-    let timeout = 0;
-    const handleResize = () => {
-      window.clearTimeout(timeout);
-      timeout = window.setTimeout(() => {
-        const isSmall = window.innerWidth < 640;
-        const newPct = isSmall ? 0.8 : 0.62;
-        setItemPct((prev) => {
-          if (Math.abs(prev - newPct) < 0.001) return prev;
-          return newPct;
-        });
+  let timeout = 0;
+  const handleResize = () => {
+    window.clearTimeout(timeout);
+    timeout = window.setTimeout(() => {
+      const isSmall = window.innerWidth < 640;
+      const newPct = isSmall ? 0.8 : 0.62;
+      setItemPct((prev) => {
+        if (Math.abs(prev - newPct) < 0.001) return prev;
+        return newPct;
+      });
 
-        // rerun visuals and re-center after layout updates
-        requestAnimationFrame(() => {
-          applyVisuals();
-          const el = imageRefs.current[activeIndex];
-          scrollItemToCenter(imagesContainerRef.current, el, "x");
-        });
-      }, 120);
-    };
+      // rerun visuals and re-center after layout updates
+      requestAnimationFrame(() => {
+        applyVisuals();
+        const el = imageRefs.current[activeIndex];
+        scrollItemToCenter(imagesContainerRef.current, el, "x");
+      });
+    }, 120);
+  };
 
-    // initial run + listen
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-      window.clearTimeout(timeout);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeIndex]);
+  // initial run + listen
+  handleResize();
+  window.addEventListener("resize", handleResize);
+  return () => {
+    window.removeEventListener("resize", handleResize);
+    window.clearTimeout(timeout);
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+}, [activeIndex]);
 
-  return (
-    <>
-      {showModal && (
-        <CertModal
-          cert={certs[activeIndex]}
-          // onOpen={pauseAutoRotate}
-          showModal={showModal}
-          setShowModal={setShowModal}
-          // onClose={startAutoRotate}
-        />
-      )}
+return (
+  <>
+    {showModal && (
+      <CertModal
+        cert={certs[activeIndex]}
+        // onOpen={pauseAutoRotate}
+        showModal={showModal}
+        setShowModal={setShowModal}
+        // onClose={startAutoRotate}
+      />
+    )}
 
-      <section
-        id="certs"
-        className="flex flex-col gap-10 justify-center"
-        // onMouseEnter={pauseAutoRotate}
-        // onMouseLeave={startAutoRotate}
-      >
-        <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
-          My Certifications ({certs.length}) <br />
-          <span className="text-xs font-normal">
-            tap certification to view details
-          </span>
-        </h2>
+    <section
+      id="certs"
+      className="flex flex-col gap-10 justify-center"
+      // onMouseEnter={pauseAutoRotate}
+      // onMouseLeave={startAutoRotate}
+    >
+      <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
+        My Certifications ({certs.length}) <br />
+        <span className="text-xs font-normal">
+          tap certification to view details
+        </span>
+      </h2>
 
-        <div className="min-h-[420px] flex flex-col lg:flex-row items-center gap-6">
-          {/* LEFT - names with top and bottom arrows */}
-          <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
-            <div className="flex flex-col items-center w-full">
-              <div className="w-full overflow-y-auto py-4 no-scrollbar pt-3 pb-3 ">
-                <div className="flex  flex-col items-start gap-2 2xl:gap-4 px-3">
-                  {certs.map((cert, idx) => (
-                    <div
-                      key={`${cert.name}-${idx}`}
-                      className={`cursor-pointer select-none text-[13px] px-2 py-1.5 2xl:text-sm rounded-md ${
-                        idx === activeIndex
-                          ? "text-highlight font-semibold"
-                          : "text-x font-medium"
-                      }`}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setActiveIndex(idx);
-                      }}
-                      style={{
-                        transformOrigin: "left center",
-                        transition:
-                          "transform 200ms linear, opacity 200ms linear, color 200ms linear, fontSize 200ms linear",
-                        color:
-                          idx === activeIndex
-                            ? "var(--highlight-color, #b7ff4a)"
-                            : "rgba(255,255,255,0.75)",
-                        opacity: idx === activeIndex ? 1 : 0.8,
-                      }}
-                    >
-                      {cert.name}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* mobile single active name (non-scrollable) */}
-          <div
-            className="flex lg:hidden w-full overflow-hidden  justify-center items-center py-2 px-3"
-            style={{
-              touchAction: "none", // disable browser touch gestures on this element
-            }}
-          >
-            <div
-              // key={`${certs[activeIndex].name}-${activeIndex}`}
-              className="w-full text-center select-none text-highlight whitespace-nowrap truncate overflow-hidden font-semibold"
-              aria-hidden={false}
-            >
-              {certs[activeIndex].name}
-            </div>
-          </div>
-
-          {/* RIGHT - images */}
-          <div className="flex-1 w-full">
-            <div className="relative">
-              <div
-                ref={imagesContainerRef}
-                className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3 flex items-center"
-                style={{
-                  scrollSnapType: "x mandatory",
-                  // disable native visible scrollbar
-                  WebkitOverflowScrolling: "touch",
-                }}
-              >
+      <div className="min-h-[420px] flex flex-col lg:flex-row items-center gap-6">
+        {/* LEFT - names with top and bottom arrows */}
+        <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
+          <div className="flex flex-col items-center w-full">
+            <div className="w-full overflow-y-auto py-4 no-scrollbar pt-3 pb-3 ">
+              <div className="flex  flex-col items-start gap-2 2xl:gap-4 px-3">
                 {certs.map((cert, idx) => (
                   <div
                     key={`${cert.name}-${idx}`}
-                    ref={(el) => (imageRefs.current[idx] = el)}
+                    className={`cursor-pointer select-none text-[13px] px-2 py-1.5 2xl:text-sm rounded-md ${
+                      idx === activeIndex
+                        ? "text-highlight font-semibold"
+                        : "text-x font-medium"
+                    }`}
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveIndex(idx);
                     }}
-                    className="snap-center flex-shrink-0 rounded-xl overflow-hidden h-[320px] flex items-center justify-center cursor-pointer relative group"
                     style={{
-                      flex: `0 0 ${itemPct * 100}%`,
-                      minWidth: `${itemPct * 100}%`,
-
-                      background:
-                        "linear-gradient(180deg, #111 0%, #0b0b0b 100%)",
-                      boxShadow:
-                        idx === activeIndex
-                          ? "0 8px 30px rgba(0,0,0,0.6)"
-                          : "0 4px 12px rgba(0,0,0,0.4)",
+                      transformOrigin: "left center",
                       transition:
-                        "transform 220ms linear, opacity 220ms linear, box-shadow 220ms linear",
+                        "transform 200ms ease-out, opacity 200ms ease-out, color 200ms ease-out, fontSize 200ms ease-out",
+                      color:
+                        idx === activeIndex
+                          ? "var(--highlight-color, #b7ff4a)"
+                          : "rgba(255,255,255,0.75)",
+                      opacity: idx === activeIndex ? 1 : 0.8,
                     }}
                   >
-                    {/* overlay */}
-
-                    {idx === activeIndex && (
-                      <div
-                        onClick={(e) => {
-                          e.preventDefault();
-                          setShowModal(true);
-                        }}
-                        className={`group-hover:bg-blackb group-hover:bg-opacity-20  absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-all duration-300 custom-cursor`}
-                        role="button"
-                        aria-label={`View ${cert.name} certification details`}
-                        tabIndex={0}
-                      ></div>
-                    )}
-                    <img
-                      src={cert.imageLink}
-                      draggable={false}
-                      className=" select-none w-full h-full object-cover block"
-                      alt={cert.name}
-                      style={{
-                        transformOrigin: "center center",
-                      }}
-                    />
+                    {cert.name}
                   </div>
                 ))}
-              </div>
-
-              {/* left image arrow */}
-              <div className=" absolute left-2 top-1/2 -translate-y-1/2">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveIndex((i) => Math.max(0, i - 1));
-                  }}
-                  className="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
-                  aria-label="prev image"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                  >
-                    <path
-                      d="M15 18l-6-6 6-6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              {/* right image arrow */}
-              <div className=" absolute right-2 top-1/2 -translate-y-1/2">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
-                  }}
-                  className="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
-                  aria-label="next image"
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="white"
-                    strokeWidth="2"
-                  >
-                    <path
-                      d="M9 18l6-6-6-6"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
               </div>
             </div>
           </div>
         </div>
-      </section>
-    </>
-  );
+        {/* mobile single active name (non-scrollable) */}
+        <div
+          className="flex lg:hidden w-full overflow-hidden  justify-center items-center py-2 px-3"
+          style={{
+            touchAction: "none", // disable browser touch gestures on this element
+          }}
+        >
+          <div
+            // key={`${certs[activeIndex].name}-${activeIndex}`}
+            className="w-full text-center select-none text-highlight whitespace-nowrap truncate overflow-hidden font-semibold"
+            aria-hidden={false}
+          >
+            {certs[activeIndex].name}
+          </div>
+        </div>
+
+        {/* RIGHT - images */}
+        <div className="flex-1 w-full">
+          <div className="relative">
+            <div
+              ref={imagesContainerRef}
+              className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3 flex items-center"
+              style={{
+                scrollSnapType: "x mandatory",
+                // disable native visible scrollbar
+                WebkitOverflowScrolling: "touch",
+              }}
+            >
+              {certs.map((cert, idx) => (
+                <div
+                  key={`${cert.name}-${idx}`}
+                  ref={(el) => (imageRefs.current[idx] = el)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setActiveIndex(idx);
+                  }}
+                  className="snap-center flex-shrink-0 rounded-xl overflow-hidden h-[320px] flex items-center justify-center cursor-pointer relative group"
+                  style={{
+                    flex: `0 0 ${itemPct * 100}%`,
+                    minWidth: `${itemPct * 100}%`,
+
+                    background:
+                      "linear-gradient(180deg, #111 0%, #0b0b0b 100%)",
+                    boxShadow:
+                      idx === activeIndex
+                        ? "0 8px 30px rgba(0,0,0,0.6)"
+                        : "0 4px 12px rgba(0,0,0,0.4)",
+                    transition:
+                      "transform 220ms ease-out, opacity 220ms ease-out, box-shadow 220ms ease-out",
+                  }}
+                >
+                  {/* overlay */}
+
+                  {idx === activeIndex && (
+                    <div
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setShowModal(true);
+                      }}
+                      className={`group-hover:bg-blackb group-hover:bg-opacity-20  absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-all duration-300 custom-cursor`}
+                      role="button"
+                      aria-label={`View ${cert.name} certification details`}
+                      tabIndex={0}
+                    ></div>
+                  )}
+                  <img
+                    src={cert.imageLink}
+                    draggable={false}
+                    className=" select-none w-full h-full object-cover block"
+                    alt={cert.name}
+                    style={{
+                      transformOrigin: "center center",
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* left image arrow */}
+            <div className=" absolute left-2 top-1/2 -translate-y-1/2">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveIndex((i) => Math.max(0, i - 1));
+                }}
+                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
+                aria-label="prev image"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                >
+                  <path
+                    d="M15 18l-6-6 6-6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            {/* right image arrow */}
+            <div className=" absolute right-2 top-1/2 -translate-y-1/2">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
+                }}
+                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
+                aria-label="next image"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                >
+                  <path
+                    d="M9 18l6-6-6-6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </>
+);
 }
 
 export default Certifications;
