@@ -220,7 +220,7 @@ const applyVisuals = () => {
       el.style.transform = `scale(${scale})`;
       el.style.opacity = `${opacity}`;
       el.style.transition =
-        "transform 180ms ease-out, opacity 180ms ease-out, box-shadow 180ms ease-out";
+        "transform 180ms linear, opacity 180ms linear, box-shadow 180ms linear";
       el.style.boxShadow = `${
         t > 0.85 ? "0 8px 30px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.4)"
       }`;
@@ -451,7 +451,7 @@ return (
                     style={{
                       transformOrigin: "left center",
                       transition:
-                        "transform 200ms ease-out, opacity 200ms ease-out, color 200ms ease-out, fontSize 200ms ease-out",
+                        "transform 200ms linear, opacity 200ms linear, color 200ms linear, fontSize 200ms linear",
                       color:
                         idx === activeIndex
                           ? "var(--highlight-color, #b7ff4a)"
@@ -514,7 +514,7 @@ return (
                         ? "0 8px 30px rgba(0,0,0,0.6)"
                         : "0 4px 12px rgba(0,0,0,0.4)",
                     transition:
-                      "transform 220ms ease-out, opacity 220ms ease-out, box-shadow 220ms ease-out",
+                      "transform 220ms linear, opacity 220ms linear, box-shadow 220ms linear",
                   }}
                 >
                   {/* overlay */}
@@ -551,7 +551,7 @@ return (
                   e.preventDefault();
                   setActiveIndex((i) => Math.max(0, i - 1));
                 }}
-                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
+                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 max-md:h-28"
                 aria-label="prev image"
               >
                 <svg
@@ -578,7 +578,7 @@ return (
                   e.preventDefault();
                   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
                 }}
-                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700"
+                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 max-md:h-28"
                 aria-label="next image"
               >
                 <svg
