@@ -102,507 +102,564 @@ const dummyCertifications = [
   },
 ];
 
+const mountedRef = { current: false };
+
 function Certifications() {
   const [certs] = useState(dummyCertifications);
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
-const scrollTimeoutRef = useRef(null);
-const [itemPct, setItemPct] = useState(() =>
-  typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
-);
+  const scrollTimeoutRef = useRef(null);
+  const mounted = useRef(false);
+  const lastInteractionRef = useRef("init");
+  const touchStartRef = useRef({ x: 0, y: 0, moved: false });
+  const [itemPct, setItemPct] = useState(() =>
+    typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
+  );
 
-// auto rotate timer
-// const autoRotateIntervalRef = useRef(null);
+  // auto rotate timer
+  // const autoRotateIntervalRef = useRef(null);
 
-// function autorotateActiveIndex() {
-//   setActiveIndex((i) => (i + 1) % certs.length);
-// }
+  // function autorotateActiveIndex() {
+  //   setActiveIndex((i) => (i + 1) % certs.length);
+  // }
 
-// const isMobileScreen = () =>
-//   typeof window !== "undefined" && window.innerWidth < 640;
+  // const isMobileScreen = () =>
+  //   typeof window !== "undefined" && window.innerWidth < 640;
 
-// const startAutoRotate = () => {
-//   if (isMobileScreen()) return; // disable on mobile
-//   if (autoRotateIntervalRef.current) return; // already running
-//   autoRotateIntervalRef.current = window.setInterval(
-//     autorotateActiveIndex,
-//     5000
-//   );
-// };
+  // const startAutoRotate = () => {
+  //   if (isMobileScreen()) return; // disable on mobile
+  //   if (autoRotateIntervalRef.current) return; // already running
+  //   autoRotateIntervalRef.current = window.setInterval(
+  //     autorotateActiveIndex,
+  //     5000
+  //   );
+  // };
 
-// const pauseAutoRotate = () => {
-//   if (autoRotateIntervalRef.current) {
-//     window.clearInterval(autoRotateIntervalRef.current);
-//     autoRotateIntervalRef.current = null;
-//   }
-// };
+  // const pauseAutoRotate = () => {
+  //   if (autoRotateIntervalRef.current) {
+  //     window.clearInterval(autoRotateIntervalRef.current);
+  //     autoRotateIntervalRef.current = null;
+  //   }
+  // };
 
-// useEffect(() => {
-//   startAutoRotate();
+  // useEffect(() => {
+  //   startAutoRotate();
 
-//   // Pause when page loses focus, resume when it regains focus
-//   const handleVisibilityChange = () => {
-//     if (document.hidden) {
-//       pauseAutoRotate();
-//     } else {
-//       startAutoRotate();
-//     }
-//   };
+  //   // Pause when page loses focus, resume when it regains focus
+  //   const handleVisibilityChange = () => {
+  //     if (document.hidden) {
+  //       pauseAutoRotate();
+  //     } else {
+  //       startAutoRotate();
+  //     }
+  //   };
 
-//   document.addEventListener("visibilitychange", handleVisibilityChange);
+  //   document.addEventListener("visibilitychange", handleVisibilityChange);
 
-//   return () => {
-//     pauseAutoRotate();
-//     document.removeEventListener("visibilitychange", handleVisibilityChange);
-//   };
-//   // eslint-disable-next-line react-hooks/exhaustive-deps
-// }, [certs.length]);
+  //   return () => {
+  //     pauseAutoRotate();
+  //     document.removeEventListener("visibilitychange", handleVisibilityChange);
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [certs.length]);
 
-// const namesContainerRef = useRef(null);
-const imagesContainerRef = useRef(null);
-// const nameRefs = useRef([]);
-const imageRefs = useRef([]);
+  // const namesContainerRef = useRef(null);
+  const imagesContainerRef = useRef(null);
+  // const nameRefs = useRef([]);
+  const imageRefs = useRef([]);
 
-// programmatic scroll guard to avoid feedback loops
-const programmaticScrollRef = useRef(false);
-const programmaticTimeoutRef = useRef(0);
+  // programmatic scroll guard to avoid feedback loops
+  const programmaticScrollRef = useRef(false);
+  const programmaticTimeoutRef = useRef(0);
 
-// visual constants
+  // visual constants
 
-const MAX_IMG_SCALE = 1;
-const MIN_IMG_SCALE = 0.8;
-const MAX_IMG_OPACITY = 1;
-const MIN_IMG_OPACITY = 0.5;
+  const MAX_IMG_SCALE = 1;
+  const MIN_IMG_SCALE = 0.8;
+  const MAX_IMG_OPACITY = 1;
+  const MIN_IMG_OPACITY = 0.5;
 
-// helpers
-const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+  // helpers
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-const computeClosestIndex = (container, refsArray, axis = "y") => {
-  if (!container) return 0;
-  const cRect = container.getBoundingClientRect();
-  const center =
-    axis === "y" ? cRect.top + cRect.height / 2 : cRect.left + cRect.width / 2;
+  const computeClosestIndex = (container, refsArray, axis = "y") => {
+    if (!container) return 0;
+    const cRect = container.getBoundingClientRect();
+    const center =
+      axis === "y"
+        ? cRect.top + cRect.height / 2
+        : cRect.left + cRect.width / 2;
 
-  let bestIndex = 0;
-  let bestDistance = Infinity;
-  refsArray.forEach((el, i) => {
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const itemCenter =
-      axis === "y" ? r.top + r.height / 2 : r.left + r.width / 2;
-    const dist = Math.abs(itemCenter - center);
-    if (dist < bestDistance) {
-      bestDistance = dist;
-      bestIndex = i;
-    }
-  });
-  return bestIndex;
-};
-
-const applyVisuals = () => {
-  const imagesContainer = imagesContainerRef.current;
-
-  if (imagesContainer) {
-    const iRect = imagesContainer.getBoundingClientRect();
-    const iCenterX = iRect.left + iRect.width / 2;
-    imageRefs.current.forEach((el) => {
+    let bestIndex = 0;
+    let bestDistance = Infinity;
+    refsArray.forEach((el, i) => {
       if (!el) return;
       const r = el.getBoundingClientRect();
-      const itemCenterX = r.left + r.width / 2;
-      const distance = clamp(
-        Math.abs(itemCenterX - iCenterX) / (iRect.width / 2),
-        0,
-        1
-      );
-      const t = 1 - distance;
-      const scale = MIN_IMG_SCALE + (MAX_IMG_SCALE - MIN_IMG_SCALE) * t;
-      const opacity = MIN_IMG_OPACITY + (MAX_IMG_OPACITY - MIN_IMG_OPACITY) * t;
-      el.style.transform = `scale(${scale})`;
-      el.style.opacity = `${opacity}`;
-      el.style.transition =
-        "transform 180ms linear, opacity 180ms linear, box-shadow 180ms linear";
-      el.style.boxShadow = `${
-        t > 0.85 ? "0 8px 30px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.4)"
-      }`;
+      const itemCenter =
+        axis === "y" ? r.top + r.height / 2 : r.left + r.width / 2;
+      const dist = Math.abs(itemCenter - center);
+      if (dist < bestDistance) {
+        bestDistance = dist;
+        bestIndex = i;
+      }
     });
-  }
-};
+    return bestIndex;
+  };
 
-// scroll active item into center of its container
-const scrollItemToCenter = (container, el, axis = "y") => {
-  if (!container || !el) return;
-  // mark programmatic so scroll handler does not override activeIndex
-  programmaticScrollRef.current = true;
-  window.clearTimeout(programmaticTimeoutRef.current);
-  // use scrollIntoView with axis specific options
-  if (axis === "y") {
-    el.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-      inline: "nearest",
-    });
-  } else {
-    el.scrollIntoView({
-      behavior: "smooth",
-      inline: "center",
-      block: "nearest",
-    });
-  }
-  // keep guard active for a short while while scroll finishes
-  programmaticTimeoutRef.current = window.setTimeout(() => {
-    programmaticScrollRef.current = false;
-    applyVisuals();
-  }, 420);
-};
+  const applyVisuals = () => {
+    const imagesContainer = imagesContainerRef.current;
 
-// when activeIndex changes we programmatically center both lists
-useEffect(() => {
-  // const targetName = nameRefs.current[activeIndex];
-  const targetImg = imageRefs.current[activeIndex];
-  // scrollItemToCenter(namesContainerRef.current, targetName, "y");
-  scrollItemToCenter(imagesContainerRef.current, targetImg, "x");
-  // also update visuals immediately
-  applyVisuals();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [activeIndex]);
+    if (imagesContainer) {
+      const iRect = imagesContainer.getBoundingClientRect();
+      const iCenterX = iRect.left + iRect.width / 2;
+      imageRefs.current.forEach((el) => {
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        const itemCenterX = r.left + r.width / 2;
+        const distance = clamp(
+          Math.abs(itemCenterX - iCenterX) / (iRect.width / 2),
+          0,
+          1
+        );
+        const t = 1 - distance;
+        const scale = MIN_IMG_SCALE + (MAX_IMG_SCALE - MIN_IMG_SCALE) * t;
+        const opacity =
+          MIN_IMG_OPACITY + (MAX_IMG_OPACITY - MIN_IMG_OPACITY) * t;
+        el.style.transform = `scale(${scale})`;
+        el.style.opacity = `${opacity}`;
+        el.style.transition =
+          "transform 180ms linear, opacity 180ms linear, box-shadow 180ms linear";
+        el.style.boxShadow = `${
+          t > 0.85 ? "0 8px 30px rgba(0,0,0,0.6)" : "0 4px 12px rgba(0,0,0,0.4)"
+        }`;
+      });
+    }
+  };
 
-// attach scroll, wheel, and touch handlers
-useEffect(() => {
-  // const namesContainer = namesContainerRef.current;
-  const imagesContainer = imagesContainerRef.current;
-  if (!imagesContainer) return;
+  // scroll active item into center of its container (horizontal)
+  const scrollItemToCenter = (container, el) => {
+    if (!container || !el) return;
 
-  let raf = 0;
+    // mark programmatic so the scroll handler won't treat this as a user scroll
+    programmaticScrollRef.current = true;
+    window.clearTimeout(programmaticTimeoutRef.current);
 
-  const onImagesScroll = () => {
-    if (programmaticScrollRef.current) {
+    // calculate left so that element is centered in container
+    // offsetLeft is relative to the container's scrollLeft in this layout
+    const elLeft = el.offsetLeft;
+    const left = Math.max(
+      0,
+      elLeft - (container.clientWidth - el.clientWidth) / 2
+    );
+
+    // animate the container scroll (only the container will scroll, not the whole page)
+    try {
+      container.scrollTo({ left, behavior: "smooth" });
+    } catch (err) {
+      // fallback for older browsers
+      container.scrollLeft = left;
+    }
+
+    // keep guard active while smooth scroll finishes
+    programmaticTimeoutRef.current = window.setTimeout(() => {
+      programmaticScrollRef.current = false;
+      applyVisuals();
+    }, 420);
+  };
+
+  // when activeIndex changes we programmatically center both lists
+  useEffect(() => {
+    const targetImg = imageRefs.current[activeIndex];
+    const container = imagesContainerRef.current;
+
+    // if no container or target yet, bail
+    if (!container || !targetImg) {
       applyVisuals();
       return;
     }
 
-    // 1. Keep visuals smooth and immediate
-    if (raf) cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(applyVisuals);
+    // initial mount: set visuals and snap container into place without animation
+    if (!mounted.current) {
+      mounted.current = true;
+      requestAnimationFrame(() => {
+        applyVisuals();
+        // position container instantly without smooth behavior to avoid page-level scrolling
+        const elLeft = targetImg.offsetLeft;
+        const left = Math.max(
+          0,
+          elLeft - (container.clientWidth - targetImg.clientWidth) / 2
+        );
+        try {
+          container.scrollTo({ left, behavior: "auto" });
+        } catch (err) {
+          container.scrollLeft = left;
+        }
+      });
+      lastInteractionRef.current = "init";
+      return;
+    }
 
-    // 2. Debounce the state update so it only happens when swipe "settles"
-    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-    scrollTimeoutRef.current = setTimeout(() => {
+    // if the last change came from user scroll, do not call another programmatic center
+    if (lastInteractionRef.current === "user-scroll") {
+      applyVisuals();
+      lastInteractionRef.current = "idle";
+      return;
+    }
+
+    // otherwise (click / arrow / programmatic) center smoothly
+    scrollItemToCenter(container, targetImg);
+    applyVisuals();
+    lastInteractionRef.current = "idle";
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
+  // attach scroll, wheel, and touch handlers
+  useEffect(() => {
+    const imagesContainer = imagesContainerRef.current;
+    if (!imagesContainer) return;
+
+    let raf = 0;
+    let scrollEndFallbackTimeout = null;
+
+    const computeAndSetIndex = () => {
       const newIndex = computeClosestIndex(
         imagesContainer,
         imageRefs.current,
         "x"
       );
       if (newIndex !== activeIndex) {
+        lastInteractionRef.current = "user-scroll";
         setActiveIndex(newIndex);
       }
-    }, 150); // 150ms of no scrolling means the user has likely stopped
-  };
+    };
 
-  // prevent entire page from scrolling when wheel is used on the containers
-  // const onNamesWheel = (e) => {
-  //   // vertical scroll belongs to names container so let it scroll there but prevent page
-  //   e.preventDefault();
-  //   namesContainer.scrollTop += e.deltaY;
-  // };
-  const onImagesWheel = (e) => {
-    // horizontal scroll for images: translate vertical wheel into horizontal scroll
-    e.preventDefault();
-    imagesContainer.scrollLeft += e.deltaY;
-  };
-
-  const handleScrollEnd = () => {
-    const finalIndex = computeClosestIndex(
-      imagesContainer,
-      imageRefs.current,
-      "x"
-    );
-    setActiveIndex(finalIndex);
-  };
-
-  // for touchmove: prevent overscroll on page while user interacts with containers
-  const onTouchMovePrevent = (e) => {
-    // only prevent when touch is inside the container to avoid blocking whole page gestures
-    // do nothing else here. Browsers require passive:false for preventDefault to work
-    e.stopPropagation();
-  };
-
-  // namesContainer.addEventListener("scroll", onNamesScroll, { passive: true });
-  imagesContainer.addEventListener("scrollend", handleScrollEnd);
-  imagesContainer.addEventListener("scroll", onImagesScroll, {
-    passive: true,
-  });
-
-  // namesContainer.addEventListener("wheel", onNamesWheel, { passive: false });
-  imagesContainer.addEventListener("wheel", onImagesWheel, {
-    passive: false,
-  });
-
-  // namesContainer.addEventListener("touchmove", onTouchMovePrevent, {
-  //   passive: false,
-  // });
-  imagesContainer.addEventListener("touchmove", onTouchMovePrevent, {
-    passive: false,
-  });
-
-  // initial visuals
-  applyVisuals();
-
-  return () => {
-    // namesContainer.removeEventListener("scroll", onNamesScroll);
-    imagesContainer.removeEventListener("scroll", onImagesScroll);
-    // namesContainer.removeEventListener("wheel", onNamesWheel);
-    imagesContainer.removeEventListener("wheel", onImagesWheel);
-    // namesContainer.removeEventListener("touchmove", onTouchMovePrevent);
-    imagesContainer.removeEventListener("touchmove", onTouchMovePrevent);
-    if (raf) cancelAnimationFrame(raf);
-    window.clearTimeout(programmaticTimeoutRef.current);
-
-    imagesContainer.removeEventListener("scrollend", handleScrollEnd);
-    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
-  };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [activeIndex, itemPct]);
-
-// arrow controls for names list, arrows placed top and bottom
-// const goPrev = () => {
-//   setActiveIndex((i) => Math.max(0, i - 1));
-// };
-// const goNext = () => {
-//   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
-// };
-
-// responsive resize: update itemPct, re-run visuals and re-center
-useEffect(() => {
-  if (typeof window === "undefined") return;
-
-  let timeout = 0;
-  const handleResize = () => {
-    window.clearTimeout(timeout);
-    timeout = window.setTimeout(() => {
-      const isSmall = window.innerWidth < 640;
-      const newPct = isSmall ? 0.8 : 0.62;
-      setItemPct((prev) => {
-        if (Math.abs(prev - newPct) < 0.001) return prev;
-        return newPct;
-      });
-
-      // rerun visuals and re-center after layout updates
-      requestAnimationFrame(() => {
+    const onImagesScroll = () => {
+      if (programmaticScrollRef.current) {
         applyVisuals();
-        const el = imageRefs.current[activeIndex];
-        scrollItemToCenter(imagesContainerRef.current, el, "x");
-      });
-    }, 120);
-  };
+        return;
+      }
 
-  // initial run + listen
-  handleResize();
-  window.addEventListener("resize", handleResize);
-  return () => {
-    window.removeEventListener("resize", handleResize);
-    window.clearTimeout(timeout);
-  };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-}, [activeIndex]);
+      if (raf) cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(applyVisuals);
 
-return (
-  <>
-    {showModal && (
-      <CertModal
-        cert={certs[activeIndex]}
-        // onOpen={pauseAutoRotate}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        // onClose={startAutoRotate}
-      />
-    )}
+      // debounce to detect when scrolling has settled
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = window.setTimeout(() => {
+        computeAndSetIndex();
+      }, 180); // slightly increased debounce for slow swipes
+    };
 
-    <section
-      id="certs"
-      className="flex flex-col gap-10 justify-center"
-      // onMouseEnter={pauseAutoRotate}
-      // onMouseLeave={startAutoRotate}
-    >
-      <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
-        My Certifications ({certs.length}) <br />
-        <span className="text-xs font-normal">
-          tap certification to view details
-        </span>
-      </h2>
+    // wheel: turn vertical wheel into horizontal scroll
+    const onImagesWheel = (e) => {
+      e.preventDefault();
+      imagesContainer.scrollLeft += e.deltaY;
+    };
 
-      <div className="min-h-[420px] flex flex-col lg:flex-row items-center gap-6">
-        {/* LEFT - names with top and bottom arrows */}
-        <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
-          <div className="flex flex-col items-center w-full">
-            <div className="w-full overflow-y-auto py-4 no-scrollbar pt-3 pb-3 ">
-              <div className="flex  flex-col items-start gap-2 2xl:gap-4 px-3">
+    // touch handling: detect horizontal gestures and prevent vertical page scroll while swiping horizontally
+    const onTouchStart = (e) => {
+      const t = e.touches ? e.touches[0] : e;
+      touchStartRef.current = { x: t.clientX, y: t.clientY, moved: false };
+    };
+
+    const onTouchMove = (e) => {
+      const t = e.touches ? e.touches[0] : e;
+      const dx = Math.abs(t.clientX - touchStartRef.current.x);
+      const dy = Math.abs(t.clientY - touchStartRef.current.y);
+
+      // if horizontal gesture dominates mark it moved but do not prevent default.
+      // letting the browser perform native horizontal scrolling yields the best performance
+      // and keeps scroll-snap and momentum intact.
+      if (dx > dy && dx > 5) {
+        touchStartRef.current.moved = true;
+      }
+    };
+
+    const onPointerUp = () => {
+      // run compute after small delay to allow scroll-snap to finish
+      window.clearTimeout(scrollEndFallbackTimeout);
+      scrollEndFallbackTimeout = window.setTimeout(() => {
+        computeAndSetIndex();
+      }, 60);
+    };
+
+    // Attach events. note: for touchmove we must set passive:false so preventDefault works
+    imagesContainer.addEventListener("scroll", onImagesScroll, {
+      passive: true,
+    });
+    imagesContainer.addEventListener("wheel", onImagesWheel, {
+      passive: false,
+    });
+    imagesContainer.addEventListener("touchstart", onTouchStart, {
+      passive: true,
+    });
+    imagesContainer.addEventListener("touchmove", onTouchMove, {
+      passive: true,
+    });
+
+    // scrollend is handy but not supported everywhere — use fallback listeners too
+    imagesContainer.addEventListener("pointerup", onPointerUp);
+    imagesContainer.addEventListener("touchend", onPointerUp);
+    imagesContainer.addEventListener("mouseup", onPointerUp);
+
+    // initial visuals
+    applyVisuals();
+
+    return () => {
+      if (raf) cancelAnimationFrame(raf);
+      imagesContainer.removeEventListener("scroll", onImagesScroll);
+      imagesContainer.removeEventListener("wheel", onImagesWheel);
+      imagesContainer.removeEventListener("touchstart", onTouchStart);
+      imagesContainer.removeEventListener("touchmove", onTouchMove);
+      imagesContainer.removeEventListener("pointerup", onPointerUp);
+      imagesContainer.removeEventListener("touchend", onPointerUp);
+      imagesContainer.removeEventListener("mouseup", onPointerUp);
+
+      window.clearTimeout(scrollEndFallbackTimeout);
+      window.clearTimeout(programmaticTimeoutRef.current);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex, itemPct]);
+
+  // arrow controls for names list, arrows placed top and bottom
+  // const goPrev = () => {
+  //   setActiveIndex((i) => Math.max(0, i - 1));
+  // };
+  // const goNext = () => {
+  //   setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
+  // };
+
+  // responsive resize: update itemPct, re-run visuals and re-center
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let timeout = 0;
+    const handleResize = () => {
+      window.clearTimeout(timeout);
+      timeout = window.setTimeout(() => {
+        const isSmall = window.innerWidth < 640;
+        const newPct = isSmall ? 0.8 : 0.62;
+        setItemPct((prev) => {
+          if (Math.abs(prev - newPct) < 0.001) return prev;
+          return newPct;
+        });
+
+        // rerun visuals and re-center after layout updates
+        requestAnimationFrame(() => {
+          applyVisuals();
+          const el = imageRefs.current[activeIndex];
+          scrollItemToCenter(imagesContainerRef.current, el, "x");
+        });
+      }, 120);
+    };
+
+    // initial run + listen
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.clearTimeout(timeout);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIndex]);
+
+  return (
+    <>
+      {showModal && (
+        <CertModal
+          cert={certs[activeIndex]}
+          // onOpen={pauseAutoRotate}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          // onClose={startAutoRotate}
+        />
+      )}
+
+      <section
+        id="certs"
+        className="flex flex-col gap-10 justify-center"
+        // onMouseEnter={pauseAutoRotate}
+        // onMouseLeave={startAutoRotate}
+      >
+        <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
+          My Certifications ({certs.length}) <br />
+          <span className="text-xs font-normal">
+            tap certification to view details
+          </span>
+        </h2>
+
+        <div className="min-h-[420px] flex flex-col lg:flex-row items-center gap-6">
+          {/* LEFT - names with top and bottom arrows */}
+          <div className=" flex flex-col items-start gap-3 max-lg:hidden ">
+            <div className="flex flex-col items-center w-full">
+              <div className="w-full overflow-y-auto py-4 no-scrollbar pt-3 pb-3 ">
+                <div className="flex  flex-col items-start gap-2 2xl:gap-4 px-3">
+                  {certs.map((cert, idx) => (
+                    <div
+                      key={`${cert.name}-${idx}`}
+                      className={`cursor-pointer select-none text-[13px] px-2 py-1.5 2xl:text-sm rounded-md ${
+                        idx === activeIndex
+                          ? "text-highlight font-semibold"
+                          : "text-x font-medium"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        lastInteractionRef.current = "click";
+                        setActiveIndex(idx);
+                      }}
+                      style={{
+                        transformOrigin: "left center",
+                        transition:
+                          "transform 200ms linear, opacity 200ms linear, color 200ms linear, fontSize 200ms linear",
+                        color:
+                          idx === activeIndex
+                            ? "var(--highlight-color, #b7ff4a)"
+                            : "rgba(255,255,255,0.75)",
+                        opacity: idx === activeIndex ? 1 : 0.8,
+                      }}
+                    >
+                      {cert.name}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* mobile single active name (non-scrollable) */}
+          <div className="flex lg:hidden w-full overflow-hidden  justify-center items-center py-2 px-3">
+            <div
+              // key={`${certs[activeIndex].name}-${activeIndex}`}
+              className="w-full text-center select-none text-highlight whitespace-nowrap truncate overflow-hidden font-semibold"
+              aria-hidden={false}
+            >
+              {certs[activeIndex].name}
+            </div>
+          </div>
+
+          {/* RIGHT - images */}
+          <div className="flex-1 w-full">
+            <div className="relative">
+              <div
+                ref={imagesContainerRef}
+                className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3 flex items-center"
+                style={{
+                  scrollSnapType: "x mandatory",
+                  // disable native visible scrollbar
+                  WebkitOverflowScrolling: "touch",
+                  touchAction: "pan-y",
+                }}
+              >
                 {certs.map((cert, idx) => (
                   <div
                     key={`${cert.name}-${idx}`}
-                    className={`cursor-pointer select-none text-[13px] px-2 py-1.5 2xl:text-sm rounded-md ${
-                      idx === activeIndex
-                        ? "text-highlight font-semibold"
-                        : "text-x font-medium"
-                    }`}
+                    ref={(el) => (imageRefs.current[idx] = el)}
                     onClick={(e) => {
                       e.preventDefault();
                       setActiveIndex(idx);
                     }}
+                    className="snap-center flex-shrink-0 rounded-xl overflow-hidden h-[320px] flex items-center justify-center cursor-pointer relative group"
                     style={{
-                      transformOrigin: "left center",
-                      transition:
-                        "transform 200ms linear, opacity 200ms linear, color 200ms linear, fontSize 200ms linear",
-                      color:
+                      flex: `0 0 ${itemPct * 100}%`,
+                      minWidth: `${itemPct * 100}%`,
+
+                      background:
+                        "linear-gradient(180deg, #111 0%, #0b0b0b 100%)",
+                      boxShadow:
                         idx === activeIndex
-                          ? "var(--highlight-color, #b7ff4a)"
-                          : "rgba(255,255,255,0.75)",
-                      opacity: idx === activeIndex ? 1 : 0.8,
+                          ? "0 8px 30px rgba(0,0,0,0.6)"
+                          : "0 4px 12px rgba(0,0,0,0.4)",
+                      transition:
+                        "transform 220ms linear, opacity 220ms linear, box-shadow 220ms linear",
                     }}
                   >
-                    {cert.name}
+                    {/* overlay */}
+
+                    {idx === activeIndex && (
+                      <div
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setShowModal(true);
+                        }}
+                        className={`group-hover:bg-blackb group-hover:bg-opacity-20  absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-all duration-300 custom-cursor`}
+                        role="button"
+                        aria-label={`View ${cert.name} certification details`}
+                        tabIndex={0}
+                      ></div>
+                    )}
+                    <img
+                      src={cert.imageLink}
+                      draggable={false}
+                      className=" select-none w-full h-full object-cover block"
+                      alt={cert.name}
+                      style={{
+                        transformOrigin: "center center",
+                      }}
+                    />
                   </div>
                 ))}
+              </div>
+
+              {/* left image arrow */}
+              <div className=" absolute left-2 top-1/2 -translate-y-1/2">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    lastInteractionRef.current = "click";
+                    setActiveIndex((i) => Math.max(0, i - 1));
+                  }}
+                  className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 max-md:h-28"
+                  aria-label="prev image"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                  >
+                    <path
+                      d="M15 18l-6-6 6-6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* right image arrow */}
+              <div className=" absolute right-2 top-1/2 -translate-y-1/2">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    lastInteractionRef.current = "click";
+                    setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
+                  }}
+                  className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 max-md:h-28"
+                  aria-label="next image"
+                >
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    strokeWidth="2"
+                  >
+                    <path
+                      d="M9 18l6-6-6-6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </button>
               </div>
             </div>
           </div>
         </div>
-        {/* mobile single active name (non-scrollable) */}
-        <div
-          className="flex lg:hidden w-full overflow-hidden  justify-center items-center py-2 px-3"
-          style={{
-            touchAction: "none", // disable browser touch gestures on this element
-          }}
-        >
-          <div
-            // key={`${certs[activeIndex].name}-${activeIndex}`}
-            className="w-full text-center select-none text-highlight whitespace-nowrap truncate overflow-hidden font-semibold"
-            aria-hidden={false}
-          >
-            {certs[activeIndex].name}
-          </div>
-        </div>
-
-        {/* RIGHT - images */}
-        <div className="flex-1 w-full">
-          <div className="relative">
-            <div
-              ref={imagesContainerRef}
-              className="w-full overflow-x-auto snap-x snap-mandatory no-scrollbar gap-1 sm:gap-3 py-6 sm:px-3 flex items-center"
-              style={{
-                scrollSnapType: "x mandatory",
-                // disable native visible scrollbar
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-              {certs.map((cert, idx) => (
-                <div
-                  key={`${cert.name}-${idx}`}
-                  ref={(el) => (imageRefs.current[idx] = el)}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setActiveIndex(idx);
-                  }}
-                  className="snap-center flex-shrink-0 rounded-xl overflow-hidden h-[320px] flex items-center justify-center cursor-pointer relative group"
-                  style={{
-                    flex: `0 0 ${itemPct * 100}%`,
-                    minWidth: `${itemPct * 100}%`,
-
-                    background:
-                      "linear-gradient(180deg, #111 0%, #0b0b0b 100%)",
-                    boxShadow:
-                      idx === activeIndex
-                        ? "0 8px 30px rgba(0,0,0,0.6)"
-                        : "0 4px 12px rgba(0,0,0,0.4)",
-                    transition:
-                      "transform 220ms linear, opacity 220ms linear, box-shadow 220ms linear",
-                  }}
-                >
-                  {/* overlay */}
-
-                  {idx === activeIndex && (
-                    <div
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setShowModal(true);
-                      }}
-                      className={`group-hover:bg-blackb group-hover:bg-opacity-20  absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-all duration-300 custom-cursor`}
-                      role="button"
-                      aria-label={`View ${cert.name} certification details`}
-                      tabIndex={0}
-                    ></div>
-                  )}
-                  <img
-                    src={cert.imageLink}
-                    draggable={false}
-                    className=" select-none w-full h-full object-cover block"
-                    alt={cert.name}
-                    style={{
-                      transformOrigin: "center center",
-                    }}
-                  />
-                </div>
-              ))}
-            </div>
-
-            {/* left image arrow */}
-            <div className=" absolute left-2 top-1/2 -translate-y-1/2">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveIndex((i) => Math.max(0, i - 1));
-                }}
-                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 max-md:h-28"
-                aria-label="prev image"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                >
-                  <path
-                    d="M15 18l-6-6 6-6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            {/* right image arrow */}
-            <div className=" absolute right-2 top-1/2 -translate-y-1/2">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveIndex((i) => Math.min(certs.length - 1, i + 1));
-                }}
-                className="p-2 rounded-md bg-gray-800 hover:bg-gray-700 max-md:h-28"
-                aria-label="next image"
-              >
-                <svg
-                  width="16"
-                  height="16"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                >
-                  <path
-                    d="M9 18l6-6-6-6"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </>
-);
+      </section>
+    </>
+  );
 }
 
 export default Certifications;
