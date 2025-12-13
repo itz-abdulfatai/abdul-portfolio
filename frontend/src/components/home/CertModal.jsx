@@ -39,7 +39,8 @@ function CertModal({
         <div
           className="fixed z-50 top-0 left-0 right-0 bottom-0 bg-black/50 backdrop-blur-sm flex justify-center items-center padding-x animate-fadeIn"
           onClick={() => {
-            if (window.innerWidth >= 640) setShowModal(false);
+            // if (window.innerWidth >= 640)
+            setShowModal(false);
           }}
         >
           <div

@@ -102,7 +102,7 @@ const dummyCertifications = [
   },
 ];
 
-const mountedRef = { current: false };
+// const mountedRef = { current: false };
 
 function Certifications() {
   const [certs] = useState(dummyCertifications);
@@ -111,7 +111,7 @@ function Certifications() {
   const scrollTimeoutRef = useRef(null);
   const mounted = useRef(false);
   const lastInteractionRef = useRef("init");
-  const touchStartRef = useRef({ x: 0, y: 0, moved: false });
+  // const touchStartRef = useRef({ x: 0, y: 0, moved: false });
   const [itemPct, setItemPct] = useState(() =>
     typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
   );
@@ -255,6 +255,7 @@ function Certifications() {
     // animate the container scroll (only the container will scroll, not the whole page)
     try {
       container.scrollTo({ left, behavior: "smooth" });
+    // eslint-disable-next-line no-unused-vars
     } catch (err) {
       // fallback for older browsers
       container.scrollLeft = left;
@@ -291,6 +292,7 @@ function Certifications() {
         );
         try {
           container.scrollTo({ left, behavior: "auto" });
+          // eslint-disable-next-line no-unused-vars
         } catch (err) {
           container.scrollLeft = left;
         }
@@ -350,56 +352,56 @@ function Certifications() {
     };
 
     // wheel: turn vertical wheel into horizontal scroll
-    const onImagesWheel = (e) => {
-      e.preventDefault();
-      imagesContainer.scrollLeft += e.deltaY;
-    };
+    // const onImagesWheel = (e) => {
+    //   e.preventDefault();
+    //   imagesContainer.scrollLeft += e.deltaY;
+    // };
 
     // touch handling: detect horizontal gestures and prevent vertical page scroll while swiping horizontally
-    const onTouchStart = (e) => {
-      const t = e.touches ? e.touches[0] : e;
-      touchStartRef.current = { x: t.clientX, y: t.clientY, moved: false };
-    };
+    // const onTouchStart = (e) => {
+    //   const t = e.touches ? e.touches[0] : e;
+    //   touchStartRef.current = { x: t.clientX, y: t.clientY, moved: false };
+    // };
 
-    const onTouchMove = (e) => {
-      const t = e.touches ? e.touches[0] : e;
-      const dx = Math.abs(t.clientX - touchStartRef.current.x);
-      const dy = Math.abs(t.clientY - touchStartRef.current.y);
+    // const onTouchMove = (e) => {
+    //   const t = e.touches ? e.touches[0] : e;
+    //   const dx = Math.abs(t.clientX - touchStartRef.current.x);
+    //   const dy = Math.abs(t.clientY - touchStartRef.current.y);
 
-      // if horizontal gesture dominates mark it moved but do not prevent default.
-      // letting the browser perform native horizontal scrolling yields the best performance
-      // and keeps scroll-snap and momentum intact.
-      if (dx > dy && dx > 5) {
-        touchStartRef.current.moved = true;
-      }
-    };
+    //   // if horizontal gesture dominates mark it moved but do not prevent default.
+    //   // letting the browser perform native horizontal scrolling yields the best performance
+    //   // and keeps scroll-snap and momentum intact.
+    //   if (dx > dy && dx > 5) {
+    //     touchStartRef.current.moved = true;
+    //   }
+    // };
 
-    const onPointerUp = () => {
-      // run compute after small delay to allow scroll-snap to finish
-      window.clearTimeout(scrollEndFallbackTimeout);
-      scrollEndFallbackTimeout = window.setTimeout(() => {
-        computeAndSetIndex();
-      }, 60);
-    };
+    // const onPointerUp = () => {
+    //   // run compute after small delay to allow scroll-snap to finish
+    //   window.clearTimeout(scrollEndFallbackTimeout);
+    //   scrollEndFallbackTimeout = window.setTimeout(() => {
+    //     computeAndSetIndex();
+    //   }, 60);
+    // };
 
     // Attach events. note: for touchmove we must set passive:false so preventDefault works
     imagesContainer.addEventListener("scroll", onImagesScroll, {
       passive: true,
     });
-    imagesContainer.addEventListener("wheel", onImagesWheel, {
-      passive: false,
-    });
-    imagesContainer.addEventListener("touchstart", onTouchStart, {
-      passive: true,
-    });
-    imagesContainer.addEventListener("touchmove", onTouchMove, {
-      passive: true,
-    });
+    // imagesContainer.addEventListener("wheel", onImagesWheel, {
+    //   passive: false,
+    // });
+    // imagesContainer.addEventListener("touchstart", onTouchStart, {
+    //   passive: true,
+    // });
+    // imagesContainer.addEventListener("touchmove", onTouchMove, {
+    //   passive: true,
+    // });
 
     // scrollend is handy but not supported everywhere — use fallback listeners too
-    imagesContainer.addEventListener("pointerup", onPointerUp);
-    imagesContainer.addEventListener("touchend", onPointerUp);
-    imagesContainer.addEventListener("mouseup", onPointerUp);
+    // imagesContainer.addEventListener("pointerup", onPointerUp);
+    // imagesContainer.addEventListener("touchend", onPointerUp);
+    // imagesContainer.addEventListener("mouseup", onPointerUp);
 
     // initial visuals
     applyVisuals();
@@ -407,12 +409,12 @@ function Certifications() {
     return () => {
       if (raf) cancelAnimationFrame(raf);
       imagesContainer.removeEventListener("scroll", onImagesScroll);
-      imagesContainer.removeEventListener("wheel", onImagesWheel);
-      imagesContainer.removeEventListener("touchstart", onTouchStart);
-      imagesContainer.removeEventListener("touchmove", onTouchMove);
-      imagesContainer.removeEventListener("pointerup", onPointerUp);
-      imagesContainer.removeEventListener("touchend", onPointerUp);
-      imagesContainer.removeEventListener("mouseup", onPointerUp);
+      // imagesContainer.removeEventListener("wheel", onImagesWheel);
+      // imagesContainer.removeEventListener("touchstart", onTouchStart);
+      // imagesContainer.removeEventListener("touchmove", onTouchMove);
+      // imagesContainer.removeEventListener("pointerup", onPointerUp);
+      // imagesContainer.removeEventListener("touchend", onPointerUp);
+      // imagesContainer.removeEventListener("mouseup", onPointerUp);
 
       window.clearTimeout(scrollEndFallbackTimeout);
       window.clearTimeout(programmaticTimeoutRef.current);
@@ -547,6 +549,7 @@ function Certifications() {
                   // disable native visible scrollbar
                   WebkitOverflowScrolling: "touch",
                   touchAction: "pan-y",
+                  overflowX: "auto",
                 }}
               >
                 {certs.map((cert, idx) => (
