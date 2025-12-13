@@ -44,7 +44,7 @@
     }
 
     section {
-        @apply padding-x min-h-[90vh] md:min-h-screen py-5
+        @apply padding-x min-h-[90vh] 2xl:min-h-[75vh] md:min-h-screen py-5
     }
 
     .work-heading {

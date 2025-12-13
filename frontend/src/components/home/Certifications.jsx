@@ -5,6 +5,7 @@ import CertModal from "./CertModal";
 /** @type {import('../../types').CertificationType[]} */
 const dummyCertifications = [
   {
+    id: "1",
     name: "AWS Cloud Practitioner",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/aws-cloud-practitioner",
@@ -15,6 +16,7 @@ const dummyCertifications = [
       "Entry level cloud certification covering core AWS services.\nThis program introduces foundational cloud concepts such as elasticity, scalability, fault tolerance, and cost optimization.\nYou also gain exposure to IAM roles and policies, global infrastructure, storage options, networking basics, shared responsibility model, and billing tools.\nThe exam is designed for beginners and helps prepare individuals transitioning into cloud engineering, DevOps, or security roles.\nIt provides a broad but meaningful understanding of how modern cloud environments work at a practical level.\nIdeal as a starting point before progressing into more specialized certifications or hands-on cloud projects.",
   },
   {
+    id: "2",
     name: "Meta Frontend Developer",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/meta-frontend",
@@ -24,6 +26,7 @@ const dummyCertifications = [
       "Covers modern frontend development with React and JavaScript.\nThe program emphasizes practical problem solving through interactive coding exercises, real-world UI challenges, and iterative code improvement.\nStudents learn component architecture, prop drilling vs state lifting, responsive design systems, async data flows, modular CSS, and rendering optimization.\nThe curriculum blends theory with hands-on projects that replicate real production workflows.\nGreat for developers who want to strengthen their UI engineering foundation and build polished, scalable React applications.",
   },
   {
+    id: "3",
     name: "Google UX Design",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/google-ux",
@@ -34,6 +37,7 @@ const dummyCertifications = [
       "User experience fundamentals and design thinking principles.\nThis certificate guides learners from early-stage research to final high-fidelity prototypes.\nTopics include persona creation, journey mapping, accessibility guidelines, low-fidelity wireframing, user testing, iterative design, heuristic evaluation, and responsive design strategies.\nThe program encourages building thoughtful user-first products with clarity, consistency, and empathy.\nCompleting it helps designers communicate decisions effectively, collaborate with product teams, and refine solutions based on validated user insights.\nGreat for product designers, UI designers, and full-stack developers wanting to understand UX deeply.",
   },
   {
+    id: "4",
     name: "Microsoft Azure Fundamentals",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/azure-fundamentals",
@@ -43,6 +47,7 @@ const dummyCertifications = [
       "Covers Azure core services, security, and cloud concepts.\nLearners explore compute services such as VMs, serverless functions, containers, and App Services.\nIt also dives into identity management through Azure AD, governance controls through management groups and policy, and monitoring tools like Azure Monitor.\nThe course provides a strong introduction to cloud security, networking basics, hybrid solutions, and cost management.\nPerfect foundation for enterprise IT roles and cloud path beginners.",
   },
   {
+    id: "5",
     name: "Stripe Payments Specialist",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/stripe-payments",
@@ -53,6 +58,7 @@ const dummyCertifications = [
       "Training on integrating and managing online payments.\nThe course includes in-depth coverage of checkout flows, subscription billing, customer portals, invoicing systems, fraud detection tools, and webhook-driven automation.\nLearners gain familiarity with secure API usage, PCI compliance requirements, webhook signing, dispute handling, and multi-currency workflows.\nThis certification suits developers building ecommerce applications, SaaS billing engines, or any product requiring reliable financial transactions at scale.",
   },
   {
+    id: "6",
     name: "AWS Cloud Practitioner",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/aws-cloud-practitioner",
@@ -63,6 +69,7 @@ const dummyCertifications = [
       "Entry level cloud certification covering core AWS services.\nThis curriculum includes detailed learning paths involving compute engines, scaling strategies, networking layers, edge locations, and encryption fundamentals.\nIt prepares learners to communicate cloud concepts confidently and collaborate effectively with engineering teams.\nThe exam emphasizes conceptual clarity rather than deep architecture, making it accessible to newcomers but still valuable for professionals.",
   },
   {
+    id: "7",
     name: "Meta Frontend Developer",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/meta-frontend",
@@ -72,6 +79,7 @@ const dummyCertifications = [
       "Covers modern frontend development with React and JavaScript.\nThis includes advanced rendering patterns, component composition, DOM reconciliation logic, virtual DOM diffing, event delegation, and debugging performance bottlenecks.\nThe hands-on projects simulate workplace tasks involving real UI architecture decisions.\nAn excellent track for developers leveling up their frontend engineering expertise.",
   },
   {
+    id: "8",
     name: "Google UX Design",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/google-ux",
@@ -82,6 +90,7 @@ const dummyCertifications = [
       "User experience fundamentals and design thinking principles.\nLearners explore visual hierarchy, typography choices, color psychology, grid systems, and how these influence user perception.\nThe coursework encourages structured thought by merging user research with creative prototyping.\nBy the end, students can design informed solutions backed by real user insights and test outcomes.",
   },
   {
+    id: "9",
     name: "Microsoft Azure Fundamentals",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/azure-fundamentals",
@@ -91,6 +100,7 @@ const dummyCertifications = [
       "Covers Azure core services, security, and cloud concepts.\nThe curriculum walks learners through container orchestration, virtual networks, hybrid identity, encryption models, and cost governance.\nThis certification acts as a stepping stone into more advanced Azure paths like Solutions Architect or DevOps Engineer.",
   },
   {
+    id: "10",
     name: "Stripe Payments Specialist",
     imageLink: "/placeholder-cert1.png",
     certLink: "https://example.com/certs/stripe-payments",
@@ -101,7 +111,6 @@ const dummyCertifications = [
       "Training on integrating and managing online payments.\nDevelopers gain real-world understanding of secure token handling, fraud scoring, identity verification, bank payouts, and cross-border payment flows.\nThis certification is practical and heavily API-driven, giving you tools to implement payment logic with confidence.",
   },
 ];
-
 
 function Certifications() {
   const [certs] = useState(dummyCertifications);
@@ -545,4 +554,3 @@ function Certifications() {
 }
 
 export default Certifications;
-

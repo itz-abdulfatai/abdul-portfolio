@@ -1,13 +1,14 @@
-import {  useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
-import ReactGA from 'react-ga4';
+import ReactGA from "react-ga4";
 import Icon from "../components/global/Icon";
 import SettingContext from "../contexts/settingContext";
 import { useLocation } from "react-router-dom";
-import { Helmet } from "react-helmet"
+import { Helmet } from "react-helmet";
 import LittleSpinner from "../components/global/LittleSpinner";
 import BookMeeting from "../components/global/BookMeeting";
+import { scrollR } from "../utils/scrollR";
 
 function Quote() {
   const { settings, loading: settingsLoading } = useContext(SettingContext);
@@ -23,6 +24,11 @@ function Quote() {
 
   const { search } = useLocation();
   const source = new URLSearchParams(search).get("source");
+
+  useEffect(() => {
+    scrollR("llll", "left", false);
+    scrollR("rrrr", "right", false);
+  }, []);
 
   async function validateEmail(email) {
     try {
@@ -157,7 +163,7 @@ function Quote() {
         />
       </Helmet>
       <section className="flex max-lg:gap-10 justify-between flex-col lg:flex-row items-start min-h-screen py-20 relative px-5 sm:px-10 md:px-16 lg:px-unset">
-        <div className=" w-full lg:w-1/2 flex flex-col gap-5 lg:sticky lg:top-20">
+        <div className="llll w-full lg:w-1/2 flex flex-col gap-5 lg:sticky lg:top-20">
           <h2 className="text-[40px] font-[600] max-w-[400px] leading-tight">
             Get a Custom Website Quote
           </h2>
@@ -181,7 +187,7 @@ function Quote() {
           )}
         </div>
 
-        <div className="w-full lg:w-1/2 rrr max-sm:mt-10  flex flex-col gap-8">
+        <div className="rrrr w-full lg:w-1/2 rrr max-sm:mt-10  flex flex-col gap-8">
           <BookMeeting />
 
           {/* <p className="text-center text-tertiary -my-4">or</p> */}

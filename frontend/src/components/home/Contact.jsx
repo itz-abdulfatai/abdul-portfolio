@@ -2,10 +2,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import SettingContext from "../../contexts/settingContext";
 import RotatingText from "../global/RotatingText";
 // import { Link } from "react-router-dom";
-// import { scrollR } from "../../utils/scrollR"
+import { scrollR } from "../../utils/scrollR";
 import axios from "axios";
 import ReCAPTCHA from "react-google-recaptcha";
-import ReactGA from 'react-ga4';
+import ReactGA from "react-ga4";
 import Icon from "../global/Icon";
 // import Spinner from "../global/Spinner";
 import Error from "../global/Error";
@@ -26,8 +26,8 @@ function Contact() {
   // console.log(capRef.current)
 
   useEffect(() => {
-    // scrollR('lll', 'left', false)
-    // scrollR('rrr', 'right', false)
+    scrollR("lll", "left", false);
+    scrollR("rrr", "right", false);
   }, []);
 
   // function onChange(token) {

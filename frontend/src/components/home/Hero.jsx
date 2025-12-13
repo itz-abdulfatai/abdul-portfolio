@@ -21,7 +21,7 @@ function Hero() {
   return (
     <section
       id="home"
-      className="homme overflow-hidden items-stretch flex justify-between min-h-[30vh] lg:min-h-[80vh] "
+      className="homme overflow-hidden items-stretch 2xl:items-center flex justify-between min-h-[30vh] lg:min-h-[80vh] "
     >
       <div className=" flex py-8 lg:py-28 justify-end items-center md:items-start text-center md:text-left w-full flex-col gap-8 ">
         <div className="flex items-center gap-3">
@@ -32,23 +32,22 @@ function Hero() {
           />
           <span className=" dot"></span>
           <p className="text-tertiary">
-            {
-              loading ? 'loading availability...':
-              error ? 'Available for freelancing':
+            {loading ? (
+              "loading availability..."
+            ) : error ? (
+              "Available for freelancing"
+            ) : (
               <>
-              { isAvaliableForFreelancing
-                ? "Available for freelancing":
-                 "Currently Unavailable"
-                }
+                {isAvaliableForFreelancing
+                  ? "Available for freelancing"
+                  : "Currently Unavailable"}
               </>
-            }
-               
+            )}
           </p>
         </div>
         <h1 className=" text-[35px] lg:text-[50px] font-[600]">
           {/* {heading} */}
           Bring your creative vision to life with professional design expertise
-          
         </h1>
         <div className=" flex gap-5 flex-col md:flex-row max-md:items-center max-sm:w-[90%] max-md:w-[60%] ">
           <Button
@@ -73,7 +72,7 @@ function Hero() {
             text="View recent work"
             onclick={() => {
               // scrollToSection("about");
-              navigate("/works")
+              navigate("/works");
             }}
             textColor={"primary"}
           />
