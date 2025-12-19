@@ -1,23 +1,28 @@
-import { useContext, useEffect } from "react"
-import Button from "../global/Button"
-import ProjectCard from "../global/ProjectCard"
-import SettingContext from "../../contexts/settingContext"
-import { useNavigate } from "react-router-dom"
-import { shuffle } from "../../utils/helper"
-import { scrollR } from "../../utils/scrollR"
+import { useContext, useEffect, useMemo } from "react";
+import Button from "../global/Button";
+import ProjectCard from "../global/ProjectCard";
+import SettingContext from "../../contexts/settingContext";
+import { useNavigate } from "react-router-dom";
+import { shuffle } from "../../utils/helper";
+import { scrollR } from "../../utils/scrollR";
 // import Spinner from "../global/Spinner"
 // import Error from "../global/Error"
-import LittleSpinner from "../global/LittleSpinner"
+import LittleSpinner from "../global/LittleSpinner";
 
-function Portfolio({heading}) {
-    const {settings, loading, error, fetchSettings} = useContext(SettingContext)
-    const {projects} = settings;
-    const navigate = useNavigate()
+function Portfolio({ heading }) {
+  const { settings, loading, error, fetchSettings } =
+    useContext(SettingContext);
+  const { projects } = settings;
+  const navigate = useNavigate();
 
-      useEffect(() => {
-    scrollR('pppppppp', 'bottom', false)
+  useEffect(() => {
+    scrollR("pppppppp", "bottom", false);
+  }, []);
 
-  }, [])
+  const firstFour = useMemo(
+    () => shuffle(projects ?? []).slice(0, 4),
+    [projects]
+  );
 
   return (
     <section
@@ -57,9 +62,9 @@ function Portfolio({heading}) {
         )}
         {!loading && projects && (
           <>
-            {shuffle(projects).map(
-              (p, i) => i < 4 && <ProjectCard p={p} key={i} />
-            )}
+            {firstFour.map((p) => (
+              <ProjectCard p={p} key={p.id || p.title} />
+            ))}
           </>
         )}
       </div>
@@ -67,5 +72,4 @@ function Portfolio({heading}) {
   );
 }
 
-export default Portfolio
-
+export default Portfolio;

@@ -227,18 +227,23 @@
         @apply flex flex-col gap-3 w-full
     }
 
-    .form-input {
-        @apply rounded-xl bg-x2 p-3 placeholder:text-tertiary placeholder:text-sm focus:border-blue-600 w-full
-    }
-    .form-select {
-        @apply rounded-xl bg-x2 py-4 px-3 placeholder:text-tertiary placeholder:text-sm focus:border-blue-600 w-full
-    }
+.form-base {
+    @apply rounded-xl bg-x2 placeholder:text-tertiary placeholder:text-sm focus:border-blue-600 w-full
+}
+
+.form-input {
+    @apply form-base p-3
+}
+
+.form-select {
+    @apply form-base py-4 px-3
+}
 
 
     
 
 
-    input, textarea {
+    input, textarea, select {
         resize: none;
         @apply focus:outline-none test-b border-transparent 
     }

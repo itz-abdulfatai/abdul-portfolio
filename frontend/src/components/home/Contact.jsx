@@ -73,9 +73,7 @@ function Contact() {
           return "valid";
         }
       }
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      // console.log(error);
+    } catch {
       return "email validation failed, Try again later";
     }
   }
@@ -102,7 +100,7 @@ function Contact() {
       return;
     }
 
-    console.log("has reach to message sending level");
+    // console.log("has reach to message sending level");
     // alert('Message sent successfully')
     const formData = new FormData(e.target);
     const data = {};

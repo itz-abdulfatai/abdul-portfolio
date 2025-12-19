@@ -201,13 +201,21 @@ function Quote() {
           {/* <p className="text-center text-tertiary -my-4">or</p> */}
 
           {/* select service */}
-          <div className="form-row">
-            <label className="">What service are you interested in?</label>
+          <div
+            className="form-row"
+            role="tablist"
+            aria-label="Service selection"
+          >
+            <span id="service-label" className="">
+              What service are you interested in?
+            </span>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               {services.map((serviceOption) => (
                 <button
                   key={serviceOption.id}
                   type="button"
+                  aria-selected={service === serviceOption.id}
+                  role="tab"
                   onClick={() => setService(serviceOption.id)}
                   className={`py-4 px-4 rounded-xl font-[500] transition-all flex flex-col items-center gap-2 duration-300 ${
                     service === serviceOption.id
@@ -361,11 +369,14 @@ function Quote() {
               <fieldset className="form-row">
                 <label htmlFor="budget">What is your approximate budget?</label>
                 <select className="form-select" id="budget" name="budget">
-                  <option value="">Please select</option>
-                  <option value="<1000">&lt;$100</option>
-                  <option value="1000-5000">$100-$500</option>
-                  <option value="5000-10000">$500-$1000</option>
-                  <option value=">10000">&gt;$1000</option>
+                  <option selected disabled>
+                    Select Budget
+                  </option>
+                  <option value="not-sure">Not sure</option>
+                  <option value="<100">&lt;$100</option>
+                  <option value="100-500">$100-$500</option>
+                  <option value="500-1000">$500-$1000</option>
+                  <option value=">1000">&gt;$1000</option>
                   <option value="prefer-not-say">Prefer not to say</option>
                 </select>
               </fieldset>
@@ -430,7 +441,7 @@ function Quote() {
                     results?
                   </label>
                   <select className="form-select" id="seo" name="seo">
-                    <option defaultValue value="">
+                    <option selected disabled>
                       Please select
                     </option>
                     <option value="yes">Yes, I&apos;m interested</option>
@@ -448,7 +459,7 @@ function Quote() {
                     id="virtualAssistant"
                     name="virtualAssistant"
                   >
-                    <option defaultValue value="">
+                    <option selected disabled>
                       Please select
                     </option>
                     <option value="yes">Yes, I&apos;m interested</option>
@@ -462,7 +473,7 @@ function Quote() {
                     fresh?
                   </label>
                   <select className="form-select" id="content" name="content">
-                    <option defaultValue value="">
+                    <option selected disabled>
                       Please select
                     </option>
                     <option value="yes">Yes, I&apos;m interested</option>
@@ -470,18 +481,14 @@ function Quote() {
                   </select>
                 </fieldset>
               </div>
-
+              <p className=" text-sm"></p>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {message && <p className="text-green-500 text-sm">{message}</p>}
               <button
                 disabled={loading}
                 className="bg-highlight py-3 rounded-xl text-primary font-[500] capitalize hover:bg-x transition-all hover:text-secondary mt-3 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                {loading
-                  ? "Please Wait..."
-                  : error
-                  ? error
-                  : message
-                  ? message
-                  : "Get Quote"}
+                {loading ? "Please Wait..." : "Get Quote"}
               </button>
             </form>
           )}
@@ -606,7 +613,11 @@ function Quote() {
                   What is your approximate monthly budget?
                 </label>
                 <select className="form-select" id="budget" name="budget">
-                  <option value="">Please select</option>
+                  <option selected disabled>
+                    Select budget
+                  </option>
+
+                  <option value="not-sure">Not Sure</option>
                   <option value="<500">&lt;$500</option>
                   <option value="500-2000">$500-$2,000</option>
                   <option value="2000-5000">$2,000-$5,000</option>
@@ -645,18 +656,14 @@ function Quote() {
                   placeholder="Share any other details, like competitors or specific campaigns"
                 />
               </fieldset>
-              {/* Submit button as in your code */}
+              <p className=" text-sm"></p>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {message && <p className="text-green-500 text-sm">{message}</p>}
               <button
                 disabled={loading}
                 className="bg-highlight py-3 rounded-xl text-primary font-[500] capitalize hover:bg-x transition-all hover:text-secondary mt-3 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                {loading
-                  ? "Please Wait..."
-                  : error
-                  ? error
-                  : message
-                  ? message
-                  : "Get Quote"}
+                {loading ? "Please Wait..." : "Get Quote"}
               </button>
             </form>
           )}
@@ -779,7 +786,9 @@ function Quote() {
               <fieldset className="form-row">
                 <label htmlFor="budget">What is your approximate budget?</label>
                 <select className="form-select" id="budget" name="budget">
-                  <option value="">Please select</option>
+                  <option selected disabled>
+                    Select Budget
+                  </option>
                   <option value="<1000">&lt;$1,000</option>
                   <option value="1000-5000">$1,000-$5,000</option>
                   <option value="5000-10000">$5,000-$10,000</option>
@@ -818,18 +827,14 @@ function Quote() {
                   placeholder="Share any other details, like data privacy concerns or scalability needs"
                 />
               </fieldset>
-              {/* Submit button as in your code */}
+              <p className=" text-sm"></p>
+              {error && <p className="text-red-500 text-sm">{error}</p>}
+              {message && <p className="text-green-500 text-sm">{message}</p>}
               <button
                 disabled={loading}
                 className="bg-highlight py-3 rounded-xl text-primary font-[500] capitalize hover:bg-x transition-all hover:text-secondary mt-3 disabled:opacity-20 disabled:cursor-not-allowed"
               >
-                {loading
-                  ? "Please Wait..."
-                  : error
-                  ? error
-                  : message
-                  ? message
-                  : "Get Quote"}
+                {loading ? "Please Wait..." : "Get Quote"}
               </button>
             </form>
           )}

@@ -18,6 +18,10 @@ function CertModal({
   };
 
   const copyUrlToClipboard = () => {
+    if (!navigator.clipboard) {
+      console.error("Clipboard API not available");
+      return;
+    }
     const url = `${window.location.origin}${
       window.location.pathname
     }${getCertUrl(certification.name)}`;

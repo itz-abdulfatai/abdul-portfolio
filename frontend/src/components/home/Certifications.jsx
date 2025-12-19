@@ -1,5 +1,5 @@
 // @ts-checkk
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CertModal from "./CertModal";
 import { useSearchParams } from "react-router-dom";
 import ReactGA from "react-ga4";
@@ -131,20 +131,23 @@ function Certifications() {
 
     if (certParam) {
       const foundIndex = certs.findIndex(
-        (c) => c.name.toLocaleLowerCase().replace(/\s+/g, "-") === certParam
+        (c) => c.name.toLowerCase().replace(/\s+/g, "-") === certParam
       );
-
+      let scrollTimeout;
       if (foundIndex !== -1) {
         setActiveIndex(foundIndex);
         setShowModal(true);
 
-        setTimeout(() => {
+        scrollTimeout = setTimeout(() => {
           const certSection = document.getElementById("certs");
           if (certSection) {
             certSection.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         }, 20);
       }
+      return () => {
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -152,7 +155,7 @@ function Certifications() {
   useEffect(() => {
     const handleBackButton = () => {
       // do your action here
-      console.log("back button pressed");
+      // console.log("back button pressed");
 
       if (showModal) {
         handleModalClose(certs[activeIndex]);
@@ -164,41 +167,46 @@ function Certifications() {
     return () => {
       window.removeEventListener("popstate", handleBackButton);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showModal]);
+  }, [showModal, handleModalClose, certs, activeIndex]);
 
-  const handleModalOpen = (cert) => {
-    /** @type {import('../../types').CertificationType} */
-    const certification = cert;
-    setShowModal(true);
-    const certSlug = certs[activeIndex].name.toLowerCase().replace(/\s+/g, "-");
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.set("cert", certSlug);
-      return newParams;
-    });
+  const handleModalOpen = useCallback(
+    (cert) => {
+      /** @type {import('../../types').CertificationType} */
+      const certification = cert;
+      setShowModal(true);
+      const certSlug = certification.name.toLowerCase().replace(/\s+/g, "-");
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.set("cert", certSlug);
+        return newParams;
+      });
 
-    ReactGA.event({
-      category: "certifications",
-      action: `open ${certification.name} certification`,
-    });
-  };
+      ReactGA.event({
+        category: "certifications",
+        action: `open ${certification.name} certification`,
+      });
+    },
+    [setSearchParams]
+  );
 
-  const handleModalClose = (cert) => {
-    /** @type {import('../../types').CertificationType} */
-    const certification = cert;
-    setShowModal(false);
-    setSearchParams((prevParams) => {
-      const newParams = new URLSearchParams(prevParams);
-      newParams.delete("cert");
-      return newParams;
-    }); // Remove cert param
+  const handleModalClose = useCallback(
+    (cert) => {
+      /** @type {import('../../types').CertificationType} */
+      const certification = cert;
+      setShowModal(false);
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.delete("cert");
+        return newParams;
+      }); // Remove cert param
 
-    ReactGA.event({
-      category: "certifications",
-      action: `close ${certification.name} certification`,
-    });
-  };
+      ReactGA.event({
+        category: "certifications",
+        action: `close ${certification.name} certification`,
+      });
+    },
+    [setSearchParams]
+  );
 
   const imagesContainerRef = useRef(null);
   const imageRefs = useRef([]);
@@ -423,7 +431,7 @@ function Certifications() {
         requestAnimationFrame(() => {
           applyVisuals();
           const el = imageRefs.current[activeIndex];
-          scrollItemToCenter(imagesContainerRef.current, el, "x");
+          scrollItemToCenter(imagesContainerRef.current, el);
         });
       }, 120);
     };

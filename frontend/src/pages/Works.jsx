@@ -56,7 +56,7 @@ function Works() {
         <div className="flex flex-col gap-10">
           {/* Sticky Tabs Navigation */}
 
-          {!loading && jobs.length > 1 && (
+          {!loading && jobs.length + portfolio.length > 1 && (
             <div className="sm:sticky sm:top-0 -mx-8 sm:bg-primary/95 sm:backdrop-blur-sm sm:shadow-md sm:z-40">
               <div className="flex gap-4 justify-center items-center py-4">
                 <button
