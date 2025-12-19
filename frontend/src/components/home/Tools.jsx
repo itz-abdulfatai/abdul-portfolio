@@ -17,7 +17,10 @@ function Tools() {
     // scrollR('tttt', 'bottom', false)
   }, []);
   return (
-    <section id="tools" className=" flex flex-col gap-10 justify-center min-h-0">
+    <section
+      id="tools"
+      className=" flex flex-col gap-10 justify-center min-h-0"
+    >
       <h2 className=" h22 text-secondary  text-2xl md:text-[40px] font-[600]">
         Essential tools I use
       </h2>
@@ -26,21 +29,23 @@ function Tools() {
         exceptional, high-performing websites and applications.
       </p>
       <div className="  flex flex-wrap gap-4 ">
-        {loading &&
+        {loading && (
+          <div className="w-full  pt-9 h-14 ">
+            <LittleSpinner className="" />
+          </div>
+        )}
 
-        <div className="w-full  pt-9 h-14 ">
-          <LittleSpinner className='' />
-
-        </div>
-
-}
-        
-        {error && 
-        <div className="w-full  pt-9 h-14 flex items-center gap-4 ">
-          Error loading tools
-          <Button onclick={fetchSettings} text='Retry' className='underline'/>
-        </div>
-        }
+        {error && (
+          <div className="w-full  pt-9 h-14 flex items-center gap-4 ">
+            Error loading tools
+            <Button
+              onclick={fetchSettings}
+              text="Retry"
+              textColor="highlight"
+              className="underline"
+            />
+          </div>
+        )}
         {!loading && tools && (
           <>
             {tools.map((tool, index) =>

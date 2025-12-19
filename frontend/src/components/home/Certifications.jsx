@@ -1,6 +1,8 @@
 // @ts-checkk
 import { useEffect, useRef, useState } from "react";
 import CertModal from "./CertModal";
+import { useSearchParams } from "react-router-dom";
+import ReactGA from "react-ga4";
 
 /** @type {import('../../types').CertificationType[]} */
 const dummyCertifications = [
@@ -116,12 +118,87 @@ function Certifications() {
   const [certs] = useState(dummyCertifications);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const scrollTimeoutRef = useRef(null);
   const mounted = useRef(false);
   const lastInteractionRef = useRef("init");
   const [itemPct, setItemPct] = useState(() =>
     typeof window !== "undefined" && window.innerWidth < 640 ? 0.8 : 0.62
   );
+
+  useEffect(() => {
+    const certParam = searchParams.get("cert");
+
+    if (certParam) {
+      const foundIndex = certs.findIndex(
+        (c) => c.name.toLocaleLowerCase().replace(/\s+/g, "-") === certParam
+      );
+
+      if (foundIndex !== -1) {
+        setActiveIndex(foundIndex);
+        setShowModal(true);
+
+        setTimeout(() => {
+          const certSection = document.getElementById("certs");
+          if (certSection) {
+            certSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 20);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    const handleBackButton = () => {
+      // do your action here
+      console.log("back button pressed");
+
+      if (showModal) {
+        handleModalClose(certs[activeIndex]);
+      }
+    };
+
+    window.addEventListener("popstate", handleBackButton);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackButton);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showModal]);
+
+  const handleModalOpen = (cert) => {
+    /** @type {import('../../types').CertificationType} */
+    const certification = cert;
+    setShowModal(true);
+    const certSlug = certs[activeIndex].name.toLowerCase().replace(/\s+/g, "-");
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.set("cert", certSlug);
+      return newParams;
+    });
+
+    ReactGA.event({
+      category: "certifications",
+      action: `open ${certification.name} certification`,
+    });
+  };
+
+  const handleModalClose = (cert) => {
+    /** @type {import('../../types').CertificationType} */
+    const certification = cert;
+    setShowModal(false);
+    setSearchParams((prevParams) => {
+      const newParams = new URLSearchParams(prevParams);
+      newParams.delete("cert");
+      return newParams;
+    }); // Remove cert param
+
+    ReactGA.event({
+      category: "certifications",
+      action: `close ${certification.name} certification`,
+    });
+  };
 
   const imagesContainerRef = useRef(null);
   const imageRefs = useRef([]);
@@ -367,7 +444,7 @@ function Certifications() {
         <CertModal
           cert={certs[activeIndex]}
           showModal={showModal}
-          setShowModal={setShowModal}
+          handleModalClose={handleModalClose}
         />
       )}
 
@@ -469,7 +546,7 @@ function Certifications() {
                       <div
                         onClick={(e) => {
                           e.preventDefault();
-                          setShowModal(true);
+                          handleModalOpen(cert);
                         }}
                         className={`group-hover:bg-blackb group-hover:bg-opacity-20  absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center transition-all duration-300 custom-cursor`}
                         role="button"

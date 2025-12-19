@@ -230,6 +230,13 @@
     .form-input {
         @apply rounded-xl bg-x2 p-3 placeholder:text-tertiary placeholder:text-sm focus:border-blue-600 w-full
     }
+    .form-select {
+        @apply rounded-xl bg-x2 py-4 px-3 placeholder:text-tertiary placeholder:text-sm focus:border-blue-600 w-full
+    }
+
+
+    
+
 
     input, textarea {
         resize: none;

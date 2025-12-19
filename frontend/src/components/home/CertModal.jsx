@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { getCertUrl } from "../../utils/helper";
 
 function CertModal({
   cert,
   showModal,
-  setShowModal,
+  handleModalClose,
   onClose = () => {},
   onOpen = () => {},
 }) {
@@ -11,8 +12,27 @@ function CertModal({
   const certification = cert;
 
   const [showDescription, setShowDescription] = useState(false);
+  const [shared, setShared] = useState(false);
   const formatDate = (date) => {
     return date.toLocaleString("en-US", { month: "long", year: "numeric" });
+  };
+
+  const copyUrlToClipboard = () => {
+    const url = `${window.location.origin}${
+      window.location.pathname
+    }${getCertUrl(certification.name)}`;
+    navigator.clipboard.writeText(url).then(
+      () => {
+        setShared(true);
+
+        setTimeout(() => {
+          setShared(false);
+        }, 2000);
+      },
+      (err) => {
+        console.error("Failed to copy: ", err);
+      }
+    );
   };
 
   useEffect(() => {
@@ -43,7 +63,7 @@ function CertModal({
           className="fixed z-50 top-0 left-0 right-0 bottom-0 bg-black/50 backdrop-blur-sm flex justify-center items-center padding-x animate-fadeIn"
           onClick={() => {
             // if (window.innerWidth >= 640)
-            setShowModal(false);
+            handleModalClose(certification);
           }}
         >
           <div
@@ -54,6 +74,7 @@ function CertModal({
               <div className="absolute top-4 left-4 right-4 z-20 flex items-center max-md:justify-end justify-between pointer-events-none">
                 <a
                   href={certification.certLink}
+                  title="open certificate link"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="pointer-events-auto bg-secondary hover:bg-primary
@@ -64,15 +85,31 @@ function CertModal({
                   View Certificate
                   <i className="bx bx-right-top-arrow-circle group-hover:translate-x-1 transition-transform text-base"></i>
                 </a>
-
-                <button
-                  className="pointer-events-auto w-8 h-8 rounded-full bg-secondary hover:bg-primary
+                <div className="flex items-center gap-2">
+                  <button
+                    className="pointer-events-auto w-8 h-8 rounded-full bg-secondary hover:bg-primary
+               flex items-center justify-center transition-colors duration-300 group active:opacity-50"
+                    onClick={copyUrlToClipboard}
+                    disabled={shared}
+                    aria-label="copy cert link"
+                    title="copy certificate link"
+                  >
+                    {shared ? (
+                      <i className="bx bx-check text-primary group-hover:text-secondary transition-colors duration-300"></i>
+                    ) : (
+                      <i className="bx bx-copy text-primary group-hover:text-secondary transition-colors duration-300"></i>
+                    )}
+                  </button>
+                  <button
+                    title="close modal"
+                    className="pointer-events-auto w-8 h-8 rounded-full bg-secondary hover:bg-primary
                flex items-center justify-center transition-colors duration-300 group"
-                  onClick={() => setShowModal(false)}
-                  aria-label="Close modal"
-                >
-                  <i className="bx bx-x text-primary group-hover:text-secondary transition-colors duration-300"></i>
-                </button>
+                    onClick={() => handleModalClose(certification)}
+                    aria-label="Close modal"
+                  >
+                    <i className="bx bx-x text-primary group-hover:text-secondary transition-colors duration-300"></i>
+                  </button>
+                </div>
               </div>
 
               <img
@@ -130,6 +167,7 @@ function CertModal({
 
               <a
                 href={certification.certLink}
+                title="open certificate link"
                 className="self-start px-4 py-2 md:hidden text-sm font-medium text-highlight hover:text-secondary bg-x/40 hover:bg-x/60 rounded-lg transition-all duration-300 flex items-center gap-2 border border-secondary group"
                 target="_blank"
                 rel="noopener noreferrer"
