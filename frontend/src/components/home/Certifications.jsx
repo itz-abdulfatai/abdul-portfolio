@@ -473,7 +473,7 @@ function Certifications() {
                   {certs.map((cert, idx) => (
                     <div
                       key={`${cert.name}-${idx}`}
-                      className={`cursor-pointer select-none text-[13px] px-2 py-1.5 2xl:text-sm rounded-md ${
+                      className={`cursor-pointer select-none text-[15px] px-2 py-1.5 2xl:text-sm rounded-md ${
                         idx === activeIndex
                           ? "text-highlight font-semibold"
                           : "text-x font-medium"

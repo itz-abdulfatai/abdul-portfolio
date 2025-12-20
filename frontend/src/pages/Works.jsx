@@ -39,7 +39,10 @@ function Works() {
           content="Browse through my diverse portfolio to see the creative projects I’ve crafted for satisfied clients."
         />
       </Helmet>
-      <section id="portfolio" className="flex flex-col gap-10 py-14">
+      <section
+        id="portfolio"
+        className="overflow-x-hidden flex flex-col gap-10 py-14"
+      >
         <div className="flex flex-col md:flex-row justify-between gap-5">
           <h2
             className="text-[25px] lg:text-[40px] font-[600]"

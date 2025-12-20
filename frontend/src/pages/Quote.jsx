@@ -195,7 +195,7 @@ function Quote() {
           )}
         </div>
 
-        <div className="rrrr w-full lg:w-1/2 rrr max-sm:mt-10  flex flex-col gap-8">
+        <div className="md:rrrr w-full lg:w-1/2 md:rrr max-sm:mt-10  flex flex-col gap-8">
           <BookMeeting />
 
           {/* <p className="text-center text-tertiary -my-4">or</p> */}

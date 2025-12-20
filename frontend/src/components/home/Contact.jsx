@@ -175,8 +175,8 @@ function Contact() {
         id="contact"
         className=" flex justify-between flex-col md:flex-row items-center"
       >
-        <div className=" lll w-full  flex flex-col gap-5">
-          <h2 className="text-[40px] font-[600] max-w-[400px] leading-tight">
+        <div className=" md:lll w-full  flex flex-col gap-5">
+          <h2 className="text-[35px] md:text-[40px] font-[600] max-w-[400px] leading-tight">
             Contact me for
             {/* for collaboration */}
             <RotatingText
@@ -212,7 +212,7 @@ function Contact() {
           )}
         </div>
 
-        <div className="w-full rrr max-sm:mt-10  flex flex-col gap-8">
+        <div className="w-full md:rrr max-sm:mt-10  flex flex-col gap-8">
           {pathname !== "/" && <BookMeeting />}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
