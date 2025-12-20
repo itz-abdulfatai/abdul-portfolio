@@ -152,6 +152,24 @@ function Certifications() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleModalClose = useCallback(
+    (cert) => {
+      /** @type {import('../../types').CertificationType} */
+      const certification = cert;
+      setShowModal(false);
+      setSearchParams((prevParams) => {
+        const newParams = new URLSearchParams(prevParams);
+        newParams.delete("cert");
+        return newParams;
+      }); // Remove cert param
+
+      ReactGA.event({
+        category: "certifications",
+        action: `close ${certification.name} certification`,
+      });
+    },
+    [setSearchParams]
+  );
   useEffect(() => {
     const handleBackButton = () => {
       // do your action here
@@ -189,24 +207,6 @@ function Certifications() {
     [setSearchParams]
   );
 
-  const handleModalClose = useCallback(
-    (cert) => {
-      /** @type {import('../../types').CertificationType} */
-      const certification = cert;
-      setShowModal(false);
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams);
-        newParams.delete("cert");
-        return newParams;
-      }); // Remove cert param
-
-      ReactGA.event({
-        category: "certifications",
-        action: `close ${certification.name} certification`,
-      });
-    },
-    [setSearchParams]
-  );
 
   const imagesContainerRef = useRef(null);
   const imageRefs = useRef([]);
