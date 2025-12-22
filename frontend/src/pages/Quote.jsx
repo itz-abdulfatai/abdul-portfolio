@@ -274,7 +274,7 @@ function Quote() {
                 </div>
                 <div className="form-row">
                   <label htmlFor="how-did-you-hear-about-abduldev">
-                    How did you hear about Abduldev?
+                    How did you find us?
                   </label>
                   <input
                     required
@@ -535,7 +535,7 @@ function Quote() {
                 </div>
                 <div className="form-row">
                   <label htmlFor="how-did-you-hear-about-abduldev">
-                    How did you hear about Abduldev?
+                    How did you find us?
                   </label>
                   <input
                     required
@@ -710,7 +710,7 @@ function Quote() {
                 </div>
                 <div className="form-row">
                   <label htmlFor="how-did-you-hear-about-abduldev">
-                    How did you hear about Abduldev?
+                    How did you find us?
                   </label>
                   <input
                     required
