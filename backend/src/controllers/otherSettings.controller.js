@@ -35,6 +35,28 @@ export async function getProjects(req, res) {
   }
 }
 
+export async function getCertifications(req, res) {
+  try {
+    const certifications = await db.certification.findMany({
+      where: {
+        settingId: process.env.SETTINGS_DB_ID,
+      },
+      orderBy: {
+        priority: "asc",
+      },
+    });
+
+    if (!certifications)
+      return res.status(404).send("certifications not found");
+
+    res.send(certifications);
+  } catch (error) {
+    console.error(error);
+    console.error(error.stack);
+    res.status(500).send({ message: `an error occured: ${error.message}` });
+  }
+}
+
 export async function getTestimonials(req, res) {
   try {
     const testimonials = await db.testimonial.findMany({
@@ -175,6 +197,41 @@ export async function addProjects(req, res) {
   }
 }
 
+export async function addCertification(req, res) {
+  const { data } = req.body;
+  if (!data) return res.status(400).send("no or invalid data");
+
+  try {
+    const newCertification = await db.certification.create({
+      data: {
+        ...data,
+        settingId: process.env.SETTINGS_DB_ID,
+      },
+    });
+
+    res.status(201).send({
+      message: "certification added successfully",
+      certification: newCertification,
+    });
+  } catch (error) {
+    console.error(error);
+    console.error(error.stack);
+
+    if (
+      error.message ===
+      "\nInvalid `prisma.certification.create()` invocation:\n\n\nUnique constraint failed on the fields: (`name`)"
+    ) {
+      return res
+        .status(400)
+        .send({ message: "A certification with that name already exists" });
+    }
+
+    return res
+      .status(500)
+      .send({ message: `an error occured: ${error.message}` });
+  }
+}
+
 export async function addTestimonials(req, res) {
   const { data } = req.body;
   if (!data) return res.status(400).send("no or invalid data");
@@ -287,13 +344,11 @@ export async function updateProjects(req, res) {
 
   try {
     const updatedProject = await db.project.update({
-        where: {id},
-        data : {
-            ...data
-        }
-    })
-
-        
+      where: { id },
+      data: {
+        ...data,
+      },
+    });
 
     if (!updatedProject) return res.status(404).send("project not found");
 
@@ -304,7 +359,33 @@ export async function updateProjects(req, res) {
     return res
       .status(500)
       .send({ message: `an error occured: ${error.message}` });
-    
+  }
+}
+
+export async function updateCertification(req, res) {
+  const { id } = req.params;
+  if (!id) return res.status(400).send("no or invalid parameters");
+
+  const { data } = req.body;
+  if (!data) return res.status(400).send("no or invalid data");
+
+  try {
+    const updatedCertification = await db.certification.update({
+      where: { id },
+      data: { ...data },
+    });
+
+    if (!updatedCertification)
+      return res.status(404).send("certification not found");
+
+    res.send({ message: "certification updated successfully" });
+  } catch (error) {
+    console.error(error);
+    console.error(error.stack);
+
+    return res
+      .status(500)
+      .send({ message: `an error occured: ${error.message}` });
   }
 }
 
@@ -318,15 +399,16 @@ export async function updateTestimonials(req, res) {
 
   try {
     const updatedTestimonial = await db.testimonial.update({
-        where: {
-            id,
-        },
-        data: {
-            ...data,
-        },
-    })
+      where: {
+        id,
+      },
+      data: {
+        ...data,
+      },
+    });
 
-    if (!updatedTestimonial) return res.status(404).send("testimonial not found");
+    if (!updatedTestimonial)
+      return res.status(404).send("testimonial not found");
 
     res.send({ message: "testimonial updated successfully" });
   } catch (error) {
@@ -335,7 +417,6 @@ export async function updateTestimonials(req, res) {
     return res
       .status(500)
       .send({ message: `an error occured: ${error.message}` });
-    
   }
 }
 
@@ -350,71 +431,108 @@ export async function updateTools(req, res) {
 
   try {
     const updatedTool = await db.tool.update({
-        where: {id},
-        data: {...data}
-    })
+      where: { id },
+      data: { ...data },
+    });
 
     if (!updatedTool) return res.status(404).send("tool not found");
 
-    res.send({message: "tool updated successfully"})
-    
+    res.send({ message: "tool updated successfully" });
   } catch (error) {
-    console.error(error)
-    console.error(error.stack)
-    return res.status(500).send({message: `an error occured: ${error.message}`})
-    
+    console.error(error);
+    console.error(error.stack);
+    return res
+      .status(500)
+      .send({ message: `an error occured: ${error.message}` });
   }
 }
 
 // delete
 export async function deleteSocials(req, res) {
-    const {id} = req.params
-    if (!id) return res.status(400).send("no or invalid parameters")
+  const { id } = req.params;
+  if (!id) return res.status(400).send("no or invalid parameters");
 
-        try {
-            const deleted = await db.social.delete({
-                where: {id}
-            })
+  try {
+    const deleted = await db.social.delete({
+      where: { id },
+    });
 
-            if (!deleted) return res.status(404).send("social not found")
+    if (!deleted) return res.status(404).send("social not found");
 
-            res.send({message: "social deleted successfully"})
-        } catch (error) {
-            console.error(error)
-            console.error(error.stack)
+    res.send({ message: "social deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    console.error(error.stack);
 
-            if (error.message === '\nInvalid `prisma.social.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.') {
-                return res.status(404).send({message:"social not found"})
-            }
+    if (
+      error.message ===
+      "\nInvalid `prisma.social.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist."
+    ) {
+      return res.status(404).send({ message: "social not found" });
+    }
 
-            return res.status(500).send({message: `an error occured: ${error.message}`})
-            
-        }
+    return res
+      .status(500)
+      .send({ message: `an error occured: ${error.message}` });
+  }
 }
 
 export async function deleteProjects(req, res) {
-    const {id} = req.params
-    if (!id) return res.status(400).send("no or invalid parameters")
+  const { id } = req.params;
+  if (!id) return res.status(400).send("no or invalid parameters");
 
-        try {
-            const deleted = await db.project.delete({
-                where: {id}
-            })
+  try {
+    const deleted = await db.project.delete({
+      where: { id },
+    });
 
-            if (!deleted) return res.status(404).send("project not found")
+    if (!deleted) return res.status(404).send("project not found");
 
-            res.send({message: "project deleted successfully"})
-        } catch (error) {
-            console.error(error)
-            console.error(error.stack)
+    res.send({ message: "project deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    console.error(error.stack);
 
-            if (error.message === '\nInvalid `prisma.project.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist.') {
-                return res.status(404).send({message:"project not found"})
-            }
+    if (
+      error.message ===
+      "\nInvalid `prisma.project.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist."
+    ) {
+      return res.status(404).send({ message: "project not found" });
+    }
 
-            return res.status(500).send({message: `an error occured: ${error.message}`})
-            
-        }
+    return res
+      .status(500)
+      .send({ message: `an error occured: ${error.message}` });
+  }
+}
+
+export async function deleteCertification(req, res) {
+  const { id } = req.params;
+  if (!id) return res.status(400).send("no or invalid parameters");
+
+  try {
+    const deleted = await db.certification.delete({
+      where: { id },
+    });
+
+    if (!deleted) return res.status(404).send("certification not found");
+
+    res.send({ message: "certification deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    console.error(error.stack);
+
+    if (
+      error.message ===
+      "\nInvalid `prisma.certification.delete()` invocation:\n\n\nAn operation failed because it depends on one or more records that were required but not found. Record to delete does not exist."
+    ) {
+      return res.status(404).send({ message: "certification not found" });
+    }
+
+    return res
+      .status(500)
+      .send({ message: `an error occured: ${error.message}` });
+  }
 }
 
 export async function deleteTestimonials(req, res) {

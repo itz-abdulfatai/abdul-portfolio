@@ -117,6 +117,111 @@ export function validateAddProject(req, res, next) {
   next();
 }
 
+
+export function validateAddCertification(req, res, next) {
+  let { data } = req.body;
+  if (!data) return res.status(400).send("no or invalid data");
+
+  const errors = [];
+  const validFields = [
+    "name",
+    "imageLink",
+    "certLink",
+    "dateIssued",
+    "expiryDate",
+    "issuingOrganization",
+    "description",
+    "priority",
+    "public",
+    // "settingId",
+  ];
+
+  const filtered = {};
+
+  for (const key in data) {
+    if (validFields.includes(key)) {
+      filtered[key] = data[key];
+    }
+  }
+
+  data = filtered;
+
+  if (Object.keys(data).length === 0) {
+    errors.push("No or invalid data provided");
+    return res.status(400).send({ message: errors.join(", ") });
+  }
+
+  if (!data.name || typeof data.name !== "string") {
+    errors.push("Name is required and must be a string");
+  }
+
+  if (!data.imageLink || typeof data.imageLink !== "string") {
+    errors.push("ImageLink is required and must be a string");
+  }
+
+  if (
+    "certLink" in data &&
+    data.certLink !== null &&
+    typeof data.certLink !== "string"
+  ) {
+    errors.push("CertLink must be a string or null");
+  }
+
+  if ("dateIssued" in data) {
+    const date = new Date(data.dateIssued);
+    if (isNaN(date.getTime())) {
+      errors.push("DateIssued must be a valid date");
+    } else {
+      data.dateIssued = date;
+    }
+  }
+
+  if ("expiryDate" in data) {
+    const date = new Date(data.expiryDate);
+    if (isNaN(date.getTime())) {
+      errors.push("ExpiryDate must be a valid date");
+    } else {
+      data.expiryDate = date;
+    }
+  }
+
+  if (
+    "issuingOrganization" in data &&
+    data.issuingOrganization !== null &&
+    typeof data.issuingOrganization !== "string"
+  ) {
+    errors.push("IssuingOrganization must be a string or null");
+  }
+
+  if (
+    "description" in data &&
+    data.description !== null &&
+    typeof data.description !== "string"
+  ) {
+    errors.push("Description must be a string or null");
+  }
+
+  if ("priority" in data && typeof data.priority !== "number") {
+    errors.push("Priority must be a number");
+  }
+
+  if ("public" in data && typeof data.public !== "boolean") {
+    errors.push("Public must be a boolean");
+  }
+
+  // if (!data.settingId || typeof data.settingId !== "string") {
+  //   errors.push("SettingId is required and must be a string");
+  // }
+
+  if (errors.length > 0) {
+    return res.status(400).send({ message: errors.join(", ") });
+  }
+
+  req.body.data = data;
+  next();
+}
+
+
 export function validateAddTestimonial(req, res, next) {
   let { data } = req.body;
   if (!data) return res.status(400).send("no or invalid data");

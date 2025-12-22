@@ -31,6 +31,7 @@ model Setting {
   projects                  Project[]
   testimonials              Testimonial[]
   socials                   social[]
+  certifications            Certification[]
 }
 
 model Tool {
@@ -61,7 +62,22 @@ model Project {
   github       String?
   link         String?
 }
+model Certification {
+  id           String      @id @unique @default(uuid())
+  name         String      @unique
+  imageLink    String
+  certLink     String?
+  dateIssued   DateTime?   @default(now())
+  expiryDate   DateTime?
+  issuingOrganization   String?
+  description  String?
+  softDelete   Boolean? @default(false)
+  setting      Setting     @relation(fields: [settingId], references: [id])
+  settingId    String
+  priority     Float?      @default(1)
+  public       Boolean     @default(true)
 
+}
 model ClientInfo {
   id          String        @id @unique @default(uuid())
   name        String        @unique

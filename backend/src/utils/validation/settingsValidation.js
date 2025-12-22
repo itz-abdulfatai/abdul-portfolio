@@ -22,7 +22,13 @@ export async function validateUpdateData(data) {
 
   // check for invalid fields 
 
-  if ("tools" in data || "projects" in data || "testimonials" in data || "socials" in data) {
+  if (
+    "tools" in data ||
+    "projects" in data ||
+    "testimonials" in data ||
+    "socials" in data ||
+    "certifications" in data
+  ) {
     errors.push("Invalid request: Restricted fields included");
     return errors; // Terminate validation immediately
   }
