@@ -4,12 +4,11 @@ import ReCAPTCHA from "react-google-recaptcha";
 import ReactGA from "react-ga4";
 import Icon from "../components/global/Icon";
 import SettingContext from "../contexts/settingContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import LittleSpinner from "../components/global/LittleSpinner";
 import BookMeeting from "../components/global/BookMeeting";
 import { scrollR } from "../utils/scrollR";
-
 
 const services = [
   { id: "web-dev", label: "Web Development" },
@@ -27,8 +26,9 @@ function Quote() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [message, setMessage] = useState(null);
-  const [service, setService] = useState("web-dev"); // web-dev | digital-marketing | ai-automation
+  const [service, setService] = useState(""); // web-dev | digital-marketing | ai-automation
   const capRef = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { search } = useLocation();
   const source = new URLSearchParams(search).get("source");
@@ -37,6 +37,34 @@ function Quote() {
     scrollR("llll", "left", false);
     scrollR("rrrr", "right", false);
   }, []);
+
+  useEffect(() => {
+    const serviceParam = searchParams.get("service");
+
+    if (serviceParam) {
+      if (
+        serviceParam == "web-dev" ||
+        serviceParam == "digital-marketing" ||
+        serviceParam == "ai-automation"
+      ) {
+        setService(serviceParam);
+      } else setService("web-dev");
+    } else setService("web-dev");
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (service !== "" && searchParams.get("service") !== service) {
+      setSearchParams(
+        (prev) => {
+          const newParams = new URLSearchParams(prev);
+          newParams.set("service", service);
+          return newParams;
+        },
+        { replace: true }
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [service]);
 
   async function validateEmail(email) {
     try {

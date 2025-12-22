@@ -133,6 +133,7 @@ function Certifications() {
   const { certifications: certs } = settings;
 
   useEffect(() => {
+    if (!certs || certs.length === 0) return;
     const certParam = searchParams.get("cert");
 
     if (certParam) {
@@ -155,19 +156,21 @@ function Certifications() {
         if (scrollTimeout) clearTimeout(scrollTimeout);
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [certs, searchParams]);
 
   const handleModalClose = useCallback(
     (cert) => {
       /** @type {import('../../types').CertificationType} */
       const certification = cert;
       setShowModal(false);
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams);
-        newParams.delete("cert");
-        return newParams;
-      }); // Remove cert param
+      setSearchParams(
+        (prevParams) => {
+          const newParams = new URLSearchParams(prevParams);
+          newParams.delete("cert");
+          return newParams;
+        },
+        { replace: true }
+      ); // Remove cert param
 
       ReactGA.event({
         category: "certifications",
@@ -178,10 +181,7 @@ function Certifications() {
   );
   useEffect(() => {
     const handleBackButton = () => {
-      // do your action here
-      // console.log("back button pressed");
-
-      if (showModal) {
+      if (showModal && certs && certs.length > 0 && certs[activeIndex]) {
         handleModalClose(certs[activeIndex]);
       }
     };
@@ -199,11 +199,14 @@ function Certifications() {
       const certification = cert;
       setShowModal(true);
       const certSlug = certification.name.toLowerCase().replace(/\s+/g, "-");
-      setSearchParams((prevParams) => {
-        const newParams = new URLSearchParams(prevParams);
-        newParams.set("cert", certSlug);
-        return newParams;
-      });
+      setSearchParams(
+        (prevParams) => {
+          const newParams = new URLSearchParams(prevParams);
+          newParams.set("cert", certSlug);
+          return newParams;
+        },
+        { replace: true }
+      );
 
       ReactGA.event({
         category: "certifications",
