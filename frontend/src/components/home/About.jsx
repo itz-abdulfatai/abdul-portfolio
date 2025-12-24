@@ -26,7 +26,7 @@ function About() {
           <br />
           <br />I help businesses design, build, and grow high-performance web
           and mobile applications that are secure, scalable, and conversion
-          focused. My work ranges from e commerce platforms and business
+          focused. My work ranges from e-commerce platforms and business
           applications to sales funnels, internal tools, and enterprise-grade
           backend systems
           {!expanded ? " ..." : "."}

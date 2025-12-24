@@ -102,6 +102,8 @@ function Header() {
       <button
         onClick={() => setNavActive(!navActive)}
         className="p-1 text-3xl md:hidden"
+        aria-label="Toggle navigation menu"
+        aria-expanded={navActive}
       >
         <i className="bx bx-menu"></i>
       </button>

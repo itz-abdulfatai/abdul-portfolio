@@ -25,8 +25,7 @@ function Portfolio({ heading }) {
     [projects]
   );
 
-  console.log(firstFour);
-  
+  // console.log(firstFour);
 
   return (
     <section

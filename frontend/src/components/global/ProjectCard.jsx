@@ -15,7 +15,7 @@ function ProjectCard({p}) {
     >
       <div className=" overflow-hidden rounded-2xl fles justify-center items-center h-56 md:h-80 ">
         <img
-          src={p.images[0] || "https://picsum.photos/200/300?random=1"}
+          src={p.images?.[0] || "https://picsum.photos/200/300?random=1"}
           alt=""
           className=" w-full group-hover:scale-105 transition-all duration-500 ease-linear h-full"
         />
@@ -24,14 +24,11 @@ function ProjectCard({p}) {
         <div className=" flex flex-col gap-3">
           <h3 className=" text-lg md:text-2xl font-[500]">{p.name}</h3>
           <div className=" flex gap-3 flex-wrap">
-            {p.services.map(
-              (service, index) =>
-                index < 2 && (
-                  <div key={service} className=" p-2 rounded-lg bg-[#282828]">
-                    {service}
-                  </div>
-                )
-            )}
+            {p.services?.slice(0, 2).map((service) => (
+              <div key={service} className=" p-2 rounded-lg bg-[#282828]">
+                {service}
+              </div>
+            ))}
           </div>
         </div>
         <span className=" flex justify-center items-center p-3 bg-highlight text-2xl text-primary rounded-xl hover:bg-[#282828] hover:text-secondary transition-all duration-300 gap-5">
