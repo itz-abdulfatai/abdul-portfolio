@@ -19,8 +19,8 @@ function Testimonials() {
 
   return (
     <section id="testimonials" className=" tesii flex flex-col gap-10 min-h-0">
-      <h2 className=" text-[40px] font-[600] text-tertiary">
-        What our customers say
+      <h2 className=" text-[25px] lg:text-[40px] font-[600]">
+        What my customers say
       </h2>
       {loading && (
         <div className="w-full  pt-9 h-14 ">

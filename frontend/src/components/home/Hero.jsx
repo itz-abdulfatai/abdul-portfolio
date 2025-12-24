@@ -57,7 +57,7 @@ function Hero() {
             icon={<i className="text-xl ml-5 bx bx-chevron-right"></i>}
             text="Start your project"
             onclick={() => {
-              navigate("/quote?source=hero");
+              navigate("/quote?source=hero-cta");
             }}
             textColor={"primary"}
           />

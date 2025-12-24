@@ -8,20 +8,15 @@ import Button from "../components/global/Button"
 import { scrollToSection } from "../utils/scrollIn"
 
 function Works() {
-  const {settings, loading, error, fetchSettings} = useContext(SettingContext)
-  const { projects } = settings
-  const [activeTab, setActiveTab] = useState('jobs')
+  const { settings, loading, error, fetchSettings } =
+    useContext(SettingContext);
+  const { projects } = settings;
+  const [activeTab, setActiveTab] = useState("jobs");
 
-  const jobs =
-    projects
-      ?.filter((p) => p.type === "job")
-      .sort((a, b) => (Number(b.priority) || 0) - (Number(a.priority) || 0)) ||
-    [];
-  const portfolio =
-    projects
-      ?.filter((p) => p.type !== "job")
-      .sort((a, b) => (Number(b.priority) || 0) - (Number(a.priority) || 0)) ||
-    [];
+  const jobs = projects?.filter((p) => p.type === "job") || [];
+  // .sort((a, b) => (Number(b.priority) || 0) - (Number(a.priority) || 0))
+  const portfolio = projects?.filter((p) => p.type !== "job") || [];
+  // .sort((a, b) => (Number(b.priority) || 0) - (Number(a.priority) || 0))
   return (
     <>
       <Helmet>

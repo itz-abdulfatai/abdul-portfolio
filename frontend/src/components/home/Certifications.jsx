@@ -466,7 +466,7 @@ function Certifications() {
 
       <section id="certs" className="flex flex-col gap-10 justify-center">
         <h2 className="h22 text-secondary text-2xl md:text-[40px] font-[600]">
-          My Certifications {certs && certs.length} <br />
+          My Certifications {certs && `( ${certs.length} )`} <br />
           <span className="text-xs font-normal">
             tap certification to view details
           </span>

@@ -14,7 +14,11 @@ function CertModal({
   const [showDescription, setShowDescription] = useState(false);
   const [shared, setShared] = useState(false);
   const formatDate = (date) => {
-    return date.toLocaleString("en-US", { month: "long", year: "numeric" });
+    const d = new Date(date);
+    return d.toLocaleString("en-US", {
+      month: "long",
+      year: "numeric",
+    });
   };
 
   const copyUrlToClipboard = () => {

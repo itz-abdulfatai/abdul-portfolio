@@ -28,15 +28,15 @@ function Header() {
       <nav
         className={` absolute z-50
            max-md:-top-[500px] max-md:opacity-0
-          right-0 left-0 max-md:py-3 max-md:bg-x2 flex-col md:flex-row  md:static flex items-center justify-center flex-1 md:gap-4 transition-all duration-300 text-tertiary text-lg ${
+          right-0 left-0 max-md:pt-3 max-md:bg-primary flex-col md:flex-row  md:static flex items-center justify-center flex-1 lg:gap-4 transition-all duration-300 text-tertiary text-lg ${
             navActive && "active"
           }`}
       >
         {isHome ? (
           <>
-            <a href="#home" className="nav-link">
+            {/* <a href="#home" className="nav-link">
               Home
-            </a>
+            </a> */}
             <a href="#about" className="nav-link">
               About
             </a>
@@ -52,6 +52,9 @@ function Header() {
             <a href="#testimonials" className="nav-link">
               Reviews
             </a>
+            <a href="#contact" className="nav-link md:hidden">
+              Contact
+            </a>
           </>
         ) : (
           <>
@@ -63,6 +66,9 @@ function Header() {
             </Link>
             <Link to="/quote?source=nav" className="nav-link">
               Quote
+            </Link>
+            <Link to="/contact" className="nav-link md:hidden">
+              Contact
             </Link>
 
             {/* <Link to='#portfolio' className="nav-link">Work</Link> */}

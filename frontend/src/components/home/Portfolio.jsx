@@ -3,7 +3,7 @@ import Button from "../global/Button";
 import ProjectCard from "../global/ProjectCard";
 import SettingContext from "../../contexts/settingContext";
 import { useNavigate } from "react-router-dom";
-import { shuffle } from "../../utils/helper";
+// import { shuffle } from "../../utils/helper";
 import { scrollR } from "../../utils/scrollR";
 // import Spinner from "../global/Spinner"
 // import Error from "../global/Error"
@@ -20,9 +20,13 @@ function Portfolio({ heading }) {
   }, []);
 
   const firstFour = useMemo(
-    () => shuffle(projects ?? []).slice(0, 4),
+    // () => shuffle(projects ?? []).slice(0, 4),
+    () => (projects ?? []).slice(0, 4),
     [projects]
   );
+
+  console.log(firstFour);
+  
 
   return (
     <section

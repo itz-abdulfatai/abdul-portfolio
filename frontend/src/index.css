@@ -40,7 +40,7 @@
     }
 
     .nav-link {
-        @apply px-4 py-[5px] max-md:w-full max-md:text-center hover:bg-[#d9d9d9] text-base  hover:text-primary md:rounded-xl transition-all font-[500] max-md:bg-x2
+        @apply px-4 py-[5px] max-md:w-full  hover:bg-[#d9d9d9] text-base  hover:text-primary md:rounded-xl transition-all font-[500] max-md:bg-primary max-md:border-b border-b-x2
     }
 
     section {
