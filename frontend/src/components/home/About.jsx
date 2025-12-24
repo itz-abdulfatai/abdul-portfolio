@@ -33,7 +33,7 @@ function About() {
         </p>
 
         <div
-          className={`overflow-hidden transition-[max-height,opacity] duration-1000 ease-linear 
+          className={`overflow-hidden transition-[max-height,opacity] duration-1000 ease-in-out 
     ${
       expanded
         ? " max-h-[800px] sm:max-h-[370px] opacity-100 md:max-h-[330px] lg:max-h-[420px] xl:max-h-[320px] 2xl:max-h-[270px]"
