@@ -226,6 +226,7 @@ function Contact() {
                   type="text"
                   id="name"
                   name="name"
+                  autoComplete="name"
                 />
               </div>
               <div className=" form-row">

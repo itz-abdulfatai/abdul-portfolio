@@ -204,7 +204,7 @@ function Quote() {
             Get a Custom Website Quote
           </h2>
           <p className="max-w-[350px] text-tertiary">
-            Tell us about your project and we&apos;ll provide a tailored
+            Tell me about your project and we&apos;ll provide a tailored
             solution that meets your needs and budget.
           </p>
 
@@ -265,7 +265,9 @@ function Quote() {
               <input type="hidden" name="service" value={service} />
               <fieldset className="flex gap-3 max-sm:flex-col">
                 <div className="form-row">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name">
+                    Name <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     placeholder="Your Name"
@@ -273,15 +275,19 @@ function Quote() {
                     type="text"
                     id="name"
                     name="name"
+                    autoComplete="name"
                   />
                 </div>
                 <div className="form-row">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">
+                    Email <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     className="form-input"
                     placeholder="your@email.com"
                     type="email"
+                    autoComplete="email"
                     id="email"
                     name="mail"
                   />
@@ -290,19 +296,24 @@ function Quote() {
 
               <fieldset className="flex gap-3 max-sm:flex-col">
                 <div className="form-row">
-                  <label htmlFor="phone">Phone</label>
+                  <label htmlFor="phone">
+                    Phone <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     className="form-input"
-                    placeholder="+1234567890"
+                    placeholder="WhatsApp preferred"
                     type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
                     id="phone"
                     name="phone"
                   />
                 </div>
                 <div className="form-row">
                   <label htmlFor="how-did-you-hear-about-abduldev">
-                    How did you find us?
+                    How did you find me?{" "}
+                    <span className="text-highlight">*</span>
                   </label>
                   <input
                     required
@@ -318,20 +329,21 @@ function Quote() {
               <fieldset className="form-row">
                 <label htmlFor="existingWebsite">
                   Do you have an existing website? If yes, what features would
-                  you like to keep?
+                  you like to keep? <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
                   id="existingWebsite"
                   name="existingWebsite"
                   rows="2"
-                  placeholder="Tell us about your current website and what elements you'd like to preserve"
+                  placeholder="Link if any, Tell me about your current website and what elements you'd like to preserve"
                 />
               </fieldset>
 
               <fieldset className="form-row">
                 <label htmlFor="purpose">
-                  What&apos;s the main purpose of your website?
+                  What&apos;s the main purpose of your website?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -344,7 +356,8 @@ function Quote() {
 
               <fieldset className="form-row">
                 <label htmlFor="websiteExamples">
-                  Do you have any website examples you like?
+                  Do you have any website examples you like?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -357,7 +370,8 @@ function Quote() {
 
               <fieldset className="form-row">
                 <label htmlFor="features">
-                  What special features would you like on your website?
+                  What special features would you like on your website?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -370,7 +384,8 @@ function Quote() {
 
               <fieldset className="form-row">
                 <label htmlFor="branding">
-                  What are your branding preferences (logo, colors, style)?
+                  What are your branding preferences (logo, colors, style)?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -383,7 +398,8 @@ function Quote() {
 
               <fieldset className="form-row">
                 <label htmlFor="pages">
-                  What pages would you like on your website?
+                  What pages would you like on your website?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -395,22 +411,24 @@ function Quote() {
               </fieldset>
 
               <fieldset className="form-row">
-                <label htmlFor="budget">What is your approximate budget?</label>
-                <select className="form-select" id="budget" name="budget">
-                  <option selected disabled>
-                    Select Budget
-                  </option>
-                  <option value="not-sure">Not sure</option>
-                  <option value="<100">&lt;$100</option>
-                  <option value="100-500">$100-$500</option>
-                  <option value="500-1000">$500-$1000</option>
-                  <option value=">1000">&gt;$1000</option>
-                  <option value="prefer-not-say">Prefer not to say</option>
-                </select>
+                <label htmlFor="budget">
+                  What is your approximate budget?{" "}
+                  <span className="text-x">(optional)</span>
+                </label>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="budget"
+                  name="budget"
+                  placeholder="e.g., $100, ¥500, prefer not to say..."
+                />
               </fieldset>
 
               <fieldset className="form-row">
-                <label htmlFor="location">What country are you based in?</label>
+                <label htmlFor="location">
+                  What country are you based in?{" "}
+                  <span className="text-highlight">*</span>
+                </label>
                 <input
                   required
                   className="form-input"
@@ -423,7 +441,8 @@ function Quote() {
 
               <fieldset className="form-row">
                 <label htmlFor="hosting">
-                  Do you have hosting and domain already?
+                  Do you have hosting and domain already?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <input
                   className="form-input"
@@ -436,19 +455,23 @@ function Quote() {
 
               <fieldset className="form-row">
                 <label htmlFor="maintenance">
-                  Who will maintain the website after it&apos;s built?
+                  Who will maintain the website after it&apos;s built?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
                   id="maintenance"
                   name="maintenance"
                   rows="2"
-                  placeholder="Tell us about who will manage the website and their technical experience"
+                  placeholder="Tell me about who will manage the website and their technical experience"
                 />
               </fieldset>
 
               <fieldset className="form-row">
-                <label htmlFor="additional">Additional Information</label>
+                <label htmlFor="additional">
+                  Additional Information{" "}
+                  <span className="text-x">(optional)</span>
+                </label>
                 <textarea
                   className="form-input"
                   id="additional"
@@ -466,7 +489,7 @@ function Quote() {
                 <fieldset className="form-row">
                   <label htmlFor="seo">
                     Would you like your website to rank higher in search
-                    results?
+                    results? <span className="text-x">(optional)</span>
                   </label>
                   <select className="form-select" id="seo" name="seo">
                     <option selected disabled>
@@ -480,7 +503,8 @@ function Quote() {
                 <fieldset className="form-row">
                   <label htmlFor="virtualAssistant">
                     Would you like support with social media management/
-                    advertising (Instagram, Facebook, blog, etc)?
+                    advertising (Instagram, Facebook, blog, etc)?{" "}
+                    <span className="text-x">(optional)</span>
                   </label>
                   <select
                     className="form-select"
@@ -498,7 +522,7 @@ function Quote() {
                 <fieldset className="form-row">
                   <label htmlFor="content">
                     Would you like regular content updates to keep your website
-                    fresh?
+                    fresh? <span className="text-x">(optional)</span>
                   </label>
                   <select className="form-select" id="content" name="content">
                     <option selected disabled>
@@ -527,7 +551,9 @@ function Quote() {
               {/* Common fields */}
               <fieldset className="flex gap-3 max-sm:flex-col">
                 <div className="form-row">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name">
+                    Name <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     placeholder="Your Name"
@@ -535,15 +561,19 @@ function Quote() {
                     type="text"
                     id="name"
                     name="name"
+                    autoComplete="name"
                   />
                 </div>
                 <div className="form-row">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">
+                    Email <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     className="form-input"
                     placeholder="your@email.com"
                     type="email"
+                    autoComplete="email"
                     id="email"
                     name="mail"
                   />
@@ -551,19 +581,24 @@ function Quote() {
               </fieldset>
               <fieldset className="flex gap-3 max-sm:flex-col">
                 <div className="form-row">
-                  <label htmlFor="phone">Phone</label>
+                  <label htmlFor="phone">
+                    Phone <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     className="form-input"
-                    placeholder="+1234567890"
+                    placeholder="WhatsApp preferred"
                     type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
                     id="phone"
                     name="phone"
                   />
                 </div>
                 <div className="form-row">
                   <label htmlFor="how-did-you-hear-about-abduldev">
-                    How did you find us?
+                    How did you find me?{" "}
+                    <span className="text-highlight">*</span>
                   </label>
                   <input
                     required
@@ -577,7 +612,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="businessOverview">
-                  Tell us about your business or brand
+                  Tell me about your business or brand{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -589,7 +625,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="goals">
-                  What are your main marketing goals?
+                  What are your main marketing goals?{" "}
+                  <span className="text-highlight">*</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -602,7 +639,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="targetAudience">
-                  Who is your target audience?
+                  Who is your target audience?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -614,7 +652,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="currentEfforts">
-                  What marketing efforts are you currently using?
+                  What marketing efforts are you currently using?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -626,7 +665,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="platforms">
-                  Which platforms/channels do you want to focus on?
+                  Which platforms/channels do you want to focus on?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -638,23 +678,22 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="budget">
-                  What is your approximate monthly budget?
+                  What is your approximate monthly budget?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
-                <select className="form-select" id="budget" name="budget">
-                  <option selected disabled>
-                    Select budget
-                  </option>
-
-                  <option value="not-sure">Not Sure</option>
-                  <option value="<500">&lt;$500</option>
-                  <option value="500-2000">$500-$2,000</option>
-                  <option value="2000-5000">$2,000-$5,000</option>
-                  <option value=">5000">&gt;$5,000</option>
-                  <option value="prefer-not-say">Prefer not to say</option>
-                </select>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="budget"
+                  name="budget"
+                  placeholder="e.g., $100, €500, prefer not to say..."
+                />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="timeline">What is your desired timeline?</label>
+                <label htmlFor="timeline">
+                  What is your desired timeline?{" "}
+                  <span className="text-x">(optional)</span>
+                </label>
                 <input
                   className="form-input"
                   type="text"
@@ -664,7 +703,10 @@ function Quote() {
                 />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="location">What country are you based in?</label>
+                <label htmlFor="location">
+                  What country are you based in?{" "}
+                  <span className="text-highlight">*</span>
+                </label>
                 <input
                   required
                   className="form-input"
@@ -675,7 +717,10 @@ function Quote() {
                 />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="additional">Additional Information</label>
+                <label htmlFor="additional">
+                  Additional Information{" "}
+                  <span className="text-x">(optional)</span>
+                </label>
                 <textarea
                   className="form-input"
                   id="additional"
@@ -702,7 +747,9 @@ function Quote() {
               {/* Common fields */}
               <fieldset className="flex gap-3 max-sm:flex-col">
                 <div className="form-row">
-                  <label htmlFor="name">Name</label>
+                  <label htmlFor="name">
+                    Name <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     placeholder="Your Name"
@@ -710,15 +757,19 @@ function Quote() {
                     type="text"
                     id="name"
                     name="name"
+                    autoComplete="name"
                   />
                 </div>
                 <div className="form-row">
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="email">
+                    Email <span className="text-highlight">*</span>
+                  </label>
                   <input
                     required
                     className="form-input"
                     placeholder="your@email.com"
                     type="email"
+                    autoComplete="email"
                     id="email"
                     name="mail"
                   />
@@ -730,15 +781,17 @@ function Quote() {
                   <input
                     required
                     className="form-input"
-                    placeholder="+1234567890"
+                    placeholder="WhatsApp preferred"
                     type="tel"
+                    autoComplete="tel"
+                    inputMode="tel"
                     id="phone"
                     name="phone"
                   />
                 </div>
                 <div className="form-row">
                   <label htmlFor="how-did-you-hear-about-abduldev">
-                    How did you find us?
+                    How did you find me?{" "}
                   </label>
                   <input
                     required
@@ -752,7 +805,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="businessOverview">
-                  Tell us about your business or operations
+                  Tell me about your business or operations{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -764,7 +818,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="automationGoals">
-                  What do you want to automate?
+                  What do you want to automate?{" "}
+                  <span className="text-highlight">*</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -777,7 +832,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="currentTools">
-                  What tools/systems are you currently using?
+                  What tools/systems are you currently using?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -789,7 +845,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="aiFeatures">
-                  What AI features are you interested in?
+                  What AI features are you interested in?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -801,7 +858,8 @@ function Quote() {
               </fieldset>
               <fieldset className="form-row">
                 <label htmlFor="integrations">
-                  Any specific integrations needed?
+                  Any specific integrations needed?{" "}
+                  <span className="text-x">(optional)</span>
                 </label>
                 <textarea
                   className="form-input"
@@ -812,20 +870,22 @@ function Quote() {
                 />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="budget">What is your approximate budget?</label>
-                <select className="form-select" id="budget" name="budget">
-                  <option selected disabled>
-                    Select Budget
-                  </option>
-                  <option value="<1000">&lt;$1,000</option>
-                  <option value="1000-5000">$1,000-$5,000</option>
-                  <option value="5000-10000">$5,000-$10,000</option>
-                  <option value=">10000">&gt;$10,000</option>
-                  <option value="prefer-not-say">Prefer not to say</option>
-                </select>
+                <label htmlFor="budget">
+                  Estimated budget <span className="text-x">(optional)</span>
+                </label>
+                <input
+                  className="form-input"
+                  type="text"
+                  id="budget"
+                  name="budget"
+                  placeholder="e.g., $100, £500, prefer not to say..."
+                />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="timeline">What is your desired timeline?</label>
+                <label htmlFor="timeline">
+                  What is your desired timeline?{" "}
+                  <span className="text-x">(optional)</span>
+                </label>
                 <input
                   className="form-input"
                   type="text"
@@ -835,7 +895,9 @@ function Quote() {
                 />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="location">What country are you based in?</label>
+                <label htmlFor="location">
+                  What country are you based in?{" "}
+                </label>
                 <input
                   required
                   className="form-input"
@@ -846,7 +908,10 @@ function Quote() {
                 />
               </fieldset>
               <fieldset className="form-row">
-                <label htmlFor="additional">Additional Information</label>
+                <label htmlFor="additional">
+                  Additional Information{" "}
+                  <span className="text-x">(optional)</span>
+                </label>
                 <textarea
                   className="form-input"
                   id="additional"
