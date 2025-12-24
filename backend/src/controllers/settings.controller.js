@@ -5,26 +5,35 @@ export async function getSettings(req, res) {
     const settings = await db.setting.findUnique({
       where: {
         id: process.env.SETTINGS_DB_ID,
-        
-      },cacheStrategy: {swr: 100000, ttl: 200000, tags: ['my_global_settings']},
+      },
+      cacheStrategy: { swr: 100000, ttl: 200000, tags: ["my_global_settings"] },
       include: {
         projects: {
           include: {
             clientInfo: true,
           },
-          where: {softDelete: false, public: true}
+          where: { softDelete: false, public: true },
+          orderBy: {
+            priority: "desc",
+          },
         },
         socials: {
-          where: {softDelete:false}
+          where: { softDelete: false },
         },
         testimonials: {
           include: {
             clientInfo: true,
           },
-          where: {softDelete: false}
+          where: { softDelete: false },
         },
         tools: {
-          where: {softDelete: false}
+          where: { softDelete: false },
+        },
+        certifications: {
+          where: { softDelete: false, public: true },
+          orderBy: {
+            priority: "desc",
+          },
         },
       },
     });
