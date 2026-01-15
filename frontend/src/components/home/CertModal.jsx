@@ -10,6 +10,7 @@ function CertModal({
 }) {
   /** @type {import('../../types').CertificationType} */
   const certification = cert;
+  console.log("Certification Data:", certification);
 
   const [showDescription, setShowDescription] = useState(false);
   const [shared, setShared] = useState(false);
@@ -90,7 +91,7 @@ function CertModal({
                rounded-2xl transition-all duration-300 flex items-center gap-2
                border border-secondary group max-md:hidden"
                 >
-                  View Certificate
+                  Verify Certificate
                   <i className="bx bx-right-top-arrow-circle group-hover:translate-x-1 transition-transform text-base"></i>
                 </a>
                 <div className="flex items-center gap-2">
@@ -151,27 +152,29 @@ function CertModal({
                 </div>
               </div>
 
-              {certification.description && showDescription ? (
-                <div className="bg-x/30 rounded-lg p-4 text-sm text-secondary leading-relaxed border border-x/50 animate-fadeIn whitespace-pre-line">
-                  <p>{certification.description}</p>
+              {certification.description &&
+                certification.description.trim() !== "" &&
+                (showDescription ? (
+                  <div className="bg-x/30 rounded-lg p-4 text-sm text-secondary leading-relaxed border border-x/50 animate-fadeIn whitespace-pre-line">
+                    <p>{certification.description}</p>
+                    <button
+                      className="text-highlight mt-5 text-right w-full hover:text-secondary transition-colors duration-300"
+                      onClick={hideDesc}
+                    >
+                      Hide description
+                    </button>
+                  </div>
+                ) : (
                   <button
-                    className=" text-highlight  mt-5 text-right w-full hover:text-secondary transition-colors duration-300"
-                    onClick={hideDesc}
+                    className="self-start px-4 py-2 text-sm font-medium bg-x/40 hover:bg-x/60 rounded-lg transition-all duration-300 flex items-center gap-2 group border border-secondary"
+                    onClick={showDesc}
                   >
-                    Hide description
+                    <i className="bx bx-chevron-down text-highlight"></i>
+                    <span className="text-highlight group-hover:text-secondary transition-colors duration-300">
+                      Show description
+                    </span>
                   </button>
-                </div>
-              ) : (
-                <button
-                  className="self-start px-4 py-2 text-sm font-medium  bg-x/40 hover:bg-x/60 rounded-lg transition-all duration-300 flex items-center gap-2 group border border-secondary"
-                  onClick={showDesc}
-                >
-                  <i className="bx bx-chevron-down text-highlight"></i>
-                  <span className=" text-highlight group-hover:text-secondary transition-colors duration-300">
-                    Show description
-                  </span>
-                </button>
-              )}
+                ))}
 
               <a
                 href={certification.certLink}
@@ -180,7 +183,7 @@ function CertModal({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                View Certificate
+                Verify Certificate
                 <i className="bx bx-right-top-arrow-circle group-hover:translate-x-1 transition-transform"></i>
               </a>
             </div>
