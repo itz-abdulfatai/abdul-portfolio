@@ -1,1 +1,0 @@
-import{j as n}from"./index-DLWUBetU.js";function r({img:t}){return n.jsx("img",{className:" tttq rounded-3xl min-h-[50vh] md:min-h-screen",src:t||`https://picsum.photos/${window.innerWidth}/${window.innerHeight}?random=1`,alt:""})}export{r as default};
