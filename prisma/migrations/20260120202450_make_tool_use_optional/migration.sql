@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Tool" ALTER COLUMN "use" DROP NOT NULL;

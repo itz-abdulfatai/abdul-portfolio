@@ -125,6 +125,7 @@ function CertModal({
                 src={certification.imageLink}
                 alt={certification.name}
                 className="w-full h-auto object-contain transition-transform duration-500 pointer-events-none select-none"
+                loading="lazy"
               />
             </div>
 

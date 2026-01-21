@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 function Hero() {
   const navigate = useNavigate();
 
-  const { settings, loading, error } = useContext(SettingContext);
+  const { settings, loading } = useContext(SettingContext);
   const { avatar, isAvaliableForFreelancing } = settings;
   // console.log(name)
 
@@ -29,25 +29,35 @@ function Hero() {
             alt=""
             className="w-9 aspect-square rounded-md"
           />
-          <span className=" dot"></span>
-          <p className="text-tertiary">
-            {loading ? (
-              "loading availability..."
-            ) : error ? (
-              "Available for freelancing"
-            ) : (
-              <>
-                {isAvaliableForFreelancing
-                  ? "Available for freelancing"
-                  : "Currently Unavailable"}
-              </>
-            )}
-          </p>
+          <span className={"dot"}></span>
+          <p className="text-tertiary">Abdulfatai Aliyu</p>
+          <a
+            href="#contact"
+            className=" cursor-pointer text-tertiary text-xs px-2 py-1 rounded-full bg-x2 border border-x transition-all hover:bg-secondary hover:text-primary"
+          >
+            {loading
+              ? "loading Availability..."
+              : isAvaliableForFreelancing
+              ? "Available now"
+              : "Not Available"}
+          </a>
         </div>
         <h1 className=" text-[30px] sm:text-[35px] md:text-[42px] xl:text-[50px] font-[600]">
           {/* {heading} */}
-          Bring your creative vision to life with professional design expertise
+          Web, Mobile, and Digital Marketing Solutions that Drive Revenue.
         </h1>
+        <small className=" text-sm max-w-[500px] font-normal text-tertiary md:-mt-5">
+          I Specialize in{" "}
+          <strong className="text-sm font-semibold">
+            MERN stack development
+          </strong>
+          , cross-platform{" "}
+          <strong className="text-sm font-semibold">mobile apps</strong>,
+          <strong className="text-sm font-semibold"> digital marketing</strong>{" "}
+          and custom{" "}
+          <strong className="text-sm font-semibold">AI integrations</strong>{" "}
+          that save you 20+ hours a week.
+        </small>
         <div className=" flex gap-5 flex-col sm:flex-row max-md:items-center max-sm:w-[90%] w-full">
           <Button
             className={
@@ -55,7 +65,7 @@ function Hero() {
             }
             bg={"highlight"}
             icon={<i className="text-xl ml-5 bx bx-chevron-right"></i>}
-            text="Start your project"
+            text="Get a Free Quote"
             onclick={() => {
               navigate("/quote?source=hero-cta");
             }}

@@ -2,6 +2,7 @@ function BookMeeting() {
   return (
     <a
       href="https://calendly.com/abdulfataialiyu4/book"
+      target="_blank"
       className="form-input flex justify-center items-center gap-5 group "
       aria-label="Book a meeting via Calendly"
     >

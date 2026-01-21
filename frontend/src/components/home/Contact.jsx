@@ -10,7 +10,7 @@ import Icon from "../global/Icon";
 // import Spinner from "../global/Spinner";
 import Error from "../global/Error";
 import LittleSpinner from "../global/LittleSpinner";
-import { useLocation } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 import BookMeeting from "../global/BookMeeting";
 function Contact() {
   const { settings, loading: settingsLoading } = useContext(SettingContext);
@@ -20,7 +20,7 @@ function Contact() {
   const [message, setMessage] = useState(null);
   // const [captchaToken, setCaptchaToken] = useState(null)
 
-  const { pathname } = useLocation();
+  // const { pathname } = useLocation();
 
   const capRef = useRef(null);
   // console.log(capRef.current)
@@ -180,7 +180,7 @@ function Contact() {
             Contact me for
             {/* for collaboration */}
             <RotatingText
-              texts={[" a project", " partnerships", " best solutions"]}
+              texts={[" a project", " partnerships", " best solutions", " a free quote", " collaboration"]}
               mainClassName="px-0 sm:px-0 md:px-0 bg-xl text-secondary overflow-hidden py-0.5 sm:py-1 md:py-2  rounded-lg"
               staggerFrom={"last"}
               initial={{ y: "100%" }}
@@ -193,8 +193,7 @@ function Contact() {
             />
           </h2>
           <p className=" max-w-[350px] text-tertiary ">
-            Reach out today to discuss your project needs and start
-            collaborating on something amazing!
+            Ready to scale? Get in touch let&#39;s discuss your technical and growth roadmap.
           </p>
           {settingsLoading && (
             <div className="w-full  pt-9 h-14 ">
@@ -213,8 +212,8 @@ function Contact() {
         </div>
 
         <div className="w-full md:rrr max-sm:mt-10  flex flex-col gap-8">
-          {pathname !== "/" && <BookMeeting />}
-
+          {/* {pathname !== "/" && <BookMeeting />} */}
+          <BookMeeting />
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <fieldset className=" flex gap-3 ">
               <div className=" form-row">
@@ -250,7 +249,7 @@ function Contact() {
                 className="form-input "
                 id="message"
                 name="message"
-                rows="6"
+                rows="3"
               />
             </fieldset>
             <button

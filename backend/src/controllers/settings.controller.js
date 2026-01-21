@@ -27,7 +27,10 @@ export async function getSettings(req, res) {
           where: { softDelete: false },
         },
         tools: {
-          where: { softDelete: false },
+          where: { softDelete: false, public: true },
+          orderBy: {
+            priority: "desc",
+          },
         },
         certifications: {
           where: { softDelete: false, public: true },

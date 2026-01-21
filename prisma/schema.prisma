@@ -38,10 +38,15 @@ model Tool {
   id         String   @id @default(uuid())
   name       String   @unique
   icon       String?
-  use        String
+  use        String?
   setting    Setting  @relation(fields: [settingId], references: [id])
   settingId  String
   softDelete Boolean? @default(false)
+  priority  Float?   @default(1)
+  public    Boolean?  @default(true)
+  category  String? @default("All")
+  iconType String? @default("boxicon")
+
 }
 
 model Project {

@@ -49,7 +49,7 @@ function About() {
             experience, not just shipping features. Beyond development, I
             support growth through data-driven digital marketing, managing paid
             advertising across major platforms and setting up CRMs, funnels, and
-            automation systems that turn traffic into revenue.
+            AI automation systems that turn traffic into revenue.
             <br />
             <br />
             What sets me apart is my ability to bridge technology and business
@@ -57,8 +57,10 @@ function About() {
             make better technical and growth decisions that save time, reduce
             costs, and scale sustainably. <br />
             <br />
-            If you&apos;re looking for a reliable partner to build, improve, or
-            grow your product the right way, let&apos;s talk.
+            <strong className="font-semibold">
+              If you&apos;re looking for a reliable partner to build, improve,
+              or grow your product the right way, let&apos;s talk.
+            </strong>
           </div>
         </div>
 

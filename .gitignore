@@ -94,3 +94,6 @@ $RECYCLE.BIN/
 
 *.rest
 **/*.rest
+
+
+tools.ts

@@ -38,6 +38,9 @@
     .dot {
         @apply w-2 aspect-square bg-highlight rounded-full
     }
+    .cot {
+        @apply w-2 aspect-square bg-red-500 rounded-full
+    }
 
     .nav-link {
         @apply px-4 py-[5px] max-md:w-full  hover:bg-[#d9d9d9] text-base  hover:text-primary md:rounded-xl transition-all font-[500] max-md:bg-primary max-md:border-b border-b-x2
@@ -213,6 +216,10 @@
 
     .high-shadow {
         text-shadow: 0px 0px 10px var(--highlight-color);
+        
+    }
+    .low-shadow {
+        box-shadow: 0px 0px 10px var(--highlight-color);
         
     }
 

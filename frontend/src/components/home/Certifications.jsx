@@ -594,6 +594,7 @@ function Certifications() {
                         ></div>
                       )}
                       <img
+                        loading="lazy"
                         src={cert.imageLink}
                         draggable={false}
                         className=" select-none w-full h-full object-cover block"

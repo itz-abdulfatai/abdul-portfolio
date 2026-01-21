@@ -1,13 +1,16 @@
 // import { useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom";
 // import { scrollR } from "../../utils/scrollR"
 
-function ProjectCard({p}) {
-
+function ProjectCard({ p }) {
   // useEffect(() => {
   //   scrollR(p.slug, 'bottom', false)
 
   // }, [p.slug])
+  const { pathname } = useLocation();
+
+  const isHome = pathname == "/";
+
   return (
     <Link
       to={"/works/" + p.slug}
@@ -18,6 +21,7 @@ function ProjectCard({p}) {
           src={p.images?.[0] || "https://picsum.photos/200/300?random=1"}
           alt=""
           className=" w-full group-hover:scale-105 transition-all duration-500 ease-linear h-full"
+          loading={isHome ? "lazy" : undefined}
         />
       </div>
       <div className=" flex flex-col md:flex-row md:items-center max-md:gap-5 justify-between">

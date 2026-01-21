@@ -41,7 +41,7 @@ function ImageUpload() {
       console.log("Uploaded URL:", url);
 
       // add new URL to list
-      setUrls((prev) => [...prev, url]);
+      setUrls(() => [url]);
     } catch (error) {
       console.error(error);
     } finally {

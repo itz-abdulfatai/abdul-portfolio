@@ -201,11 +201,33 @@ function Quote() {
       <section className="flex max-lg:gap-10 justify-between flex-col lg:flex-row items-start min-h-screen py-20 relative px-5 sm:px-10 md:px-16 lg:px-unset">
         <div className="llll w-full lg:w-1/2 flex flex-col gap-5 lg:sticky lg:top-20">
           <h2 className="text-[40px] font-[600] max-w-[400px] leading-tight">
-            Get a Custom Website Quote
+            Get a Custom{" "}
+            {service === "web-dev"
+              ? "Website"
+              : service === "digital-marketing"
+              ? "Marketing"
+              : "Automation"}{" "}
+            Quote
           </h2>
           <p className="max-w-[350px] text-tertiary">
-            Tell me about your project and we&apos;ll provide a tailored
-            solution that meets your needs and budget.
+            {service === "web-dev" && (
+              <>
+                Tell me about your project and i will provide a tailored
+                solution that meets your needs and budget.
+              </>
+            )}
+            {service === "digital-marketing" && (
+              <>
+                Tell me about your growth goals and i will provide a tailored
+                strategy to scale your brand and reach.
+              </>
+            )}
+            {service === "ai-automation" && (
+              <>
+                Tell me about your workflows and i will provide a tailored
+                system to save you time and reduce costs.
+              </>
+            )}
           </p>
 
           {settingsLoading && (
