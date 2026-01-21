@@ -52,34 +52,36 @@ const filteredTools =
       className=" flex flex-col gap-10 justify-center min-h-0"
     >
       <div className="flex gap-10 flex-col h22">
-      <h2 className="  text-secondary  text-2xl md:text-[40px] font-[600]">
-        My Creative Stack
-      </h2>
-      <p className=" text-sm md:text-base text-tertiary max-w-[700px]">
-        Discover the tools, and technologies I use across web and app development, marketing, and automation to create exceptional, high performing digital experiences.
-      </p>
-      {!loading && tools && (
-        <div className="">
-          <div className=" flex items-center  flex-wrap gap-4 ">
-            {tabs.map((tab) => (
-              <button
-                onClick={() => {
-                  setActiveTab(tab);
-                  setFull(false);
-                }}
-                key={tab.key}
-                className={`ms:py-2.5 py-1 px-2 sm:px-3 rounded-xl font-[500] transition-all flex flex-col items-center gap-2 duration-300 ${
-                  tab === activeTab
-                    ? "bg-highlight text-primary border border-highlight"
-                    : "bg-x2 text-secondary border border-transparent hover:border-highlight"
-                }`}
-              >
-                {tab.name}
-              </button>
-            ))}
+        <h2 className="  text-secondary  text-2xl md:text-[40px] font-[600]">
+          My Creative Stack
+        </h2>
+        <p className=" text-sm md:text-base text-tertiary max-w-[700px]">
+          Discover the tools, and technologies I use across web and app
+          development, marketing, and automation to create exceptional, high
+          performing digital experiences.
+        </p>
+        {!loading && tools && (
+          <div className="">
+            <div className=" flex items-center  flex-wrap gap-4 ">
+              {tabs.map((tab) => (
+                <button
+                  onClick={() => {
+                    setActiveTab(tab);
+                    setFull(false);
+                  }}
+                  key={tab.key}
+                  className={`sm:py-2.5 py-1 px-2 sm:px-3 rounded-xl font-[500] transition-all flex flex-col items-center gap-2 duration-300 ${
+                    tab === activeTab
+                      ? "bg-highlight text-primary border border-highlight"
+                      : "bg-x2 text-secondary border border-transparent hover:border-highlight"
+                  }`}
+                >
+                  {tab.name}
+                </button>
+              ))}
+            </div>
           </div>
-        </div>
-      )}
+        )}
       </div>
       <div className="  flex flex-wrap gap-4 ">
         {loading && (
